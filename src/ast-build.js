@@ -73,21 +73,38 @@ function buildLiteral(raw, location) {
 /**
  * Build a binary expression node of the AST
  * @param {object} left - The left node
- * @param {object} op - The operator node
+ * @param {object} operator - The operator node
  * @param {object} right - The right node
  * @returns {object} - The binary expression node
  */
-function buildBinaryExpression(left, op, right) {
+function buildBinaryExpression(left, operator, right) {
   return {
     type: "BinaryExpression",
     left: left,
-    operator: op,
+    operator: operator,
     right: right,
+  };
+}
+
+/**
+ * Build a unary expression node of the AST
+ * @param {object} operator - Is the operator
+ * @param {object} argument - Is the argument
+ * @returns {object} - The unary expression node
+ */
+function buildUnaryExpression(operator, argument) {
+  return {
+    type: "UnaryExpression",
+    operator: operator,
+    argument: argument,
+    prefix: true,
   };
 }
 
 module.exports = {
     buildRoot,
     buildBinaryExpression,
-    buildLiteral
+    buildLiteral,
+    buildUnaryExpression,
+    
 }
