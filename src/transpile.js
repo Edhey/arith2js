@@ -15,7 +15,6 @@
  *
  */
 
-'use strict'
 const fs = require('fs/promises');
 
 const p = require("./calc").parser;
@@ -63,16 +62,15 @@ const findUsedFunctions = function (ast) {
 
 /**
  * Write the output to the output file
- * @param {string} outputFile - The output file
  * @param {string} output - The output code
- * @param {object} options - The options
+ * @param {object} options - The options to transpile
  * @returns {string} - The output code
  */
-async function writeOutput(outputFile, output, options) {
+async function writeOutput(output, options) {
   if (options.verbose) console.log(output); // if verbose, print the output
 
-  if (!outputFile) return output; // if there is no output file, return the output
-  await fs.writeFile(outputFile, output); // write the output to the output file
+  if (!options.output) return output; // if there is no output file, return the output
+  await fs.writeFile(options.output, output); // write the output to the output file
   return output;
 }
 
@@ -84,20 +82,35 @@ async function writeOutput(outputFile, output, options) {
  * - Generates the output code
  * - Writes the output code to the output file
  * @param {string} inputFile - file with the original code to transpile
- * @param {string} outputFile - file to write the transpiled code
+ * @param {object} options - options to transpile
  */
-module.exports = async function transpile(inputFile, outputFile) {
+module.exports = async function transpile(inputFile, options) {
   try {
-    let input = await fs.readFile(inputFile, 'utf-8')     // read the input file
-    const ast = p.parse(input);                           // lexical and syntax analysis
+    let input = await fs.readFile(inputFile, 'utf-8');     // read the input file
+    const ast = p.parse(input);                            // lexical and syntax analysis
   
-    const dependencies = findUsedFunctions(ast);          // semantic analysis
+    const dependencies = findUsedFunctions(ast);           // semantic analysis
     
-    const output = await generateCode(dependencies, ast); // code generation
+    const output = await generateCode(dependencies, ast);  // code generation
   
-    await writeOutput(outputFile, output);                // output
+    await writeOutput(output, options);        // output
   } catch (e) {
     console.error(e.message);
   }
 }
 
+
+// module.exports = async function run(inputFile, options, outputFile = "output.js") {
+//   try {
+//     let input = await fs.readFile(inputFile, 'utf-8');     // read the input file
+//     const ast = p.parse(input);                            // lexical and syntax analysis
+  
+//     const dependencies = findUsedFunctions(ast);           // semantic analysis
+    
+//     const output = await generateCode(dependencies, ast);  // code generation
+  
+
+//   } catch (e) {
+//     console.error(e.message);
+//   }
+// }

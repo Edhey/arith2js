@@ -72,12 +72,12 @@
   }
 */
 var calc = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,4],$V1=[1,5],$V2=[1,6],$V3=[5,6],$V4=[1,9],$V5=[1,10],$V6=[1,11],$V7=[1,12],$V8=[1,13],$V9=[1,14],$Va=[5,6,9,10,11,12,13,14,16],$Vb=[5,6,9,10,16],$Vc=[5,6,9,10,11,12,16];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,3],$V1=[1,4],$V2=[1,5],$V3=[1,7],$V4=[1,8],$V5=[1,9],$V6=[1,10],$V7=[1,11],$V8=[1,12],$V9=[5,7,8,9,10,11,12,14],$Va=[5,7,8,14],$Vb=[5,7,8,9,10,14];
 var parser = {trace: function trace () { },
 yy: {},
-symbols_: {"error":2,"end":3,"listExpresion":4,"EOF":5,",":6,"expresion":7,"Number":8,"+":9,"-":10,"*":11,"/":12,"**":13,"!":14,"(":15,")":16,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",6:",",8:"Number",9:"+",10:"-",11:"*",12:"/",13:"**",14:"!",15:"(",16:")"},
-productions_: [0,[3,2],[4,3],[4,1],[7,1],[7,3],[7,3],[7,3],[7,3],[7,2],[7,3],[7,2],[7,3]],
+symbols_: {"error":2,"startExpresion":3,"expresion":4,"EOF":5,"NUMBER":6,"+":7,"-":8,"*":9,"/":10,"**":11,"!":12,"(":13,")":14,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",6:"NUMBER",7:"+",8:"-",9:"*",10:"/",11:"**",12:"!",13:"(",14:")"},
+productions_: [0,[3,2],[4,1],[4,3],[4,3],[4,3],[4,3],[4,2],[4,3],[4,2],[4,3]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -87,42 +87,36 @@ case 1:
  return buildRoot($$[$0-1], _$[$0-1]); 
 break;
 case 2:
- this.$ = $$[$0-2].concat($$[$0]); 
-break;
-case 3:
- this.$ = [$$[$0]]; 
-break;
-case 4:
  this.$ = buildLiteral($$[$0], _$[$0]); 
 break;
+case 3:
+ this.$ = buildBinaryExpression($$[$0-2], '+', $$[$0], _$[$0-2], _$[$0]); 
+break;
+case 4:
+ this.$ = buildBinaryExpression($$[$0-2], '-', $$[$0], _$[$0-2], _$[$0]); 
+break;
 case 5:
- this.$ = buildBinaryExpression($$[$0-2], $$[$0], '+', _$[$0-2], _$[$0]); 
+ this.$ = buildBinaryExpression($$[$0-2], '*', $$[$0], _$[$0-2], _$[$0]); 
 break;
 case 6:
- this.$ = buildBinaryExpression($$[$0-2], $$[$0], '-', _$[$0-2], _$[$0]); 
+ this.$ = buildBinaryExpression($$[$0-2], '/', $$[$0], _$[$0-2], _$[$0]); 
 break;
 case 7:
- this.$ = buildBinaryExpression($$[$0-2], $$[$0], '*', _$[$0-2], _$[$0]); 
+ this.$ = buildUnaryExpression('-', $$[$0], _$[$0-1], _$[$0]); 
 break;
 case 8:
- this.$ = buildBinaryExpression($$[$0-2], $$[$0], '/', _$[$0-2], _$[$0]); 
+ this.$ = buildCallExpression('power', [$$[$0-2], $$[$0]], _$[$0-2], _$[$0-1]); 
 break;
 case 9:
- this.$ = buildUnaryExpression($$[$0], '-', _$[$0-1], _$[$0]); 
-break;
-case 10:
- this.$ = buildCallExpression('pow', [$$[$0-2], $$[$0]], _$[$0-2], _$[$0-1]); 
-break;
-case 11:
  this.$ = buildCallExpression('factorial', [$$[$0-1]], _$[$0-1], _$[$0]); 
 break;
-case 12:
+case 10:
  this.$ = $$[$0-1]; 
 break;
 }
 },
-table: [{3:1,4:2,7:3,8:$V0,10:$V1,15:$V2},{1:[3]},{5:[1,7],6:[1,8]},o($V3,[2,3],{9:$V4,10:$V5,11:$V6,12:$V7,13:$V8,14:$V9}),o($Va,[2,4]),{7:15,8:$V0,10:$V1,15:$V2},{7:16,8:$V0,10:$V1,15:$V2},{1:[2,1]},{7:17,8:$V0,10:$V1,15:$V2},{7:18,8:$V0,10:$V1,15:$V2},{7:19,8:$V0,10:$V1,15:$V2},{7:20,8:$V0,10:$V1,15:$V2},{7:21,8:$V0,10:$V1,15:$V2},{7:22,8:$V0,10:$V1,15:$V2},o($Va,[2,11]),o($Va,[2,9]),{9:$V4,10:$V5,11:$V6,12:$V7,13:$V8,14:$V9,16:[1,23]},o($V3,[2,2],{9:$V4,10:$V5,11:$V6,12:$V7,13:$V8,14:$V9}),o($Vb,[2,5],{11:$V6,12:$V7,13:$V8,14:$V9}),o($Vb,[2,6],{11:$V6,12:$V7,13:$V8,14:$V9}),o($Vc,[2,7],{13:$V8,14:$V9}),o($Vc,[2,8],{13:$V8,14:$V9}),o([5,6,9,10,11,12,13,16],[2,10],{14:$V9}),o($Va,[2,12])],
-defaultActions: {7:[2,1]},
+table: [{3:1,4:2,6:$V0,8:$V1,13:$V2},{1:[3]},{5:[1,6],7:$V3,8:$V4,9:$V5,10:$V6,11:$V7,12:$V8},o($V9,[2,2]),{4:13,6:$V0,8:$V1,13:$V2},{4:14,6:$V0,8:$V1,13:$V2},{1:[2,1]},{4:15,6:$V0,8:$V1,13:$V2},{4:16,6:$V0,8:$V1,13:$V2},{4:17,6:$V0,8:$V1,13:$V2},{4:18,6:$V0,8:$V1,13:$V2},{4:19,6:$V0,8:$V1,13:$V2},o($V9,[2,9]),o($V9,[2,7]),{7:$V3,8:$V4,9:$V5,10:$V6,11:$V7,12:$V8,14:[1,20]},o($Va,[2,3],{9:$V5,10:$V6,11:$V7,12:$V8}),o($Va,[2,4],{9:$V5,10:$V6,11:$V7,12:$V8}),o($Vb,[2,5],{11:$V7,12:$V8}),o($Vb,[2,6],{11:$V7,12:$V8}),o([5,7,8,9,10,11,14],[2,8],{12:$V8}),o($V9,[2,10])],
+defaultActions: {6:[2,1]},
 parseError: function parseError (str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -611,19 +605,19 @@ case 1:/* skip comments */;
 break;
 case 2:/* skip multiple line comments | The * is greedy so we need to make it lazy with ? */;
 break;
-case 3:return 8;
+case 3:return 6;
 break;
-case 4:return 13; // It must be before '*' because it is more specific, otherwise it will be recognized as '*'
+case 4:return yy_.yytext;
 break;
-case 5:return yy_.yytext;
+case 5:return 11; // It must be before '*' because it is more specific, otherwise it will be recognized as '*'
 break;
-case 6:return 6;
+case 6:return ',';
 break;
 case 7:return 5;
 break;
 }
 },
-rules: [/^(?:\s)/,/^(?:.*)/,/^(?:[/][*](.|\n)*?[*][/])/,/^(?:[0-9]+([.]\d+)?([eE][-+]?\d+)?)/,/^(?:\*\*)/,/^(?:[-+*/!()])/,/^(?:,)/,/^(?:$)/],
+rules: [/^(?:\s)/,/^(?:#.*)/,/^(?:[/][*](.|\n)*?[*][/])/,/^(?:[0-9]+([.]\d+)?([eE][-+]?\d+)?)/,/^(?:[-+*/!()])/,/^(?:\*\*)/,/^(?:,)/,/^(?:$)/],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7],"inclusive":true}}
 });
 return lexer;

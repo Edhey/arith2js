@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 /**
  * Universidad de La Laguna
  * Escuela Superior de Ingeniería y Tecnología
@@ -28,7 +29,7 @@ program
   //. write the action
 
 program
-  .command("transpile <file>")
+  .command("transpile")
   .argument("<file>", "file with the original code to transpile")
   .option("-o, --output <filename>", "file to write the transpiled code")
   .option("-v, --verbose", "show the generated code")
