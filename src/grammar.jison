@@ -14,7 +14,7 @@ const {
 // %left '**'
 // %left '!'
 // %left 'UMINUS'
-%left '(' ')'
+// %left '(' ')'
 
 %%
 end: 
