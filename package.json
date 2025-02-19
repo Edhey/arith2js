@@ -1,6 +1,6 @@
 {
-  "name": "hello-jison",
-  "version": "1.0.0",
+  "name": "artth2-js",
+  "version": "0.0.0",
   "description": "* See section [Análisis Sintáctico Ascendente en JavaScript](http://crguezl.github.io/pl-html/node43.html) * The example working at  [http://crguezl.github.io/jison-minus/](http://crguezl.github.io/jison-minus/)",
   "main": "src/transpile.js",
   "type": "commonjs",
