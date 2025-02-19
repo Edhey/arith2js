@@ -62,9 +62,9 @@ function buildRoot(child, location) {
 function buildLiteral(raw, location) {
   return {
     type: "Literal",
-    start: location.start,
-    end: location.end,
-    range: [location.start, location.end],
+    start: location.first_column,
+    end: location.last_column,
+    range: [location.first_column, location.last_column],
     value: Number(raw),
     raw: raw,
   };
@@ -75,11 +75,19 @@ function buildLiteral(raw, location) {
  * @param {object} left - The left node
  * @param {object} operator - The operator node
  * @param {object} right - The right node
+ * @param {object} startLocation - The first token location
+ * @param {object} endLocation - The last token location
  * @returns {object} - The binary expression node
  */
-function buildBinaryExpression(left, operator, right) {
+function buildBinaryExpression(left, operator, right, startLocation, endLocation) {
   return {
     type: "BinaryExpression",
+    start: startLocation.first_column,
+    end: endLocation.last_column,
+    range: [
+      startLocation.first_column, 
+      endLocation.last_column
+    ],
     left: left,
     operator: operator,
     right: right,
@@ -90,21 +98,51 @@ function buildBinaryExpression(left, operator, right) {
  * Build a unary expression node of the AST
  * @param {object} operator - Is the operator
  * @param {object} argument - Is the argument
+ * @param {object} startLocation - The first token location
+ * @param {object} endLocation - The last token location
  * @returns {object} - The unary expression node
  */
-function buildUnaryExpression(operator, argument) {
+function buildUnaryExpression(operator, argument, startLocation, endLocation) {
   return {
     type: "UnaryExpression",
     operator: operator,
     argument: argument,
+    start: startLocation.first_column,
+    end: endLocation.last_column,
+    range: [
+      startLocation.first_column, 
+      endLocation.last_column
+    ],
     prefix: true,
   };
 }
 
+/**
+ * Build a call expression node of the AST
+ * @param {object} callee - The callee
+ * @param {object[]} args - The arguments
+ * @param {object} startLocation - The first token location
+ * @param {object} endLocation - The last token location
+ * @returns {object} - The call expression node
+ */
+function buildCallExpression(callee, args, startLocation, endLocation) {
+  return {
+    type: "CallExpression",
+    start: startLocation.first_column,
+    end: endLocation.last_column,
+    range: [
+      startLocation.first_column, 
+      endLocation.last_column
+    ],
+    callee: callee,
+    arguments: args,
+  };
+}
+
 module.exports = {
-    buildRoot,
-    buildBinaryExpression,
-    buildLiteral,
-    buildUnaryExpression,
-    
+  buildRoot,
+  buildBinaryExpression,
+  buildLiteral,
+  buildUnaryExpression,
+  buildCallExpression
 }
