@@ -16,12 +16,9 @@
  */
 
 const fs = require('fs/promises');
-
 const p = require("./calc").parser;
-
 const estraverse = require("estraverse"); // needed to traverse the AST
 const exportedSupportIdentifiers = Object.keys(require("./support-lib.js")); // [ power, factorial ]
-
 const escodegen = require('escodegen'); // needed to generate the code from the AST
 const { renderFile } = require('template-file'); // handlebars.js mustache.js ...
 
@@ -47,7 +44,7 @@ async function generateCode(dependencies, ast) {
  * @param {object} ast - Abstract Syntax Tree
  * @returns {string[]} - List of used functions
  */
-const findUsedFunctions = function (ast) {
+function findUsedFunctions(ast) {
   const usedSupportFunctions = new Set();
   estraverse.traverse(ast, { // traveling the AST
     enter: function (node, _ ) { // for each node (node, parent)
@@ -58,7 +55,7 @@ const findUsedFunctions = function (ast) {
     },
   });
   return Array.from(usedSupportFunctions);
-};
+}
 
 /**
  * Write the output to the output file
@@ -87,7 +84,7 @@ async function writeOutput(output, options) {
  * @param {string} inputFile - file with the original code to transpile
  * @param {object} options - options to transpile
  */
-module.exports = async function transpile(inputFile, options) {
+async function transpile(inputFile, options) {
   try {
     let input = await fs.readFile(inputFile, 'utf-8');     // read the input file
     const ast = p.parse(input);                            // lexical and syntax analysis
@@ -101,3 +98,9 @@ module.exports = async function transpile(inputFile, options) {
     console.error(e.message);
   }
 }
+
+module.exports = {
+  generateCode,
+  findUsedFunctions,
+  transpile
+};

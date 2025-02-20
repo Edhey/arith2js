@@ -134,7 +134,10 @@ function buildCallExpression(callee, args, startLocation, endLocation) {
       startLocation.first_column, 
       endLocation.last_column
     ],
-    callee: callee,
+    callee: {
+      type: "Identifier",
+      name: callee,
+    },
     arguments: args,
   };
 }

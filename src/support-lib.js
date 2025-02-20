@@ -12,6 +12,8 @@
  *
  */
 
+const { gamma } = require('mathjs');
+
 const power = (base, exponent) => Math.pow(base, exponent);
 // const factorial = number => number === 0 ? 1 : number * factorial(number - 1);
 // ! Gamma for factorial (float)

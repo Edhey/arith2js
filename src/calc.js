@@ -105,7 +105,7 @@ case 7:
  this.$ = buildUnaryExpression('-', $$[$0], _$[$0-1], _$[$0]); 
 break;
 case 8:
- this.$ = buildCallExpression('power', [$$[$0-2], $$[$0]], _$[$0-2], _$[$0-1]); 
+ this.$ = buildCallExpression('power', [$$[$0-2], $$[$0]], _$[$0-2], _$[$0]); 
 break;
 case 9:
  this.$ = buildCallExpression('factorial', [$$[$0-1]], _$[$0-1], _$[$0]); 
@@ -607,9 +607,9 @@ case 2:/* skip multiple line comments | The * is greedy so we need to make it la
 break;
 case 3:return 6;
 break;
-case 4:return yy_.yytext;
+case 4:return 11; // It must be before '*' because it is more specific, otherwise it will be recognized as '*'
 break;
-case 5:return 11; // It must be before '*' because it is more specific, otherwise it will be recognized as '*'
+case 5:return yy_.yytext;
 break;
 case 6:return ',';
 break;
@@ -617,7 +617,7 @@ case 7:return 5;
 break;
 }
 },
-rules: [/^(?:\s)/,/^(?:#.*)/,/^(?:[/][*](.|\n)*?[*][/])/,/^(?:[0-9]+([.]\d+)?([eE][-+]?\d+)?)/,/^(?:[-+*/!()])/,/^(?:\*\*)/,/^(?:,)/,/^(?:$)/],
+rules: [/^(?:\s)/,/^(?:#.*)/,/^(?:[/][*](.|\n)*?[*][/])/,/^(?:[0-9]+([.]\d+)?([eE][-+]?\d+)?)/,/^(?:\*\*)/,/^(?:[-+*/!()])/,/^(?:,)/,/^(?:$)/],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7],"inclusive":true}}
 });
 return lexer;

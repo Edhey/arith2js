@@ -34,7 +34,7 @@ expresion:
       | expresion '*' expresion     { $$ = buildBinaryExpression($1, '*', $3, @1, @3); } // Multiplication
       | expresion '/' expresion     { $$ = buildBinaryExpression($1, '/', $3, @1, @3); } // Division
       | '-' expresion %prec UMINUS  { $$ = buildUnaryExpression('-', $2, @1, @2); } // Unary minus
-      | expresion '**' expresion    { $$ = buildCallExpression('power', [$1, $3], @1, @2); } // Power
+      | expresion '**' expresion    { $$ = buildCallExpression('power', [$1, $3], @1, @3); } // Power
       | expresion '!'               { $$ = buildCallExpression('factorial', [$1], @1, @2); } // Factorial
       | '(' expresion ')'           { $$ = $2; }  // Parentheses
 ;
