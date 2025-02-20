@@ -5,5 +5,5 @@
 [0-9]+([.]\d+)?([eE][-+]?\d+)?        return 'NUMBER';
 [-+*/!()]                             return yytext;
 '**'                                  return '**'; // It must be before '*' because it is more specific, otherwise it will be recognized as '*'
-','           return ',';
-<<EOF>>       return 'EOF';
+','                                   return ',';
+<<EOF>>                               return 'EOF';

@@ -75,7 +75,7 @@ var calc = (function(){
 var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,3],$V1=[1,4],$V2=[1,5],$V3=[1,7],$V4=[1,8],$V5=[1,9],$V6=[1,10],$V7=[1,11],$V8=[1,12],$V9=[5,7,8,9,10,11,12,14],$Va=[5,7,8,14],$Vb=[5,7,8,9,10,14];
 var parser = {trace: function trace () { },
 yy: {},
-symbols_: {"error":2,"startExpresion":3,"expresion":4,"EOF":5,"NUMBER":6,"+":7,"-":8,"*":9,"/":10,"**":11,"!":12,"(":13,")":14,"$accept":0,"$end":1},
+symbols_: {"error":2,"endExpresion":3,"expresion":4,"EOF":5,"NUMBER":6,"+":7,"-":8,"*":9,"/":10,"**":11,"!":12,"(":13,")":14,"$accept":0,"$end":1},
 terminals_: {2:"error",5:"EOF",6:"NUMBER",7:"+",8:"-",9:"*",10:"/",11:"**",12:"!",13:"(",14:")"},
 productions_: [0,[3,2],[4,1],[4,3],[4,3],[4,3],[4,3],[4,2],[4,3],[4,2],[4,3]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {

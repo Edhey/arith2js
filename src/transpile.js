@@ -34,7 +34,7 @@ const { renderFile } = require('template-file'); // handlebars.js mustache.js ..
 async function generateCode(dependencies, ast) {
   const code = escodegen.generate(ast); // generate the code from the AST
 
-  if (dependencies.length === 0)
+  if (dependencies.length === 0) // if there are no dependencies, return the code
     return code;
 
   let root = __dirname.replace(/\/src$/, ''); // get the root path (Linux)
@@ -69,8 +69,11 @@ const findUsedFunctions = function (ast) {
 async function writeOutput(output, options) {
   if (options.verbose) console.log(output); // if verbose, print the output
 
-  if (!options.output) return output; // if there is no output file, return the output
+  if (!options.output) 
+    return output; // if there is no output file, return the output
+  
   await fs.writeFile(options.output, output); // write the output to the output file
+
   return output;
 }
 
@@ -93,24 +96,8 @@ module.exports = async function transpile(inputFile, options) {
     
     const output = await generateCode(dependencies, ast);  // code generation
   
-    await writeOutput(output, options);        // output
+    await writeOutput(output, options);                    // output
   } catch (e) {
     console.error(e.message);
   }
 }
-
-
-// module.exports = async function run(inputFile, options, outputFile = "output.js") {
-//   try {
-//     let input = await fs.readFile(inputFile, 'utf-8');     // read the input file
-//     const ast = p.parse(input);                            // lexical and syntax analysis
-  
-//     const dependencies = findUsedFunctions(ast);           // semantic analysis
-    
-//     const output = await generateCode(dependencies, ast);  // code generation
-  
-
-//   } catch (e) {
-//     console.error(e.message);
-//   }
-// }

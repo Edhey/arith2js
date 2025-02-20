@@ -18,7 +18,7 @@ const {
 
 %%
 // console.log(JSON.stringify($1, null, 2));
-startExpresion: 
+endExpresion: 
     expresion EOF { return buildRoot($1, @1); } // Must contain a list of operations (listExpresion) and EOF
 ;
 

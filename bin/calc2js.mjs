@@ -20,6 +20,7 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const { version } = require("../package.json");
 import transpile from "../src/transpile.js";
+import run from "../src/run.js";
 
 program
   .version(version)
