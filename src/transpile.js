@@ -22,6 +22,12 @@ const exportedSupportIdentifiers = Object.keys(require("./support-lib.js")); // 
 const escodegen = require('escodegen'); // needed to generate the code from the AST
 const { renderFile } = require('template-file'); // handlebars.js mustache.js ...
 
+module.exports = {
+  generateCode,
+  findUsedFunctions,
+  transpile
+};
+
 /**
  * Generate the code from the AST
  * @param {string[]} dependencies - List of used functions
@@ -98,9 +104,3 @@ async function transpile(inputFile, options) {
     console.error(e.message);
   }
 }
-
-module.exports = {
-  generateCode,
-  findUsedFunctions,
-  transpile
-};

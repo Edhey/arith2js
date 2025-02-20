@@ -1,14 +1,14 @@
-const transpile = require("../src/transpile.js");
+const { transpile } = require("../src/transpile.js");
 const assert = require('assert');
 const fs = require("fs/promises");
 
 const Tst = require('./test-error-description.js');
 
 const Test = Tst.map(t => ({
-  input: __dirname + '/data/' + t.input,
-  output: __dirname + '/data/' + t.output,
-  expected: __dirname + '/data/' + t.expected,
-  correctOut: __dirname + '/data/' + t.correctOut,
+  input: __dirname + '/errors/' + t.input,
+  output: __dirname + '/errors/' + t.output,
+  expected: __dirname + '/errors/' + t.expected,
+  correctOut: __dirname + '/errors/' + t.correctOut,
 })
 )
 
