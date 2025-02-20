@@ -1,1 +1,1 @@
-console.log(3 * 2 + 1 * 4);
+console.log(3.5 * 2.2 + 1.1 * 4.4);
