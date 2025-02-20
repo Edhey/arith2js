@@ -1,4 +1,4 @@
 Parse error on line 1:
 2*(-3!!
 -------^
-Expecting '-', '+', '*', '/', ')', '**', '!', got '1'
+Expecting '+', '-', '*', '/', '**', '!', ')', got 'EOF'

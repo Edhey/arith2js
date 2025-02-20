@@ -14,7 +14,8 @@
     "test1": "npm run compile; ./bin/calc2js.js test/data/test1.calc ",
     "compile": "jison src/grammar.jison src/lexer.l -o src/calc.js",
     "test-example": "npm run compile; mocha test/ --grep 'Example Test'",
-    "test-hard": "npm run compile; mocha test/ --grep 'Hard Test'"
+    "test-hard": "npm run compile; mocha test/ --grep 'Hard Test'",
+    "test-error": "npm run compile; mocha test/ --grep 'Error Test'"
   },
   "keywords": [
     "ull",
@@ -30,7 +31,6 @@
     "jison": "^0.4.18",
     "mathjs": "^14.2.1",
     "node": "^23.8.0",
-    "sinon": "^19.0.2",
     "template-file": "^6.0.1"
   },
   "devDependencies": {
