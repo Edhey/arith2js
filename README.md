@@ -78,6 +78,7 @@ node bin/calc2js.mjs run <archivo.calc>
 - `npm run report`: Genera un reporte de cobertura en formato HTML.
 - `npm run test-example`: Ejecuta los tests de ejemplos.
 - `npm run test-hard`: Ejecuta los tests difíciles.
+- `npm run test-error`: Ejecuta los tests de errores.
 
 ## Tests
 
