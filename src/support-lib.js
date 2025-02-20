@@ -17,7 +17,8 @@ const { gamma } = require('mathjs');
 const power = (base, exponent) => Math.pow(base, exponent);
 // const factorial = number => number === 0 ? 1 : number * factorial(number - 1);
 // ! Gamma for factorial (float)
-const factorial = n => gamma(n + 1); 
+const factorial = n => gamma(n + 1); // The the templates.js file will be used to get the factorial
+
 
 module.exports = { 
   power, 
