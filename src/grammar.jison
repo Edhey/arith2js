@@ -11,10 +11,10 @@ const {
 %token NUMBER
 %left '+' '-'
 %left '*' '/'
-%left '**'
+%right '**'
 %left '!'
-%left 'UMINUS'
-%left '(' ')'
+%nonassoc 'UMINUS'
+// %left '(' ')'
 
 %%
 // console.log(JSON.stringify($1, null, 2));
