@@ -1,0 +1,2 @@
+const { print, min, Complex } = require("./src/support-lib.js");
+print(min(min(Complex('1').add(Complex('2i')), Complex('3').add(Complex('4i'))), Complex('5').add(Complex('6i')).add(Complex('7').sub(Complex('8i'))))); 

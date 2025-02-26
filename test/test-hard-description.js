@@ -1,5 +1,23 @@
 module.exports = [
   {
+    input: 'test-min-max.calc',
+    output: 'out-min-max.js',
+    expected: 'expected-min-max.js',
+    correctOut: 'correct-out-min-max.txt'
+  },
+  {
+    input: 'test-min.calc',
+    output: 'out-min.js',
+    expected: 'expected-min.js',
+    correctOut: 'correct-out-min.txt'
+  },
+  {
+    input: 'test-max.calc',
+    output: 'out-max.js',
+    expected: 'expected-max.js',
+    correctOut: 'correct-out-max.txt'
+  },
+  {
     input: 'test-Usub.calc',
     output: 'out-Usub.js',
     expected: 'expected-Usub.js',
