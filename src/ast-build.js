@@ -3,7 +3,7 @@
  * Escuela Superior de Ingeniería y Tecnología
  * Grado en Ingeniería Informática
  * Asignatura Procesadores de Lenguajes
- * Práctica 2 - Arith2js
+ * Práctica 3 - Hello Compilers
  *
  * @author Himar Edhey Hernández Alonso
  * @since Wed 19 Feb 2025 
@@ -68,6 +68,13 @@ function buildCallExpression(callee, args) {
   };
 }
 
+/**
+ * Function to build a call member expression node
+ * @param {object} callee The object that calls the member
+ * @param {object} member Is the member to call
+ * @param {object} args Are the arguments of the call
+ * @returns Returns the call member expression node
+ */
 function buildCallMemberExpression(callee, member, args) {
   return {
     type: 'CallExpression',
