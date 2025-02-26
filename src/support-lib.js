@@ -7,20 +7,49 @@
  *
  * @author Himar Edhey Hernández Alonso
  * @since Wed 19 Feb 2025 
- * @desc Librería de soporte con funciones de potencia y factorial 
+ * @desc  Librería de soporte con funciones para: 
+ *        El factorial para números complejos:
+ *          - A gamma function implementation based on Lanczos Approximation
+ *          - @see {@link https://en.wikipedia.org/wiki/Lanczos_approximation}
  * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}
  *
  */
 
-const { gamma } = require('mathjs');
+const Complex = require('complex.js');
 
-const power = (base, exponent) => Math.pow(base, exponent);
-// const factorial = number => number === 0 ? 1 : number * factorial(number - 1);
-// ! Gamma for factorial (float)
-const factorial = n => gamma(n + 1); // The the templates.js file will be used to get the factorial
+const P = [Complex(0.99999999999980993),
+Complex(676.5203681218851), Complex(-1259.1392167224028), Complex(771.32342877765313),
+Complex(-176.61502916214059), Complex(12.507343278686905), Complex(-0.13857109526572012),
+Complex(9.9843695780195716e-6), Complex(1.5056327351493116e-7)];
 
+const SQRT2PI = Complex(Math.sqrt(2 * Math.PI)); // sqrt(2 * PI)
 
-module.exports = { 
-  power, 
-  factorial 
-};
+/**
+ * @desc The Gamma function is a generalization of the factorial function to
+ * non-integer numbers. It is often used in probability and statistics, as it 
+ * shows up in the normalizing constants of important probability distributions 
+ * such as the Chi-square and the Gamma.
+*/
+function gamma(zz) {
+  if (zz.equals(Complex(0))) { return Complex(1); }
+  z = zz.sub(1);
+  let x = P[0];
+  let t = z.add(7.5); // z + 7.5
+
+  for (let i = 1; i < P.length; i++) {
+    x = x.add(P[i].div(z.add(i))); // x += P[i] / (z + i);
+  }
+  let result = SQRT2PI.mul(t.pow(z.add(0.5))).mul(t.neg().exp()).mul(x); // sqrt(2 * PI) * t^(z + 0.5) * e^(-t) * x;
+  return zz.mul(result);
+}
+
+/**
+ * Function to print a value
+ * @param {Complex} value Is the value to print
+ */
+function print(value) {
+  console.log(value.toString());  
+}
+
+module.exports = { gamma, Complex, print };
+
