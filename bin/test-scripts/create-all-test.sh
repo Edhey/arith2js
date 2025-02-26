@@ -51,8 +51,7 @@ for file in $(find "$INPUT_DIR" -name "*.calc"); do
     error_entry="{
       input: '${test_base_name}.calc',
       output: 'outerr-${test_base_name}.txt',
-      expected: 'expected-${test_base_name}.txt',
-      correctOut: 'correct-out-${test_base_name}.txt'
+      correctErr: 'correct-${test_base_name}.txt'
     }"
 
     # Append the entry to the error_entries array
@@ -79,7 +78,6 @@ for file in $(find "$INPUT_DIR" -name "*.calc"); do
     entries+=("$entry")
   fi
 done
-
 
 # Function to update the output file with new entries
 update_output_file() {
@@ -112,6 +110,7 @@ update_output_file() {
     echo "No new entries to add to $output_file"
   fi
 }
+
 # Function to override the output file with new entries
 override_output_file() {
   local output_file="$1"

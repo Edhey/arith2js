@@ -3,7 +3,7 @@
  * Escuela Superior de Ingeniería y Tecnología
  * Grado en Ingeniería Informática
  * Asignatura Procesadores de Lenguajes
- * Práctica 2 - Arith2js
+ * Práctica 3 - Hello Compilers
  *
  * @autor Himar Edhey Hernández Alonso
  * @since Wed 19 Feb 2025 
@@ -19,18 +19,18 @@ const { expect } = require('chai');
 const TestExample = require('./test-example-description.js');
 const TestHard = require('./test-hard-description.js');
 
-const ExampleTest = TestExample.map(t => ({
-  input: __dirname + '/examples/' + t.input,
-  output: __dirname + '/examples/' + t.output,
-  expected: __dirname + '/examples/' + t.expected,
-  correctOut: __dirname + '/examples/' + t.correctOut,
+const ExampleTest = TestExample.map(testDescription => ({
+  input: __dirname + '/examples-data/input/' + testDescription.input,
+  output: __dirname + '/examples-data/output/' + testDescription.output,
+  expected: __dirname + '/examples-data/expected-js/' + testDescription.expected,
+  correctOut: __dirname + '/examples-data/correct-out/' + testDescription.correctOut,
 }));
 
-const HardTest = TestHard.map(t => ({
-  input: __dirname + '/hard/' + t.input,
-  output: __dirname + '/hard/' + t.output,
-  expected: __dirname + '/hard/' + t.expected,
-  correctOut: __dirname + '/hard/' + t.correctOut,
+const HardTest = TestHard.map(testDescription => ({
+  input: __dirname + '/hard/input/' + testDescription.input,
+  output: __dirname + '/hard/output/' + testDescription.output,
+  expected: __dirname + '/hard/expected-js/' + testDescription.expected,
+  correctOut: __dirname + '/hard/correct-out/' + testDescription.correctOut,
 }));
 
 const removeRequires = /require\(["'][\S]+["']\)/g;
@@ -39,7 +39,14 @@ function removeSpaces(s) {
   return s.replace(/\s/g, '').replace(removeRequires, '');
 }
 
+/**
+ * Example Tests
+ * Run the example tests and check the output
+ */
 describe('Example Test', function () {
+  /**
+   * Transpile the example tests and check the output
+   */
   describe('Example Transpile Tests', function () {
     for (let i = 0; i < ExampleTest.length; i++) {
       it(`transpile(${ExampleTest[i].input}, ${ExampleTest[i].output})`, async function () {
@@ -53,6 +60,10 @@ describe('Example Test', function () {
     }
   });
 
+  /**
+   * Run the examples tests and check the output
+   * Using mocking to check the output
+   */
   describe('Example Run Tests', function () {
     for (let i = 0; i < ExampleTest.length; i++) {
       it(`run function with ${ExampleTest[i].input}`, async function () {
@@ -77,7 +88,14 @@ describe('Example Test', function () {
   });
 });
 
+/**
+ * Hard Tests
+ * Run the hard tests and check the output
+ */
 describe('Hard Tests', function () {
+  /**
+   * Transpile the hard tests and check the output
+   */
   describe('Transpile Tests', function () {
     for (let i = 0; i < HardTest.length; i++) {
       it(`transpile(${HardTest[i].input}, ${HardTest[i].output})`, async function () {
@@ -91,6 +109,10 @@ describe('Hard Tests', function () {
     }
   });
 
+  /**
+   * Run the hard tests and check the output
+   * Using mocking to check the output
+   */
   describe('Hard Run Tests', function () {
     for (let i = 0; i < HardTest.length; i++) {
       it(`run function with ${HardTest[i].input}`, async function () {
