@@ -11,7 +11,6 @@
     "test": "npm run compile; mocha test/",
     "cov": "nyc npm test",
     "report": "nyc --report --reporter=html --report-dir=docs -x src/template.js npm test",
-    "test1": "npm run compile; ./bin/calc2js.js test/data/test1.calc ",
     "compile": "jison src/grammar.jison src/lexer.l -o src/calc.js",
     "test-example": "npm run compile; mocha test/ --grep 'Example Test'",
     "test-simple": "npm run compile; mocha test/ --grep 'Simple Test'",
