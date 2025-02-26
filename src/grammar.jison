@@ -1,25 +1,26 @@
 %{
 const { 
   buildLiteral, 
-  buildBinaryExpression, 
-  buildUnaryExpression,
   buildCallExpression,
+  buildCallMemberExpression,
   buildRoot
 } = require('./ast-build.js');
 %}
 
 %token NUMBER
+%left '@'
+%left '&'
 %left '+' '-'
 %left '*' '/'
+%nonassoc 'UMINUS'
 %right '**'
 %left '!'
-%nonassoc 'UMINUS'
-// %left '(' ')'
+// %left '(' ')' Esto es gestionado automáticamente por el analizador sintáctico
 
 %%
 // console.log(JSON.stringify($1, null, 2));
 endExpresion: 
-    expresion EOF { return buildRoot($1, @1); } // Must contain a list of operations (listExpresion) and EOF
+    expresion EOF { return buildRoot($1); } // Must contain a list of operations (listExpresion) and EOF
 ;
 
 // listExpresion: 
@@ -28,13 +29,13 @@ endExpresion:
 // ;
 
 expresion: 
-      NUMBER                        { $$ = buildLiteral($1, @1); } // NUMBER
-      | expresion '+' expresion     { $$ = buildBinaryExpression($1, '+', $3, @1, @3); } // Addition
-      | expresion '-' expresion     { $$ = buildBinaryExpression($1, '-', $3, @1, @3); } // Subtraction 
-      | expresion '*' expresion     { $$ = buildBinaryExpression($1, '*', $3, @1, @3); } // Multiplication
-      | expresion '/' expresion     { $$ = buildBinaryExpression($1, '/', $3, @1, @3); } // Division
-      | '-' expresion %prec UMINUS  { $$ = buildUnaryExpression('-', $2, @1, @2); } // Unary minus
-      | expresion '**' expresion    { $$ = buildCallExpression('power', [$1, $3], @1, @3); } // Power
-      | expresion '!'               { $$ = buildCallExpression('factorial', [$1], @1, @2); } // Factorial
+      NUMBER                        { $$ = buildCallExpression('Complex', [buildLiteral($1)]) } // Complex Number
+      | expresion '+' expresion     { $$ = buildCallMemberExpression($1, 'add', [$3]); } // Addition
+      | expresion '-' expresion     { $$ = buildCallMemberExpression($1, 'sub', [$3]); } // Subtraction 
+      | expresion '*' expresion     { $$ = buildCallMemberExpression($1, 'mul', [$3]); } // Multiplication
+      | expresion '/' expresion     { $$ = buildCallMemberExpression($1, 'div', [$3]); } // Division
+      | '-' expresion %prec UMINUS  { $$ = buildCallMemberExpression($2, 'neg', []); } // Unary minus
+      | expresion '**' expresion    { $$ = buildCallMemberExpression($1, 'pow', [$3]); } // Power
+      | expresion '!'               { $$ = buildCallExpression('gamma', [$1]); } // Factorial
       | '(' expresion ')'           { $$ = $2; }  // Parentheses
 ;
