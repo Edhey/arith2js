@@ -20,6 +20,9 @@ const TestExample = require('./test-example-description.js');
 const TestSimple = require('./test-description.js');
 const TestHard = require('./test-hard-description.js');
 
+/**
+ * Test data for the examples
+ */
 const ExampleTest = TestExample.map(testDescription => ({
   input: __dirname + '/examples-data/input/' + testDescription.input,
   output: __dirname + '/examples-data/output/' + testDescription.output,
@@ -27,6 +30,9 @@ const ExampleTest = TestExample.map(testDescription => ({
   correctOut: __dirname + '/examples-data/correct-out/' + testDescription.correctOut,
 }));
 
+/**
+ * Test data for the simple tests
+ */
 const SimpleTest = TestSimple.map(testDescription => ({
   input: __dirname + '/data/input/' + testDescription.input,
   output: __dirname + '/data/output/' + testDescription.output,
@@ -34,6 +40,9 @@ const SimpleTest = TestSimple.map(testDescription => ({
   correctOut: __dirname + '/data/correct-out/' + testDescription.correctOut,
 }));
 
+/**
+ * Test data for the hard tests
+ */
 const HardTest = TestHard.map(testDescription => ({
   input: __dirname + '/hard/input/' + testDescription.input,
   output: __dirname + '/hard/output/' + testDescription.output,
@@ -43,8 +52,13 @@ const HardTest = TestHard.map(testDescription => ({
 
 const removeRequires = /require\(["'][\S]+["']\)/g;
 
-function removeSpaces(s) {
-  return s.replace(/\s/g, '').replace(removeRequires, '');
+/**
+ * Remove spaces and requires from the code
+ * @param {string} code Input code to remove spaces and requires
+ * @returns {string} Code without spaces and requires
+ */
+function removeSpaces(code) {
+  return code.replace(/\s/g, '').replace(removeRequires, '');
 }
 
 /**
@@ -127,7 +141,7 @@ describe('Simple Test', function () {
         // Mock console.log
         let result = "";
         const oldLog = console.log;
-        console.log = function (...s) { result += s.join(''); };
+        console.log = function (...output) { result += output.join(''); };
 
         // Run the transpiled code using the run function and check the output
         await run(SimpleTest[i].input, { verbose: false });
@@ -176,7 +190,7 @@ describe('Hard Tests', function () {
         // Mock console.log
         let result = "";
         const oldLog = console.log;
-        console.log = function (...s) { result += s.join(''); };
+        console.log = function (...output) { result += output.join(''); };
 
         // Run the transpiled code using the run function and check the output
         await run(HardTest[i].input, { verbose: false });

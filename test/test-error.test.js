@@ -1,9 +1,25 @@
+/**
+ * Universidad de La Laguna
+ * Escuela Superior de Ingeniería y Tecnología
+ * Grado en Ingeniería Informática
+ * Asignatura Procesadores de Lenguajes
+ * Práctica 3 - Hello Compilers
+ *
+ * @autor Himar Edhey Hernández Alonso
+ * @since Wed 26 Feb 2025
+ * @desc Este archivo contiene los tests de los errores de la práctica
+ * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}
+ */
+
 const { transpile } = require("../src/transpile.js");
 const { expect } = require('chai');
 const fs = require("fs/promises");
 
 const Tst = require('./test-error-description.js');
 
+/**
+ * Test data for the simple tests
+ */
 const Test = Tst.map(testDescription => ({
   input: __dirname + '/errors/syntax-error/' + testDescription.input,
   output: __dirname + '/errors/output/' + testDescription.output,
@@ -11,10 +27,19 @@ const Test = Tst.map(testDescription => ({
 })
 )
 
+/**
+ * Remove spaces and requires from the code
+ * @param {string} code Input code to remove spaces and requires
+ * @returns {string} Code without spaces and requires
+ */
 function removeSpaces(s) {
   return s.replace(/\s/g, '')
 }
 
+/**
+ * Syntax Error Tests
+ * Run the simple tests and check the output
+ */
 describe('Syntax Error Tests', function () {
   for (let i = 0; i < Test.length; i++) {
     it(`transpile(${Tst[i].input}, ${Tst[i].output})`, async () => {
