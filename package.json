@@ -1,6 +1,6 @@
 {
-  "name": "artth2-js",
-  "version": "0.4.4",
+  "name": "@ull-esit-pl-2425/arith2js-himar_edhey-hernandez-alu0101552392",
+  "version": "1.4.4",
   "description": "* See section [Análisis Sintáctico Ascendente en JavaScript](http://crguezl.github.io/pl-html/node43.html) * The example working at  [http://crguezl.github.io/jison-minus/](http://crguezl.github.io/jison-minus/)",
   "main": "src/transpile.js",
   "type": "commonjs",

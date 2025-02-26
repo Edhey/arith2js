@@ -5,7 +5,7 @@
  * Escuela Superior de Ingeniería y Tecnología
  * Grado en Ingeniería Informática
  * Asignatura Procesadores de Lenguajes
- * Práctica 2 - Arith2js
+ * Práctica 3 - Hello Compilers
  *
  * @author Himar Edhey Hernández Alonso
  * @since Wed 19 Feb 2025 
