@@ -12,7 +12,7 @@ const {
 %left '&'
 %left '+' '-'
 %left '*' '/'
-%nonassoc 'UMINUS'
+%nonassoc UMINUS
 %right '**'
 %left '!'
 // %left '(' ')' Esto es gestionado automáticamente por el analizador sintáctico
@@ -37,5 +37,7 @@ expresion:
       | '-' expresion %prec UMINUS  { $$ = buildCallMemberExpression($2, 'neg', []); } // Unary minus
       | expresion '**' expresion    { $$ = buildCallMemberExpression($1, 'pow', [$3]); } // Power
       | expresion '!'               { $$ = buildCallExpression('gamma', [$1]); } // Factorial
+      | expresion '&' expresion     { $$ = buildCallExpression('min', [$1, $3]); } // Minimum
+      | expresion '@' expresion     { $$ = buildCallExpression('max', [$1, $3]); } // Maximum 
       | '(' expresion ')'           { $$ = $2; }  // Parentheses
 ;
