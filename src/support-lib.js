@@ -3,7 +3,7 @@
  * Escuela Superior de Ingeniería y Tecnología
  * Grado en Ingeniería Informática
  * Procesadores de Lenguajes
- * Práctica 2 - Arith2js
+ * Práctica 3 - Hello Compilers
  *
  * @author Himar Edhey Hernández Alonso
  * @since Wed 19 Feb 2025 
@@ -51,5 +51,46 @@ function print(value) {
   console.log(value.toString());  
 }
 
-module.exports = { gamma, Complex, print };
+/**
+ * Function that returns the minimus of two complex numbers.
+ * First, it compares the real part of the numbers, and if they are equal,
+ * it compares the imaginary part.
+ * @param {Complex} number1 First complex number to compare
+ * @param {Complex} number2 Second complex number to compare
+ */
+function min(number1, number2) {
+  if (number1.re < number2.re) {
+    return number1;
+  } else if (number1.re > number2.re) {
+    return number2;
+  } else {
+    if (number1.im < number2.im) {
+      return number1;
+    } else {
+      return number2;
+    }
+  }
+}
 
+/**
+ * Function that returns the maximus of two complex numbers.
+ * First, it compares the real part of the numbers, and if they are equal,
+ * it compares the imaginary part.
+ * @param {Complex} number1 First complex number to compare
+ * @param {Complex} number2 Second complex number to compare
+ */
+function max(number1, number2) {
+  if (number1.re > number2.re) {
+    return number1;
+  } else if (number1.re < number2.re) {
+    return number2;
+  } else {
+    if (number1.im > number2.im) {
+      return number1;
+    } else {
+      return number2;
+    }
+  }
+}
+
+module.exports = { gamma, Complex, print, min, max };
