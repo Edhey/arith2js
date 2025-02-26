@@ -1,0 +1,50 @@
+module.exports = [
+  {
+    input: 'test-Usub.calc',
+    output: 'out-Usub.js',
+    expected: 'expected-Usub.js',
+    correctOut: 'correct-out-Usub.txt'
+  },
+  {
+    input: 'test-sub.calc',
+    output: 'out-sub.js',
+    expected: 'expected-sub.js',
+    correctOut: 'correct-out-sub.txt'
+  },
+  {
+    input: 'test-plus.calc',
+    output: 'out-plus.js',
+    expected: 'expected-plus.js',
+    correctOut: 'correct-out-plus.txt'
+  },
+  {
+    input: 'test-fact.calc',
+    output: 'out-fact.js',
+    expected: 'expected-fact.js',
+    correctOut: 'correct-out-fact.txt'
+  },
+  {
+    input: 'test-exponent.calc',
+    output: 'out-exponent.js',
+    expected: 'expected-exponent.js',
+    correctOut: 'correct-out-exponent.txt'
+  },
+  {
+    input: 'test-exp.calc',
+    output: 'out-exp.js',
+    expected: 'expected-exp.js',
+    correctOut: 'correct-out-exp.txt'
+  },
+  {
+    input: 'test-div.calc',
+    output: 'out-div.js',
+    expected: 'expected-div.js',
+    correctOut: 'correct-out-div.txt'
+  },
+  {
+    input: 'test-add.calc',
+    output: 'out-add.js',
+    expected: 'expected-add.js',
+    correctOut: 'correct-out-add.txt'
+  },
+]

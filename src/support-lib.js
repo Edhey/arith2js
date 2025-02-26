@@ -6,7 +6,7 @@
  * Práctica 3 - Hello Compilers
  *
  * @author Himar Edhey Hernández Alonso
- * @since Wed 19 Feb 2025 
+ * @since Wed 26 Feb 2025
  * @desc  Librería de soporte con funciones para: 
  *        El factorial para números complejos:
  *          - A gamma function implementation based on Lanczos Approximation

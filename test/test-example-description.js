@@ -6,6 +6,12 @@ module.exports = [
       correctOut: 'correct-out-test6.txt'
     },
 {
+      input: 'test15.calc',
+      output: 'out-test15.js',
+      expected: 'expected-test15.js',
+      correctOut: 'correct-out-test15.txt'
+    },
+{
       input: 'test9.calc',
       output: 'out-test9.js',
       expected: 'expected-test9.js',

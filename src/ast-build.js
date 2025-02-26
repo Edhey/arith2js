@@ -6,7 +6,7 @@
  * Práctica 3 - Hello Compilers
  *
  * @author Himar Edhey Hernández Alonso
- * @since Wed 19 Feb 2025 
+ * @since Wed 26 Feb 2025
  * @desc Este archivo contiene las funciones que construyen el AST
  * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}
  */
