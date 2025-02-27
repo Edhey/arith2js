@@ -58,11 +58,11 @@ describe('Syntax Error Tests', function () {
       } finally {
         console.error = originalConsoleError;
         // Clean up the output file if it exists
-        try {
-          await fs.unlink(Test[i].output);
-        } catch (err) {
-          // Ignore error if file does not exist
-        }
+        // try {
+        //   await fs.unlink(Test[i].output);
+        // } catch (err) {
+        //   // Ignore error if file does not exist
+        // }
       }
     });
   }

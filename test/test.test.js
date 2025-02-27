@@ -77,7 +77,7 @@ describe('Example Test', function () {
         let output = await fs.readFile(ExampleTest[i].output, 'utf-8');
         let expected = await fs.readFile(ExampleTest[i].expected, 'utf-8');
         expect(removeSpaces(output)).to.equal(removeSpaces(expected));
-        await fs.unlink(ExampleTest[i].output);
+        // await fs.unlink(ExampleTest[i].output);
       });
     }
   });
@@ -126,7 +126,7 @@ describe('Simple Test', function () {
         let output = await fs.readFile(SimpleTest[i].output, 'utf-8');
         let expected = await fs.readFile(SimpleTest[i].expected, 'utf-8');
         expect(removeSpaces(output)).to.equal(removeSpaces(expected));
-        await fs.unlink(SimpleTest[i].output);
+        // await fs.unlink(SimpleTest[i].output);
       });
     }
   });

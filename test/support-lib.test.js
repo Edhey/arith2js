@@ -14,6 +14,9 @@
 const { expect } = require('chai');
 const { gamma, Complex, print, min, max } = require('../src/support-lib.js');
 
+/**
+ * @desc Tests for the support library
+ */
 describe('Support Library Tests', () => {
   it('should calculate the gamma function for a complex number', () => {
     const complexNumber = Complex('2+3i');
