@@ -14,7 +14,6 @@
  * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}
  */
 
-
 import { program } from "commander";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
@@ -25,9 +24,6 @@ import run from "../src/run.js";
 program
   .version(version)
   .showSuggestionAfterError()
-  //. fill the argument
-  //. fill with option "-o, --output <filename>"
-  //. write the action
 
 program
   .command("transpile")

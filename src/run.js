@@ -6,8 +6,8 @@
  * Grado en Ingeniería Informática
  * Procesadores de Lenguajes
  * Práctica 3 - Hello Compilers
- *
- * @author Himar Edhey Hernández Alonso
+ * 
+ * @autor Himar Edhey Hernández Alonso
  * @since Wed 26 Feb 2025
  * @desc Este archivo contiene el código para la ejecución del programa que
  *       convierte una expresión aritmética en un programa en JavaScript
