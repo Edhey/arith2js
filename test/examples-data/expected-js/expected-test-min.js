@@ -1,2 +1,2 @@
-const { print,min,Complex } = require("./src/support-lib.js");
+const { print,min,Complex } = require("/home/usuario/practicas/02-Translating-Arithmetic-Expressions-to-JavaScript/arith2js-himar_edhey-hernandez-alu0101552392/src/support-lib.js");
 print(min(Complex('2'), Complex('3'))); 

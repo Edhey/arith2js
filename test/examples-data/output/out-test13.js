@@ -1,2 +1,2 @@
 const { print,Complex } = require("/home/usuario/practicas/02-Translating-Arithmetic-Expressions-to-JavaScript/arith2js-himar_edhey-hernandez-alu0101552392/src/support-lib.js");
-print(Complex('5').mul(Complex('2').add(Complex('3')))); 
+print(Complex('5i').mul(Complex('2').add(Complex('3')))); 
