@@ -175,7 +175,7 @@ describe('Hard Tests', function () {
         let output = await fs.readFile(HardTest[i].output, 'utf-8');
         let expected = await fs.readFile(HardTest[i].expected, 'utf-8');
         expect(removeSpaces(output)).to.equal(removeSpaces(expected));
-        await fs.unlink(HardTest[i].output);
+        // await fs.unlink(HardTest[i].output);
       });
     }
   });
