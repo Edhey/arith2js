@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Run tests and generate coverage report
-        run: npm run cov
+        run: npm run test && npm run cov
 
       - name: Generate HTML coverage report
         run: npm run report
