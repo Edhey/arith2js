@@ -11,16 +11,12 @@
  * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}
  */
 
-const { transpile } = require("../src/transpile.js");
-const run = require("../src/run.js");
-const fs = require("fs/promises");
-const { expect } = require('chai');
-
 const TestExample = require('./test-example-description.js');
 const TestSimple = require('./test-description.js');
 const TestHard = require('./test-hard-description.js');
+const TestErrorSyntax = require('./test-error-description.js');
 
-const { removeSpaces } = require('./test-utils.js');
+const { checkTranspile, checkRunConsoleLog, checkRunConsoleError } = require('./test-utils.js');
 
 /**
  * Test data for the examples
@@ -52,6 +48,17 @@ const HardTest = TestHard.map(testDescription => ({
   correctOut: __dirname + '/hard/correct-out/' + testDescription.correctOut,
 }));
 
+
+/**
+ * Test data for the error syntax tests
+ */
+const ErrorSyntaxTest = TestErrorSyntax.map(testDescription => ({
+  input: __dirname + '/errors/syntax-error/' + testDescription.input,
+  output: __dirname + '/errors/output/' + testDescription.output,
+  correctErr: __dirname + '/errors/correct-err/' + testDescription.correctErr,
+})
+);
+
 /**
  * Example Tests
  * Run the simple tests and check the output
@@ -63,12 +70,7 @@ describe('Example Test', function () {
   describe('Example Transpile Tests', function () {
     for (let i = 0; i < ExampleTest.length; i++) {
       it(`transpile(${ExampleTest[i].input}, ${ExampleTest[i].output})`, async function () {
-        // Compile the input and check the output program is what expected
-        await transpile(ExampleTest[i].input, { output: ExampleTest[i].output });
-        let output = await fs.readFile(ExampleTest[i].output, 'utf-8');
-        let expected = await fs.readFile(ExampleTest[i].expected, 'utf-8');
-        expect(removeSpaces(output)).to.equal(removeSpaces(expected));
-        // await fs.unlink(ExampleTest[i].output);
+        checkTranspile(ExampleTest[i]);
       });
     }
   });
@@ -80,22 +82,7 @@ describe('Example Test', function () {
   describe('Example Run Tests', function () {
     for (let i = 0; i < ExampleTest.length; i++) {
       it(`run function with ${ExampleTest[i].input}`, async function () {
-        // Mock console.log
-        let result = "";
-        const oldLog = console.log;
-        console.log = function (...s) { result += s.join(''); };
-
-        // Run the transpiled code using the run function and check the output
-        await run(ExampleTest[i].input, { verbose: false });
-
-        // Read the expected output
-        let correctOut = await fs.readFile(ExampleTest[i].correctOut, 'utf-8');
-
-        // Check the output
-        expect(removeSpaces(result)).to.equal(removeSpaces(correctOut));
-
-        // Restore console.log
-        console.log = oldLog;
+        checkRunConsoleLog(ExampleTest[i]);
       });
     }
   });
@@ -112,12 +99,7 @@ describe('Simple Test', function () {
   describe('Simple Transpile Tests', function () {
     for (let i = 0; i < SimpleTest.length; i++) {
       it(`transpile(${SimpleTest[i].input}, ${SimpleTest[i].output})`, async function () {
-        // Compile the input and check the output program is what expected
-        await transpile(SimpleTest[i].input, { output: SimpleTest[i].output });
-        let output = await fs.readFile(SimpleTest[i].output, 'utf-8');
-        let expected = await fs.readFile(SimpleTest[i].expected, 'utf-8');
-        expect(removeSpaces(output)).to.equal(removeSpaces(expected));
-        // await fs.unlink(SimpleTest[i].output);
+        checkTranspile(SimpleTest[i]);
       });
     }
   });
@@ -129,22 +111,7 @@ describe('Simple Test', function () {
   describe('Simple Run Tests', function () {
     for (let i = 0; i < SimpleTest.length; i++) {
       it(`run function with ${SimpleTest[i].input}`, async function () {
-        // Mock console.log
-        let result = "";
-        const oldLog = console.log;
-        console.log = function (...output) { result += output.join(''); };
-
-        // Run the transpiled code using the run function and check the output
-        await run(SimpleTest[i].input, { verbose: false });
-
-        // Read the expected output
-        let correctOut = await fs.readFile(SimpleTest[i].correctOut, 'utf-8');
-
-        // Check the output
-        expect(removeSpaces(result)).to.equal(removeSpaces(correctOut));
-
-        // Restore console.log
-        console.log = oldLog;
+        checkRunConsoleLog(SimpleTest[i]);
       });
     }
   });
@@ -161,12 +128,7 @@ describe('Hard Tests', function () {
   describe('Transpile Tests', function () {
     for (let i = 0; i < HardTest.length; i++) {
       it(`transpile(${HardTest[i].input}, ${HardTest[i].output})`, async function () {
-        // Compile the input and check the output program is what expected
-        await transpile(HardTest[i].input, { output: HardTest[i].output });
-        let output = await fs.readFile(HardTest[i].output, 'utf-8');
-        let expected = await fs.readFile(HardTest[i].expected, 'utf-8');
-        expect(removeSpaces(output)).to.equal(removeSpaces(expected));
-        // await fs.unlink(HardTest[i].output);
+        checkTranspile(HardTest[i]);
       });
     }
   });
@@ -178,23 +140,20 @@ describe('Hard Tests', function () {
   describe('Hard Run Tests', function () {
     for (let i = 0; i < HardTest.length; i++) {
       it(`run function with ${HardTest[i].input}`, async function () {
-        // Mock console.log
-        let result = "";
-        const oldLog = console.log;
-        console.log = function (...output) { result += output.join(''); };
-
-        // Run the transpiled code using the run function and check the output
-        await run(HardTest[i].input, { verbose: false });
-
-        // Read the expected output
-        let correctOut = await fs.readFile(HardTest[i].correctOut, 'utf-8');
-
-        // Check the output
-        expect(removeSpaces(result)).to.equal(removeSpaces(correctOut));
-
-        // Restore console.log
-        console.log = oldLog;
+        checkRunConsoleLog(HardTest[i]);
       });
     }
   });
+});
+
+/**
+ * Syntax Error Tests
+ * Run the simple tests and check the output
+ */
+describe('Syntax Error Tests', function () {
+  for (let i = 0; i < ErrorSyntaxTest.length; i++) {
+    it(`check syntax errors(${ErrorSyntaxTest[i].input}, ${ErrorSyntaxTest[i].output})`, async () => {
+      checkRunConsoleError(ErrorSyntaxTest[i]);
+    });
+  }
 });

@@ -11,6 +11,11 @@
  * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}
  */
 
+const { transpile } = require("../src/transpile.js");
+const run = require("../src/run.js");
+const fs = require("fs/promises");
+const { expect } = require('chai');
+
 /**
  * Remove spaces and requires from the code
  * @param {string} code Input code to remove spaces and requires
@@ -21,4 +26,70 @@ function removeSpaces(string) {
     replace(/^.*\/\*endofpreambleofgeneratedcode\*\//, '');
 }
 
-module.exports = { removeSpaces };
+/**
+ * Function that executes the transpile function and checks the output result
+ * removing spaces and requires
+ * @param {object} testsFile Object with the input, output, expectedjs and 
+ * correctout files 
+ * @param {boolean} unlink If true, it will delete the output file after 
+ * checking
+ */
+async function checkTranspile(testsFile, unlink = false) {
+  // Compile the input and check the output program is what expected
+  await transpile(testsFile.input, { output: testsFile.output });
+  let output = await fs.readFile(testsFile.output, 'utf-8');
+  let expected = await fs.readFile(testsFile.expected, 'utf-8');
+  expect(removeSpaces(output)).to.equal(removeSpaces(expected));
+  if (unlink) await fs.unlink(testsFile.output);
+}
+
+/**
+ * Function that executes the run function and checks the output result
+ * removing spaces and requires. It use mocking to check the console.log
+ * @param {object} testsFile Object with the input, output, expectedjs and
+ * correctout files
+ * @param {boolean} verbose If true, it will show the console.log output
+ */
+async function checkRunConsoleLog(testsFile, verbose = false) {
+  // Mock console.log
+  let result = "";
+  const oldLog = console.log;
+  console.log = function (...s) { result += s.join(''); };
+
+  // Run the transpiled code using the run function and check the output
+  await run(testsFile.input, { verbose: verbose });
+
+  // Read the expected output
+  let correctOut = await fs.readFile(testsFile.correctOut, 'utf-8');
+
+  // Check the output
+  expect(removeSpaces(result)).to.equal(removeSpaces(correctOut));
+
+  // Restore console.log
+  console.log = oldLog;
+}
+
+async function checkRunConsoleError(testsFile) {
+  let consoleOutput = "";
+  const originalConsoleError = console.error;
+  console.error = (message) => { consoleOutput += message; };
+
+  try {
+    await transpile(Test[i].input, { output: Test[i].output });
+    const output = await fs.readFile(Test[i].output, 'utf-8');
+    const expected = await fs.readFile(Test[i].expected, 'utf-8');
+    expect(removeSpaces(output)).to.equal(removeSpaces(expected));
+  } catch (e) {
+    const correctErr = await fs.readFile(Test[i].correctErr, 'utf-8');
+    expect(removeSpaces(consoleOutput)).to.include(removeSpaces(correctErr.trim()));
+  } finally {
+    console.error = originalConsoleError;
+  }
+}
+
+module.exports = { 
+  removeSpaces, 
+  checkTranspile, 
+  checkRunConsoleLog, 
+  checkRunConsoleError
+};
