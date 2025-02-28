@@ -72,12 +72,12 @@
   }
 */
 var calc = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,3],$V1=[1,4],$V2=[1,5],$V3=[1,6],$V4=[1,8],$V5=[1,9],$V6=[1,10],$V7=[1,11],$V8=[1,12],$V9=[1,13],$Va=[1,14],$Vb=[1,15],$Vc=[5,7,8,9,10,11,12,13,14,15,17],$Vd=[5,7,8,9,10,12,14,15,17],$Ve=[5,7,8,12,14,15,17];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,3],$V1=[1,4],$V2=[1,5],$V3=[1,6],$V4=[1,7],$V5=[1,9],$V6=[1,10],$V7=[1,11],$V8=[1,12],$V9=[1,13],$Va=[1,14],$Vb=[1,15],$Vc=[1,16],$Vd=[1,17],$Ve=[1,18],$Vf=[5,8,9,10,11,12,13,14,15,16,17,18,20],$Vg=[5,8,9,10,11,13,15,16,17,18,20],$Vh=[5,8,9,13,15,16,17,18,20],$Vi=[5,13,18,20];
 var parser = {trace: function trace () { },
 yy: {},
-symbols_: {"error":2,"endExpresion":3,"expresion":4,"EOF":5,"NUMBER":6,"+":7,"-":8,"*":9,"/":10,"**":11,"|":12,"!":13,"&":14,"@":15,"(":16,")":17,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",6:"NUMBER",7:"+",8:"-",9:"*",10:"/",11:"**",12:"|",13:"!",14:"&",15:"@",16:"(",17:")"},
-productions_: [0,[3,2],[4,1],[4,3],[4,3],[4,3],[4,3],[4,2],[4,3],[4,3],[4,2],[4,3],[4,3],[4,3]],
+symbols_: {"error":2,"endExpresion":3,"expresion":4,"EOF":5,"NUMBER":6,"ID":7,"+":8,"-":9,"*":10,"/":11,"**":12,"|":13,"!":14,"&":15,"@":16,"=":17,",":18,"(":19,")":20,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",6:"NUMBER",7:"ID",8:"+",9:"-",10:"*",11:"/",12:"**",13:"|",14:"!",15:"&",16:"@",17:"=",18:",",19:"(",20:")"},
+productions_: [0,[3,2],[4,1],[4,1],[4,3],[4,3],[4,3],[4,3],[4,2],[4,3],[4,3],[4,2],[4,3],[4,3],[4,3],[4,3],[4,3]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -90,42 +90,51 @@ case 2:
  this.$ = buildCallExpression('Complex', [buildLiteral($$[$0])]) 
 break;
 case 3:
- this.$ = buildCallMemberExpression($$[$0-2], 'add', [$$[$0]]); 
+ this.$ = buildIdentifier($$[$0]) 
 break;
 case 4:
- this.$ = buildCallMemberExpression($$[$0-2], 'sub', [$$[$0]]); 
+ this.$ = buildCallMemberExpression($$[$0-2], 'add', [$$[$0]]); 
 break;
 case 5:
- this.$ = buildCallMemberExpression($$[$0-2], 'mul', [$$[$0]]); 
+ this.$ = buildCallMemberExpression($$[$0-2], 'sub', [$$[$0]]); 
 break;
 case 6:
- this.$ = buildCallMemberExpression($$[$0-2], 'div', [$$[$0]]); 
+ this.$ = buildCallMemberExpression($$[$0-2], 'mul', [$$[$0]]); 
 break;
 case 7:
- this.$ = buildCallMemberExpression($$[$0], 'neg', []); 
+ this.$ = buildCallMemberExpression($$[$0-2], 'div', [$$[$0]]); 
 break;
 case 8:
- this.$ = buildCallMemberExpression($$[$0-2], 'pow', [$$[$0]]); 
+ this.$ = buildCallMemberExpression($$[$0], 'neg', []); 
 break;
 case 9:
- this.$ = buildCallMemberExpression($$[$0-1], 'abs', []); 
+ this.$ = buildCallMemberExpression($$[$0-2], 'pow', [$$[$0]]); 
 break;
 case 10:
- this.$ = buildCallExpression('gamma', [$$[$0-1]]); 
+ this.$ = buildCallMemberExpression($$[$0-1], 'abs', []); 
 break;
 case 11:
- this.$ = buildCallExpression('min', [$$[$0-2], $$[$0]]); 
+ this.$ = buildCallExpression('gamma', [$$[$0-1]]); 
 break;
 case 12:
- this.$ = buildCallExpression('max', [$$[$0-2], $$[$0]]); 
+ this.$ = buildCallExpression('min', [$$[$0-2], $$[$0]]); 
 break;
 case 13:
+ this.$ = buildCallExpression('max', [$$[$0-2], $$[$0]]); 
+break;
+case 14:
+ this.$ = buildAssigmentExpression($$[$0-2], '=', $$[$0]) 
+break;
+case 15:
+ this.$ = buildSequenceExpression([$$[$0-2], $$[$0]]) 
+break;
+case 16:
  this.$ = $$[$0-1]; 
 break;
 }
 },
-table: [{3:1,4:2,6:$V0,8:$V1,12:$V2,16:$V3},{1:[3]},{5:[1,7],7:$V4,8:$V5,9:$V6,10:$V7,11:$V8,13:$V9,14:$Va,15:$Vb},o($Vc,[2,2]),{4:16,6:$V0,8:$V1,12:$V2,16:$V3},{4:17,6:$V0,8:$V1,12:$V2,16:$V3},{4:18,6:$V0,8:$V1,12:$V2,16:$V3},{1:[2,1]},{4:19,6:$V0,8:$V1,12:$V2,16:$V3},{4:20,6:$V0,8:$V1,12:$V2,16:$V3},{4:21,6:$V0,8:$V1,12:$V2,16:$V3},{4:22,6:$V0,8:$V1,12:$V2,16:$V3},{4:23,6:$V0,8:$V1,12:$V2,16:$V3},o($Vc,[2,10]),{4:24,6:$V0,8:$V1,12:$V2,16:$V3},{4:25,6:$V0,8:$V1,12:$V2,16:$V3},o($Vd,[2,7],{11:$V8,13:$V9}),{7:$V4,8:$V5,9:$V6,10:$V7,11:$V8,12:[1,26],13:$V9,14:$Va,15:$Vb},{7:$V4,8:$V5,9:$V6,10:$V7,11:$V8,13:$V9,14:$Va,15:$Vb,17:[1,27]},o($Ve,[2,3],{9:$V6,10:$V7,11:$V8,13:$V9}),o($Ve,[2,4],{9:$V6,10:$V7,11:$V8,13:$V9}),o($Vd,[2,5],{11:$V8,13:$V9}),o($Vd,[2,6],{11:$V8,13:$V9}),o($Vd,[2,8],{11:$V8,13:$V9}),o([5,12,14,15,17],[2,11],{7:$V4,8:$V5,9:$V6,10:$V7,11:$V8,13:$V9}),o([5,12,15,17],[2,12],{7:$V4,8:$V5,9:$V6,10:$V7,11:$V8,13:$V9,14:$Va}),o($Vc,[2,9]),o($Vc,[2,13])],
-defaultActions: {7:[2,1]},
+table: [{3:1,4:2,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4},{1:[3]},{5:[1,8],8:$V5,9:$V6,10:$V7,11:$V8,12:$V9,14:$Va,15:$Vb,16:$Vc,17:$Vd,18:$Ve},o($Vf,[2,2]),o($Vf,[2,3]),{4:19,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4},{4:20,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4},{4:21,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4},{1:[2,1]},{4:22,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4},{4:23,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4},{4:24,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4},{4:25,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4},{4:26,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4},o($Vf,[2,11]),{4:27,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4},{4:28,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4},{4:29,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4},{4:30,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4},o($Vg,[2,8],{12:$V9,14:$Va}),{8:$V5,9:$V6,10:$V7,11:$V8,12:$V9,13:[1,31],14:$Va,15:$Vb,16:$Vc,17:$Vd,18:$Ve},{8:$V5,9:$V6,10:$V7,11:$V8,12:$V9,14:$Va,15:$Vb,16:$Vc,17:$Vd,18:$Ve,20:[1,32]},o($Vh,[2,4],{10:$V7,11:$V8,12:$V9,14:$Va}),o($Vh,[2,5],{10:$V7,11:$V8,12:$V9,14:$Va}),o($Vg,[2,6],{12:$V9,14:$Va}),o($Vg,[2,7],{12:$V9,14:$Va}),o($Vg,[2,9],{12:$V9,14:$Va}),o([5,13,15,16,17,18,20],[2,12],{8:$V5,9:$V6,10:$V7,11:$V8,12:$V9,14:$Va}),o([5,13,16,17,18,20],[2,13],{8:$V5,9:$V6,10:$V7,11:$V8,12:$V9,14:$Va,15:$Vb}),o($Vi,[2,14],{8:$V5,9:$V6,10:$V7,11:$V8,12:$V9,14:$Va,15:$Vb,16:$Vc,17:$Vd}),o($Vi,[2,15],{8:$V5,9:$V6,10:$V7,11:$V8,12:$V9,14:$Va,15:$Vb,16:$Vc,17:$Vd}),o($Vf,[2,10]),o($Vf,[2,16])],
+defaultActions: {8:[2,1]},
 parseError: function parseError (str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -615,18 +624,20 @@ case 2:/* skip multiple line comments | The * is greedy so we need to make it la
 break;
 case 3:return 6;
 break;
-case 4:return 11; // It must be before '*' because it is more specific, otherwise it will be recognized as '*'
+case 4:return 12; // It must be before '*' because it is more specific, otherwise it will be recognized as '*'
 break;
 case 5:return yy_.yytext;
 break;
-case 6:return ',';
+case 6:return 18;
 break;
-case 7:return 5;
+case 7:return ID;
+break;
+case 8:return 5;
 break;
 }
 },
-rules: [/^(?:\s)/,/^(?:#.*)/,/^(?:[/][*](.|\n)*?[*][/])/,/^(?:(\d+(\.\d+)?([eE][-+]?\d+)?i?|i\b))/,/^(?:\*\*)/,/^(?:[-+*/!()&@|])/,/^(?:,)/,/^(?:$)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7],"inclusive":true}}
+rules: [/^(?:\s+)/,/^(?:#.*)/,/^(?:[/][*](.|\n)*?[*][/])/,/^(?:(\d+(\.\d+)?([eE][-+]?\d+)?i?|i\b))/,/^(?:\*\*)/,/^(?:[-+*/!()&@|=])/,/^(?:,)/,/^(?:[_$a-zA-Z][$\w]*)/,/^(?:$)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8],"inclusive":true}}
 });
 return lexer;
 })();

@@ -20,6 +20,8 @@ const TestExample = require('./test-example-description.js');
 const TestSimple = require('./test-description.js');
 const TestHard = require('./test-hard-description.js');
 
+const { removeSpaces } = require('./test-utils.js');
+
 /**
  * Test data for the examples
  */
@@ -49,17 +51,6 @@ const HardTest = TestHard.map(testDescription => ({
   expected: __dirname + '/hard/expected-js/' + testDescription.expected,
   correctOut: __dirname + '/hard/correct-out/' + testDescription.correctOut,
 }));
-
-const removeRequires = /require\(["'][\S]+["']\)/g;
-
-/**
- * Remove spaces and requires from the code
- * @param {string} code Input code to remove spaces and requires
- * @returns {string} Code without spaces and requires
- */
-function removeSpaces(code) {
-  return code.replace(/\s/g, '').replace(removeRequires, '');
-}
 
 /**
  * Example Tests

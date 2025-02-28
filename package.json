@@ -23,7 +23,9 @@
     "test-error": "npm run compile; mocha test/ --grep 'Error Test'",
     "cov": "nyc npm test",
     "report": "nyc --report --reporter=html --report-dir=docs -x src/template.js npm test",
-    "compile": "jison src/grammar.jison src/lexer.l -o src/calc.js"
+    "compile": "jison src/grammar.jison src/lexer.l -o src/calc.js",
+    "trans": "./bin/calc2js.mjs transpile",
+    "exec": "./bin/calc2js.mjs run"
   },
   "keywords": [
     "ull",

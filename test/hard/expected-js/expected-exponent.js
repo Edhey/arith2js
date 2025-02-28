@@ -1,2 +1,1 @@
-const { print,Complex } = require("./src/support-lib.js");
 print(Complex('2.1').pow(Complex('3.2i')).pow(Complex('2.3')).pow(Complex('1.1').pow(Complex('0.9i')))); 

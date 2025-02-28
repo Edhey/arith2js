@@ -17,6 +17,8 @@ const fs = require("fs/promises");
 
 const Tst = require('./test-error-description.js');
 
+const { removeSpaces } = require('./test-utils.js');
+
 /**
  * Test data for the simple tests
  */
@@ -25,16 +27,7 @@ const Test = Tst.map(testDescription => ({
   output: __dirname + '/errors/output/' + testDescription.output,
   correctErr: __dirname + '/errors/correct-err/' + testDescription.correctErr,
 })
-)
-
-/**
- * Remove spaces and requires from the code
- * @param {string} code Input code to remove spaces and requires
- * @returns {string} Code without spaces and requires
- */
-function removeSpaces(s) {
-  return s.replace(/\s/g, '')
-}
+);
 
 /**
  * Syntax Error Tests
