@@ -49,6 +49,17 @@ function buildLiteral(raw) {
   };
 }
 
+/**
+ * Function to build a identifier node
+ * @param {string} name The name of the identifier
+ * @returns Returns the identifier node
+ */
+function buildIdentifier(name) {
+  return {
+    type: 'Identifier',
+    name: name,
+  };
+}
 
 /**
  * Build a call expression node of the AST
@@ -93,9 +104,40 @@ function buildCallMemberExpression(callee, member, args) {
   };
 }
 
+/**
+ * Function to build an assignment expression node
+ * @param {object} left The left side of the assignment
+ * @param {string} operator The operator of the assignment
+ * @param {object} right The right side of the assignment
+ * @returns Returns the assignment expression node
+ */
+function buildAssigmentExpression(left, operator, right) {
+  return {
+    type: 'AssignmentExpression',
+    operator: operator,
+    left: left,
+    right: right,
+  };
+}
+
+/**
+ * Function to build a sequence expression node
+ * @param {object[]} expressions The expressions of the sequence
+ * @returns Returns the sequence expression node
+ */
+function buildSequenceExpression(expressions) {
+  return {
+    type: 'SequenceExpression',
+    expressions: expressions,
+  };
+}
+
 module.exports = {
   buildRoot,
   buildLiteral,
+  buildIdentifier,
   buildCallExpression,
   buildCallMemberExpression,
+  buildAssigmentExpression,
+  buildSequenceExpression,
 }
