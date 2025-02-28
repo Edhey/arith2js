@@ -66,6 +66,12 @@ module.exports = [
       correctOut: 'correct-out-test3.txt'
     },
 {
+      input: 'test-abs-real.calc',
+      output: 'out-test-abs-real.js',
+      expected: 'expected-test-abs-real.js',
+      correctOut: 'correct-out-test-abs-real.txt'
+    },
+{
       input: 'test5.calc',
       output: 'out-test5.js',
       expected: 'expected-test5.js',
@@ -90,6 +96,12 @@ module.exports = [
       correctOut: 'correct-out-test11.txt'
     },
 {
+      input: 'test-abs-real-imag.calc',
+      output: 'out-test-abs-real-imag.js',
+      expected: 'expected-test-abs-real-imag.js',
+      correctOut: 'correct-out-test-abs-real-imag.txt'
+    },
+{
       input: 'test14.calc',
       output: 'out-test14.js',
       expected: 'expected-test14.js',
@@ -106,5 +118,11 @@ module.exports = [
       output: 'out-test4.js',
       expected: 'expected-test4.js',
       correctOut: 'correct-out-test4.txt'
+    },
+{
+      input: 'test-abs-imag.calc',
+      output: 'out-test-abs-imag.js',
+      expected: 'expected-test-abs-imag.js',
+      correctOut: 'correct-out-test-abs-imag.txt'
     },
 ]

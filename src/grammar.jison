@@ -8,6 +8,7 @@ const {
 %}
 
 %token NUMBER
+%nonassoc '|'
 %left '@'
 %left '&'
 %left '+' '-'
@@ -36,6 +37,7 @@ expresion:
       | expresion '/' expresion     { $$ = buildCallMemberExpression($1, 'div', [$3]); } // Division
       | '-' expresion %prec UMINUS  { $$ = buildCallMemberExpression($2, 'neg', []); } // Unary minus
       | expresion '**' expresion    { $$ = buildCallMemberExpression($1, 'pow', [$3]); } // Power
+      | '|' expresion '|'           { $$ = buildCallMemberExpression($2, 'abs', []); } // Absolute value
       | expresion '!'               { $$ = buildCallExpression('gamma', [$1]); } // Factorial
       | expresion '&' expresion     { $$ = buildCallExpression('min', [$1, $3]); } // Minimum
       | expresion '@' expresion     { $$ = buildCallExpression('max', [$1, $3]); } // Maximum 
