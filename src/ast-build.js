@@ -132,6 +132,32 @@ function buildSequenceExpression(expressions) {
   };
 }
 
+/**
+ * Function to build a variable declaration node
+ * @param {object array} declarations array of declarations
+ * @returns {object} variable declaration node of the AST
+ */
+function buildVariableDeclaration(declarations) {
+  return {
+    type: 'VariableDeclaration',
+    declarations: declarations,
+    kind: 'let',
+  };
+}
+
+/**
+ * Function to build a variable declarator node
+ * @param {object array} body array of statements
+ * @returns {object} node of the AST
+ */
+function buildVariableDeclarator(id, init) {
+  return {
+    type: 'VariableDeclarator',
+    id: id,
+    init: init,
+  };
+}
+
 module.exports = {
   buildRoot,
   buildLiteral,
@@ -140,4 +166,6 @@ module.exports = {
   buildCallMemberExpression,
   buildAssigmentExpression,
   buildSequenceExpression,
+  buildVariableDeclaration,
+  buildVariableDeclarator,
 }

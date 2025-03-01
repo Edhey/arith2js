@@ -7,5 +7,5 @@ number \d+(\.\d+)?([eE][-+]?\d+)?"i"?|"i"
 '**'                                  return '**'; // It must be before '*' because it is more specific, otherwise it will be recognized as '*'
 [-+*/!()&@|=]                         return yytext;
 ','                                   return ',';
-[_$a-zA-Z][$\w]*                      return ID;
+[_$a-zA-Z][$\w]*                      return 'ID';
 <<EOF>>                               return 'EOF';

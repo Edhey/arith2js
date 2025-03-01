@@ -3,6 +3,9 @@ const {
   buildLiteral, 
   buildCallExpression,
   buildCallMemberExpression,
+  buildIdentifier,
+  buildAssigmentExpression,
+  buildSequenceExpression,
   buildRoot
 } = require('./ast-build.js');
 %}
@@ -29,7 +32,7 @@ endExpresion:
 
 expresion: 
       NUMBER                        { $$ = buildCallExpression('Complex', [buildLiteral($1)]) } // Complex Number
-      | ID                            { $$ = buildIdentifier($1) } // Identifier
+      | ID                          { $$ = buildIdentifier('$' + $1) } // Identifier
       | expresion '+' expresion     { $$ = buildCallMemberExpression($1, 'add', [$3]); } // Addition
       | expresion '-' expresion     { $$ = buildCallMemberExpression($1, 'sub', [$3]); } // Subtraction 
       | expresion '*' expresion     { $$ = buildCallMemberExpression($1, 'mul', [$3]); } // Multiplication
