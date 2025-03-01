@@ -27,7 +27,7 @@ const {
 %%
 // console.log(JSON.stringify($1, null, 2));
 endExpresion: 
-    expresion EOF { return buildRoot($1); } // Must contain a list of operations (listExpresion) and EOF
+    expresion EOF { return buildRoot($1); } // End of expression
 ;
 
 expresion: 
@@ -43,7 +43,8 @@ expresion:
       | expresion '!'               { $$ = buildCallExpression('gamma', [$1]); } // Factorial
       | expresion '&' expresion     { $$ = buildCallExpression('min', [$1, $3]); } // Minimum
       | expresion '@' expresion     { $$ = buildCallExpression('max', [$1, $3]); } // Maximum 
-      | expresion '=' expresion     { $$ = buildAssigmentExpression($1, '=', $3) }
-      | expresion ',' expresion     { $$ = buildSequenceExpression([$1, $3]) }
+      | ID '=' expresion            { $$ = buildAssigmentExpression($($ID), '=', $3) } // Assigment
+      | expresion ',' expresion     { $$ = buildSequenceExpression([$1, $3]) } // Sequence
       | '(' expresion ')'           { $$ = $2; }  // Parentheses
+      | PID '(' expresion ')'       { $$ = buildCallExpression($PID, [$3]); } // Function call 
 ;

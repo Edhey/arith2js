@@ -25,7 +25,6 @@ const { transpile } = require('./transpile.js');
 module.exports = async function run(inputFile, options) {
   try {
     let output = await transpile(inputFile, options);
-    console.log(output);
     eval(output);    
   } catch (e) {
     console.error(e.message);

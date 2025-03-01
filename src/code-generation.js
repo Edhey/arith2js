@@ -13,10 +13,8 @@
  */
 
 const recast = require('recast');
-const path = require('path');
 const { findDependecies } = require('./scope.js');
 const { renderFile } = require('template-file');
-
 
 /**
  * Generate the code from the AST
@@ -24,9 +22,13 @@ const { renderFile } = require('template-file');
  * @returns {string} - The generated code
  */
 function codeGeneration(ast) {
-  let root =__dirname.replace(/\/src$/, ''); // get the root path (Linux)
+  let root = __dirname.replace(/\/src$/, ''); // get the root path (Linux)
   root = root.replace(/\\src$/, ''); // get the root path (Windows)
-  const code = recast.print(ast).code;
+
+  const options = {
+    quotes: 'single',
+  };
+  const code = recast.prettyPrint(ast, options).code;
   const dependencies = Array.from(findDependecies(ast).dependencies);
 
   if (dependencies.length === 0) // if there are no dependencies, return the code

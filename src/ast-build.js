@@ -22,17 +22,10 @@ function buildRoot(child) {
     body: [
       {
         type: 'ExpressionStatement',
-        expression: {
-          type: 'CallExpression',
-          arguments: [child],
-          callee: {
-            type: 'Identifier',
-            name: 'print',
-          },
-        }
+        expression: child,
       },
     ],
-    sourceType: 'module',
+    sourceType: 'script',
   };
 }
 
@@ -45,7 +38,7 @@ function buildLiteral(raw) {
   return {
     type: 'Literal',
     value: raw,
-    raw: raw,
+    raw: `"${raw}"`,
   };
 }
 

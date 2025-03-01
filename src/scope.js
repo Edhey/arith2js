@@ -59,7 +59,7 @@ const scopeAnalysis = (ast) => {
       this.traverse(path);
     },
     visitIdentifier(path) {
-      let name = path.node.name;
+      let name = `'${path.node.name}'`;
       if (/^[$]/.test(name) && !ast.dependencies.has(name)) {
         scope.setAsUsed(name);
       }
