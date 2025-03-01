@@ -27,7 +27,7 @@ function codeGeneration(ast) {
   let root =__dirname.replace(/\/src$/, ''); // get the root path (Linux)
   root = root.replace(/\\src$/, ''); // get the root path (Windows)
   const code = recast.print(ast).code;
-  const dependencies = findDependecies(ast).dependencies;
+  const dependencies = Array.from(findDependecies(ast).dependencies);
 
   if (dependencies.length === 0) // if there are no dependencies, return the code
     return code;

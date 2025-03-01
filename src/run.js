@@ -15,9 +15,7 @@
  *
  */
 
-const fs = require('fs/promises');
-const p = require("./calc").parser;
-const { generateCode, findUsedFunctions } = require('./transpile.js');
+const { transpile } = require('./transpile.js');
 
 /**
  * Transpile to JS the code and run it
@@ -26,16 +24,9 @@ const { generateCode, findUsedFunctions } = require('./transpile.js');
  */
 module.exports = async function run(inputFile, options) {
   try {
-    let input = await fs.readFile(inputFile, 'utf-8');     // read the input file
-    const ast = p.parse(input);                            // lexical and syntax analysis
-  
-    const dependencies = findUsedFunctions(ast);           // semantic analysis
-    
-    const code = await generateCode(dependencies, ast);  // code generation
-
-    if (options.verbose) console.log(code); // if verbose, print the output
-
-    return eval(code);   // execute the generated code
+    let output = await transpile(inputFile, options);
+    console.log(output);
+    eval(output);    
   } catch (e) {
     console.error(e.message);
   }

@@ -150,7 +150,7 @@ function buildVariableDeclaration(declarations) {
  * @param {object array} body array of statements
  * @returns {object} node of the AST
  */
-function buildVariableDeclarator(id, init) {
+function buildVariableDeclarator(id, init = null) {
   return {
     type: 'VariableDeclarator',
     id: id,
