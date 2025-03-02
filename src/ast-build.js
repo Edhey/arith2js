@@ -68,7 +68,6 @@ function buildCallExpression(callee, args) {
       name: callee,
     },
     arguments: args,
-    optional: false,
   };
 }
 
@@ -77,9 +76,10 @@ function buildCallExpression(callee, args) {
  * @param {object} callee The object that calls the member
  * @param {object} member Is the member to call
  * @param {object} args Are the arguments of the call
+ * @param {boolean} computed If the member is computed
  * @returns Returns the call member expression node
  */
-function buildCallMemberExpression(callee, member, args) {
+function buildCallMemberExpression(callee, member, args, computed = false) {
   return {
     type: 'CallExpression',
     callee: {
@@ -89,11 +89,9 @@ function buildCallMemberExpression(callee, member, args) {
         type: 'Identifier',
         name: member,
       },
-      computed: false,
-      optional: false,
+      computed: computed,
     },
     arguments: args,
-    optional: false
   };
 }
 
@@ -128,19 +126,21 @@ function buildSequenceExpression(expressions) {
 /**
  * Function to build a variable declaration node
  * @param {object array} declarations array of declarations
+ * @param {string} kind kind of the declaration
  * @returns {object} variable declaration node of the AST
  */
-function buildVariableDeclaration(declarations) {
+function buildVariableDeclaration(declarations, kind = 'let') {
   return {
     type: 'VariableDeclaration',
     declarations: declarations,
-    kind: 'let',
+    kind: kind,
   };
 }
 
 /**
  * Function to build a variable declarator node
  * @param {object array} body array of statements
+ * @param {object} init initial value of the variable
  * @returns {object} node of the AST
  */
 function buildVariableDeclarator(id, init = null) {

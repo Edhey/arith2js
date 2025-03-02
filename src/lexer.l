@@ -3,10 +3,10 @@ const reservedwords = ["fun", "true", "false", "i"]
 const predefinedIds = ["print", "write" ] // predefined identifiers
 
 const idOrReserved = text => {
-        if (reservedwords.find(w => w == text)) return text.toUpperCase();
-        if (predefinedIds.find(w => w == text)) return 'PID';
-        return 'ID';
-      }
+    if (reservedwords.find(w => w == text)) return text.toUpperCase();
+    if (predefinedIds.find(w => w == text)) return 'PID';
+    return 'ID';
+  }
 %}
 number \d+(\.\d+)?([eE][-+]?\d+)?"i"?|"i"
 

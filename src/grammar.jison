@@ -12,6 +12,7 @@ const {
 
 %token NUMBER
 %token ID
+%token PID
 %nonassoc '|'
 %left ','
 %right '='
@@ -43,7 +44,7 @@ expresion:
       | expresion '!'               { $$ = buildCallExpression('gamma', [$1]); } // Factorial
       | expresion '&' expresion     { $$ = buildCallExpression('min', [$1, $3]); } // Minimum
       | expresion '@' expresion     { $$ = buildCallExpression('max', [$1, $3]); } // Maximum 
-      | ID '=' expresion            { $$ = buildAssigmentExpression($($ID), '=', $3) } // Assigment
+      | ID '=' expresion            { $$ = buildAssigmentExpression(buildIdentifier('$' + $1), '=', $3) } // Assigment
       | expresion ',' expresion     { $$ = buildSequenceExpression([$1, $3]) } // Sequence
       | '(' expresion ')'           { $$ = $2; }  // Parentheses
       | PID '(' expresion ')'       { $$ = buildCallExpression($PID, [$3]); } // Function call 

@@ -38,8 +38,8 @@ module.exports = {
  */
 async function transpile(inputFile, options) {
   let input = await fileStream.readFile(inputFile, 'utf-8'); // 1. read the input file
+  
   let ast;
-
   try {
     ast = parser.parse(input); // 2. parse the input code
   } catch (error) {
