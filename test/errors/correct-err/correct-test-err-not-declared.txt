@@ -1,0 +1,2 @@
+Variable not declared: d
+Variable not declared: c

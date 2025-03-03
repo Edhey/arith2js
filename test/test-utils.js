@@ -12,8 +12,7 @@
  */
 
 const { transpile } = require("../src/transpile.js");
-const run = require("../src/run.js");
-const fs = require("fs/promises");
+const fileStream = require("fs/promises");
 const { expect } = require('chai');
 
 /**
@@ -37,10 +36,10 @@ function removeSpaces(string) {
 async function checkTranspile(testsFiles, unlink = false) {
   // Compile the input and check the output program is what expected
   await transpile(testsFiles.input, { output: testsFiles.output });
-  let output = await fs.readFile(testsFiles.output, 'utf-8');
-  let expected = await fs.readFile(testsFiles.expected, 'utf-8');
+  let output = await fileStream.readFile(testsFiles.output, 'utf-8');
+  let expected = await fileStream.readFile(testsFiles.expected, 'utf-8');
   expect(removeSpaces(output)).to.equal(removeSpaces(expected));
-  if (unlink) await fs.unlink(testsFiles.output);
+  if (unlink) await fileStream.unlink(testsFiles.output);
 }
 
 /**
@@ -51,39 +50,42 @@ async function checkTranspile(testsFiles, unlink = false) {
  * @param {boolean} verbose If true, it will show the console.log output
  */
 async function checkRunConsoleLog(testsFiles, verbose = false) {
-  // Mock console.log
-  let result = "";
-  const oldLog = console.log;
-  console.log = function (...s) { result += s.join(''); };
+  let consoleOutput = "";
+  const oldLog = console.log; // Mock console.log
+  console.log = (output) => { consoleOutput += output; };
+  let correctOut;
 
-  // Run the transpiled code using the run function and check the output
-  await run(testsFiles.input, { verbose: verbose, string: true });
-
-  // Read the expected output
-  let correctOut = await fs.readFile(testsFiles.correctOut, 'utf-8');
-
-  // Check the output
-  expect(removeSpaces(result)).to.equal(removeSpaces(correctOut));
-
-  // Restore console.log
-  console.log = oldLog;
+  // Transpile the input and recieve the output in the result variable
+  try {
+    const transpileResult = await transpile(testsFiles.input, { verbose: verbose });
+    const evaluatedCode = await eval(transpileResult);
+    correctOut = await fileStream.readFile(testsFiles.correctOut, 'utf-8');
+    // If there is no print in the code, the last sentence is the result
+    if (consoleOutput === "") consoleOutput = evaluatedCode.toString(); 
+  } catch (error) {
+    console.error(error);
+  } finally {
+    console.log = oldLog; // Restore console.log
+  }
+  
+  expect(removeSpaces(consoleOutput)).to.equal(removeSpaces(correctOut));
 }
 
 async function checkRunConsoleError(testsFiles) {
   let consoleOutput = "";
-  const originalConsoleError = console.error;
+  const originalConsoleError = console.error; // Mock console.error
   console.error = (message) => { consoleOutput += message; };
+  const correctErr = await fileStream.readFile(testsFiles.correctErr, 'utf-8');
 
   try {
-    await transpile(testsFiles.input, { output: testsFiles.output });
-    const output = await fs.readFile(testsFiles.output, 'utf-8');
-    const expected = await fs.readFile(testsFiles.expected, 'utf-8');
-    expect(removeSpaces(output)).to.equal(removeSpaces(expected));
-  } catch (e) {
-    const correctErr = await fs.readFile(testsFiles.correctErr, 'utf-8');
-    expect(removeSpaces(consoleOutput)).to.include(removeSpaces(correctErr.trim()));
+    await transpile(testsFiles.input);
+    const output = await fileStream.readFile(testsFiles.output, 'utf-8');
+    expect(removeSpaces(output)).to.equal(removeSpaces(correctErr));
+  } catch (error) {
+    await fileStream.writeFile(testsFiles.output, error.message);
+    expect(removeSpaces(consoleOutput)).to.equal(removeSpaces(correctErr));
   } finally {
-    console.error = originalConsoleError;
+    console.error = originalConsoleError; // Restore console.error
   }
 }
 

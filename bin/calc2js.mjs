@@ -19,32 +19,33 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const { version } = require("../package.json");
 import { transpile } from "../src/transpile.js";
-import run from "../src/run.js";
 
 program
   .version(version)
   .showSuggestionAfterError()
-
-program
-  .command("transpile")
   .argument("<file>", "file with the original code to transpile")
   .option("-o, --output <filename>", "file to write the transpiled code")
   .option("-v, --verbose", "show the generated code")
+  .option("-a, --ast", "shows the AST")
+  .option("-d, --declarations", "shows the declaration of the variables")
+  .option("-D, --definitions", "shows the definition of the variables")
+  .option("-r, --run", "run the generated code")
+  .option("-re, --return", "shows the value of the last sentence")
+  .option("-s, --string", "shows the value of the last sentence as a string")
   .description("Transpile an arithmetic expression into a JavaScript program")
-  .action((file, options) => {
-    transpile(file, options);
-  });
-
-program
-  .command("run")
-  .argument("<file>", "file with the original code to run")
-  .description("Transpile to JS the code and run it")
-  .option("-v, --verbose", "show the generated code")
-  .option("-r --return", "prints the value of the last sentence")
-  .option("-s, --string", "prints the value of the last sentence as a string")
-  .action((file, options) => {
-    run(file, options);
+  .action(async (file, options) => {
+    const transpileResult = await transpile(file, options);
+    if (options.run | options.string | options.return) {
+      const output = await eval(transpileResult);
+      if (options.string) {
+        console.log(output !== undefined ? output.toString() : "");
+      } else if (options.return) {
+        console.log(output !== undefined ? output : "");
+      }
+    }
   });
 
 // write the code to parse process.argv;
 program.parse(process.argv);
+
+export default program;

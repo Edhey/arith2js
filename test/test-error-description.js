@@ -35,6 +35,11 @@ module.exports = [
       correctErr: 'correct-test-err7.txt'
     },
 {
+      input: 'test-err-not-declared-2.calc',
+      output: 'outerr-test-err-not-declared-2.txt',
+      correctErr: 'correct-test-err-not-declared-2.txt'
+    },
+{
       input: 'test-err6.calc',
       output: 'outerr-test-err6.txt',
       correctErr: 'correct-test-err6.txt'
@@ -43,6 +48,11 @@ module.exports = [
       input: 'test-err8.calc',
       output: 'outerr-test-err8.txt',
       correctErr: 'correct-test-err8.txt'
+    },
+{
+      input: 'test-err-not-declared.calc',
+      output: 'outerr-test-err-not-declared.txt',
+      correctErr: 'correct-test-err-not-declared.txt'
     },
 {
       input: 'test-err10.calc',

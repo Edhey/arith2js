@@ -22,4 +22,4 @@ mkdir -p test/errors/correct-err
 cp "$error_file" "$syntax_error_file"
 
 # Run the transpiler and capture the error message
-bin/calc2js.mjs transpile -v "$syntax_error_file" 2> "$output_txt"
+bin/calc2js.mjs "$syntax_error_file" 2> "$output_txt"

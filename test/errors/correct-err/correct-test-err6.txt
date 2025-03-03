@@ -1,4 +1,4 @@
 Parse error on line 1:
 
 ^
-Expecting 'NUMBER', 'ID', '-', '|', '(', got 'EOF'
+Expecting 'NUMBER', 'ID', '-', '|', '(', 'PID', got 'EOF'
