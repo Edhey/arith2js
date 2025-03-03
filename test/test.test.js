@@ -70,7 +70,7 @@ describe('Example Test', function () {
   describe('Example Transpile Tests', function () {
     for (let i = 0; i < ExampleTest.length; i++) {
       it(`transpile(${ExampleTest[i].input}, ${ExampleTest[i].output})`, async function () {
-        checkTranspile(ExampleTest[i]);
+        await checkTranspile(ExampleTest[i]);
       });
     }
   });
@@ -82,7 +82,7 @@ describe('Example Test', function () {
   describe('Example Run Tests', function () {
     for (let i = 0; i < ExampleTest.length; i++) {
       it(`run function with ${ExampleTest[i].input}`, async function () {
-        checkRunConsoleLog(ExampleTest[i]);
+        await checkRunConsoleLog(ExampleTest[i]);
       });
     }
   });
@@ -99,7 +99,7 @@ describe('Simple Test', function () {
   describe('Simple Transpile Tests', function () {
     for (let i = 0; i < SimpleTest.length; i++) {
       it(`transpile(${SimpleTest[i].input}, ${SimpleTest[i].output})`, async function () {
-        checkTranspile(SimpleTest[i]);
+        await checkTranspile(SimpleTest[i]);
       });
     }
   });
@@ -111,7 +111,7 @@ describe('Simple Test', function () {
   describe('Simple Run Tests', function () {
     for (let i = 0; i < SimpleTest.length; i++) {
       it(`run function with ${SimpleTest[i].input}`, async function () {
-        checkRunConsoleLog(SimpleTest[i]);
+        await checkRunConsoleLog(SimpleTest[i]);
       });
     }
   });
@@ -128,7 +128,7 @@ describe('Hard Tests', function () {
   describe('Transpile Tests', function () {
     for (let i = 0; i < HardTest.length; i++) {
       it(`transpile(${HardTest[i].input}, ${HardTest[i].output})`, async function () {
-        checkTranspile(HardTest[i]);
+        await checkTranspile(HardTest[i]);
       });
     }
   });
@@ -140,7 +140,7 @@ describe('Hard Tests', function () {
   describe('Hard Run Tests', function () {
     for (let i = 0; i < HardTest.length; i++) {
       it(`run function with ${HardTest[i].input}`, async function () {
-        checkRunConsoleLog(HardTest[i]);
+        await checkRunConsoleLog(HardTest[i]);
       });
     }
   });
@@ -153,7 +153,7 @@ describe('Hard Tests', function () {
 describe('Syntax Error Tests', function () {
   for (let i = 0; i < ErrorSyntaxTest.length; i++) {
     it(`check syntax errors(${ErrorSyntaxTest[i].input}, ${ErrorSyntaxTest[i].output})`, async () => {
-      checkRunConsoleError(ErrorSyntaxTest[i]);
+      await checkRunConsoleError(ErrorSyntaxTest[i]);
     });
   }
 });

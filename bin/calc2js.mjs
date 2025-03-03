@@ -40,6 +40,8 @@ program
   .argument("<file>", "file with the original code to run")
   .description("Transpile to JS the code and run it")
   .option("-v, --verbose", "show the generated code")
+  .option("-r --return", "prints the value of the last sentence")
+  .option("-s, --string", "prints the value of the last sentence as a string")
   .action((file, options) => {
     run(file, options);
   });

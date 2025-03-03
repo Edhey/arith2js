@@ -24,9 +24,10 @@ const { transpile } = require('./transpile.js');
  */
 module.exports = async function run(inputFile, options) {
   try {
-    let output = await transpile(inputFile, options);
-    // output = output.replace(/\n/g, '');
-    eval(output);
+    const transpiledCode = await transpile(inputFile, options);
+    const output = eval(transpiledCode);
+    if (options.string) console.log(output.toString());
+    else if (options.return) console.log(output);
   } catch (e) {
     console.error(e.message);
   }
