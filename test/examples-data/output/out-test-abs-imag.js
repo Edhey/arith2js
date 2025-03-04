@@ -2,4 +2,4 @@ const { Complex } = require("/home/usuario/practicas/02-Translating-Arithmetic-E
 
 /* end of preamble of generated code */
 
-Complex("3i").neg().abs(); 
+Complex('3i').neg().abs(); 

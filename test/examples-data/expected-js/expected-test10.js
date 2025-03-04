@@ -2,4 +2,4 @@ const { gamma,Complex } = require("/home/usuario/practicas/02-Translating-Arithm
 
 /* end of preamble of generated code */
 
-gamma(Complex("4")); 
+gamma(Complex('4')); 

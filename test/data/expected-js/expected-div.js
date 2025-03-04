@@ -1,1 +1,1 @@
-print(Complex('1.5').div(Complex('2.5')).div(Complex('3.5').div(Complex('4.5')))); 
+Complex('1.5').div(Complex('2.5')).div(Complex('3.5').div(Complex('4.5'))); 

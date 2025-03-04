@@ -32,6 +32,7 @@ class Scope {
     this.parent = parent;
     this.initialized = new Set();
     this.used = new Set();
+    this.usedBeforeDeclaration = new Set();
     this.letDeclarations = [];
   }
 
@@ -58,6 +59,15 @@ class Scope {
    */
   setAsUsed(name) {
     this.used.add(name);
+  }
+
+  /**
+   * Marks a variable as used before declaration.
+   * @param {string} name - The name of the variable to mark as used before 
+   * declaration.
+   */
+  setAsUsedBeforeDeclaration(name) {
+    this.usedBeforeDeclaration.add(name);
   }
 
   /**
@@ -113,6 +123,12 @@ class Scope {
     const notDeclaredVariables = this.notDeclaredVariables();
     return this.showVariableErrorMessages(notDeclaredVariables,
       'Variable not declared:');
+  }
+
+  usedBeforeDeclarationVariablesAnalysis() {
+    const usedBeforeDeclarationVariables = this.usedBeforeDeclaration;
+    return this.showVariableErrorMessages(usedBeforeDeclarationVariables,
+      'Variable used before declaration:');
   }
 
   /**

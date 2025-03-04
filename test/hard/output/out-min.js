@@ -3,6 +3,6 @@ const { min,Complex } = require("/home/usuario/practicas/02-Translating-Arithmet
 /* end of preamble of generated code */
 
 min(
-    min(Complex("1").add(Complex("2i")), Complex("3").add(Complex("4i"))),
-    Complex("5").add(Complex("6i")).add(Complex("7").sub(Complex("8i")))
+  min(Complex('1').add(Complex('2i')), Complex('3').add(Complex('4i'))),
+  Complex('5').add(Complex('6i')).add(Complex('7').sub(Complex('8i')))
 ); 

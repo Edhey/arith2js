@@ -2,4 +2,4 @@ const { max,Complex } = require("/home/usuario/practicas/02-Translating-Arithmet
 
 /* end of preamble of generated code */
 
-max(Complex("4"), Complex("5")); 
+max(Complex('4'), Complex('5')); 

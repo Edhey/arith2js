@@ -13,8 +13,8 @@
 
 /** 
  * Build the root node of the AST
- * @param {object} child - The child node
- * @returns {object} - The root node
+ * @param {Object} child - The child node
+ * @returns {Object} - The root node
  */
 function buildRoot(child) {
   return {
@@ -32,7 +32,7 @@ function buildRoot(child) {
 /**
  * Build a literal node of the AST
  * @param {string} raw - The raw value of the literal
- * @returns {object} - Returns the literal node
+ * @returns {Object} - Returns the literal node
  */
 function buildLiteral(raw) {
   return {
@@ -57,8 +57,8 @@ function buildIdentifier(name) {
 /**
  * Build a call expression node of the AST
  * @param {string} callee - The name of the callee
- * @param {object[]} args - The arguments of the call expression
- * @returns {object} - The call expression node
+ * @param {Object[]} args - The arguments of the call expression
+ * @returns {Object} - The call expression node
  */
 function buildCallExpression(callee, args) {
   return {
@@ -73,9 +73,9 @@ function buildCallExpression(callee, args) {
 
 /**
  * Function to build a call member expression node
- * @param {object} callee The object that calls the member
- * @param {object} member Is the member to call
- * @param {object} args Are the arguments of the call
+ * @param {Object} callee The Object that calls the member
+ * @param {Object} member Is the member to call
+ * @param {Object} args Are the arguments of the call
  * @param {boolean} computed If the member is computed
  * @returns Returns the call member expression node
  */
@@ -97,9 +97,9 @@ function buildCallMemberExpression(callee, member, args, computed = false) {
 
 /**
  * Function to build an assignment expression node
- * @param {object} left The left side of the assignment
+ * @param {Object} left The left side of the assignment
  * @param {string} operator The operator of the assignment
- * @param {object} right The right side of the assignment
+ * @param {Object} right The right side of the assignment
  * @returns Returns the assignment expression node
  */
 function buildAssigmentExpression(left, operator, right) {
@@ -113,7 +113,7 @@ function buildAssigmentExpression(left, operator, right) {
 
 /**
  * Function to build a sequence expression node
- * @param {object[]} expressions The expressions of the sequence
+ * @param {Object[]} expressions The expressions of the sequence
  * @returns Returns the sequence expression node
  */
 function buildSequenceExpression(expressions) {
@@ -125,9 +125,9 @@ function buildSequenceExpression(expressions) {
 
 /**
  * Function to build a variable declaration node
- * @param {object array} declarations array of declarations
+ * @param {Object[]} declarations array of declarations
  * @param {string} kind kind of the declaration
- * @returns {object} variable declaration node of the AST
+ * @returns {Object} variable declaration node of the AST
  */
 function buildVariableDeclaration(declarations, kind = 'let') {
   return {
@@ -139,9 +139,9 @@ function buildVariableDeclaration(declarations, kind = 'let') {
 
 /**
  * Function to build a variable declarator node
- * @param {object array} body array of statements
- * @param {object} init initial value of the variable
- * @returns {object} node of the AST
+ * @param {Object[]} body array of statements
+ * @param {Object} init initial value of the variable
+ * @returns {Object} node of the AST
  */
 function buildVariableDeclarator(id, init = null) {
   return {

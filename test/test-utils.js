@@ -28,7 +28,7 @@ function removeSpaces(string) {
 /**
  * Function that executes the transpile function and checks the output result
  * removing spaces and requires
- * @param {object} testsFiles Object with the input, output, expectedjs and 
+ * @param {Object} testsFiles Object with the input, output, expectedjs and 
  * correctout files 
  * @param {boolean} unlink If true, it will delete the output file after 
  * checking
@@ -45,7 +45,7 @@ async function checkTranspile(testsFiles, unlink = false) {
 /**
  * Function that executes the run function and checks the output result
  * removing spaces and requires. It use mocking to check the console.log
- * @param {object} testsFiles Object with the input, output, expectedjs and
+ * @param {Object} testsFiles Object with the input, output, expectedjs and
  * correctout files
  * @param {boolean} verbose If true, it will show the console.log output
  */

@@ -2,4 +2,4 @@ const { max,Complex,min } = require("/home/usuario/practicas/02-Translating-Arit
 
 /* end of preamble of generated code */
 
-max(Complex("3"), min(Complex("4"), Complex("5"))); 
+max(Complex('3'), min(Complex('4'), Complex('5'))); 

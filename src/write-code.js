@@ -16,7 +16,7 @@ const fileStream = require('fs').promises;
 /**
  * Write the output to the output file
  * @param {string} output - The output code
- * @param {object} options - The options to transpile
+ * @param {Object} options - The options to transpile
  * @returns {string} - The output code
  */
 async function writeCode(output, options) {

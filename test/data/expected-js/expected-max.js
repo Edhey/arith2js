@@ -1,1 +1,1 @@
-print(max(Complex('1').add(Complex('2i')), Complex('5').add(Complex('6i')))); 
+Complex('1').add(Complex('2i')), Complex('5').add(Complex('6i')); 

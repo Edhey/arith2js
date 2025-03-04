@@ -18,20 +18,21 @@ const { renderFile } = require('template-file');
 
 /**
  * Generate the code from the AST
- * @param {object} ast - Abstract Syntax Tree
+ * @param {Object} ast - Abstract Syntax Tree
  * @returns {string} - The generated code
  */
 async function codeGeneration(ast) {
   let root = __dirname.replace(/\/src$/, ''); // get the root path (Linux)
   root = root.replace(/\\src$/, ''); // get the root path (Windows)
 
-  const code = recast.print(ast).code;
+  const recastOptions = { tabWidth: 2, quote: 'single' };
+  const code = recast.prettyPrint(ast, recastOptions).code;
   const dependencies = Array.from(findDependecies(ast).dependencies);
 
   if (dependencies.length === 0) // if there are no dependencies, return the code
     return code;
 
-  const renderedCode = await renderFile(`${root}/src/templates.js`, { dependencies, root, code });
+  const renderedCode = await renderFile(`${root}/src/templates.txt`, { dependencies, root, code });
   return renderedCode;
 }
 

@@ -18,7 +18,7 @@ const visit = astTypes.visit;
 
 /**
  * Detect what support functions are used: dependency analysis
- * @param {object} ast - The AST to analyze
+ * @param {Object} ast - The AST to analyze
  */
 function findDependecies(ast) {
   const functionNames = Object.keys(require("./support-lib.js"));
@@ -39,7 +39,7 @@ function findDependecies(ast) {
 
 /**
  * Analize the scope of the AST
- * @param {object} ast - The AST to analyze
+ * @param {Object} ast - The AST to analyze
  */
 const scopeAnalysis = (ast) => {
   const Scope = require('./scope-class.js');
@@ -59,9 +59,17 @@ const scopeAnalysis = (ast) => {
       this.traverse(path);
     },
     visitIdentifier(path) {
-      let name = path.node.name;
-      if (/^[$]/.test(name) && !ast.dependencies.has(name)) {
-        scope.setAsUsed(name);
+      const parent = path.parent.node;
+      const currentNodeName = path.node.name;
+      if (/^[$]/.test(currentNodeName)
+        && !ast.dependencies.has(currentNodeName)) {
+        if (!scope.has(currentNodeName)) {
+          scope.setAsUsedBeforeDeclaration(currentNodeName);
+        }
+        if (!(parent.type === 'AssignmentExpression'
+          && parent.left.name === currentNodeName)) {
+          scope.setAsUsed(currentNodeName);
+        }
       }
       this.traverse(path);
     },
@@ -80,6 +88,10 @@ const scopeAnalysis = (ast) => {
   let notUsedMessage = scope.notUsedVariablesAnalysis();
   if (notUsedMessage) {
     console.error(notUsedMessage);
+  }
+  let usedBeforeDeclarationMessage = scope.usedBeforeDeclarationVariablesAnalysis();
+  if (usedBeforeDeclarationMessage) {
+    console.error(usedBeforeDeclarationMessage);
   }
   return ast;
 };

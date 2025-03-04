@@ -2,4 +2,4 @@ const { Complex } = require("/home/usuario/practicas/02-Translating-Arithmetic-E
 
 /* end of preamble of generated code */
 
-Complex("1").add(Complex("2")).mul(Complex("3").add(Complex("4"))); 
+Complex('1').add(Complex('2')).mul(Complex('3').add(Complex('4'))); 

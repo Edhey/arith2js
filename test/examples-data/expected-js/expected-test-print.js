@@ -3,4 +3,4 @@ const { Complex,print } = require("/home/usuario/practicas/02-Translating-Arithm
 /* end of preamble of generated code */
 
 let $a, $b;
-($a = Complex("5").add(Complex("6i")), $b = Complex("3")), print($a.add($b)); 
+($a = Complex('5').add(Complex('6i')), $b = Complex('3')), print($a.add($b)); 

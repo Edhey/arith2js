@@ -1,1 +1,1 @@
-print(Complex('2').pow(Complex('3')).add(Complex('4').pow(Complex('2')))); 
+Complex('2').pow(Complex('3')).add(Complex('4').pow(Complex('2'))); 

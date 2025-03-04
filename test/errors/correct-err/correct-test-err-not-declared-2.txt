@@ -1,2 +1,6 @@
 Variable not declared: d
 Variable not declared: c
+Variable declared but not used: a
+Variable declared but not used: b
+Variable used before declaration: d
+Variable used before declaration: c

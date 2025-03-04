@@ -2,4 +2,4 @@ const { min,Complex } = require("/home/usuario/practicas/02-Translating-Arithmet
 
 /* end of preamble of generated code */
 
-min(Complex("2"), Complex("3")); 
+min(Complex('2'), Complex('3')); 
