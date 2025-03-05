@@ -34,9 +34,9 @@ class Scope {
     this.initialized = new Set();
     this.definitions = new Map();
 
-    this.usages = new Map();
     this.used = new Set();
-    
+    this.scope = new Map();
+
     this.usedBeforeDeclaration = new Set();
     this.letDeclarations = [];
   }
@@ -46,18 +46,33 @@ class Scope {
    * @param {string} name - The name of the variable to add.
    */
   add(name) {
-    this.initialized.add(name);
+    this.setAsInitialized(name);
     this.letDeclarations.push(buildVariableDeclarator(buildIdentifier(name)));
   }
 
   /**
    * Adds a variable definition to the scope.
-   * @param {string} name - The name of the variable to add.
    * @param {Object} node - The AST node representing the variable definition
    */
-  addDefinition(name, node) {
+  addDefinition(node) {
+    const name = node.left.name;
     this.definitions.set(name, node);
     this.add(name);
+    this.scope.set(name, { declaration: node, usage: [] });
+  }
+
+  /**
+   * Adds a variable usage to the scope.
+   * @param {Object} node - The AST node representing the variable usage.
+   */
+  addUsage(node) {
+    const name = node.name;
+    if (this.scope.get(name) === undefined) {
+      this.scope.set(name, { declaration: null, usage: [node] });
+    } else {
+      this.scope.get(name).usage.push(node);
+    }
+    this.setAsUsed(name);
   }
 
   /**

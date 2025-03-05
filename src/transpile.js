@@ -70,7 +70,9 @@ async function transpile(inputFile, options) {
 
   if (options.scope) {
     console.log("Scope:");
-    // console.log(JSON.stringify(ast.scope, null, 2));
+    for (const [key, value] of ast.scope.scope) {
+      console.log(key + " -> " + JSON.stringify(value, null, 2));
+    }
   }
 
   let output = await codeGeneration(ast); // 5. generate the output code (JS)

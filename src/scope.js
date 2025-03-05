@@ -50,9 +50,10 @@ const scopeAnalysis = (ast) => {
       const node = path.node;
       if (node.left.type === 'Identifier') {
         let name = node.left.name;
-        if (name && !scope.has(name)) {
-          if (!ast.dependencies.has(name)) {
-            scope.addDefinition(name, node);
+        if (!ast.dependencies.has(name)) {
+          if (name && !scope.has(name)) {
+            scope.addDefinition(node);
+            scope.addUsage(node.left);
           }
         }
       }
@@ -68,7 +69,7 @@ const scopeAnalysis = (ast) => {
         }
         if (!(parent.type === 'AssignmentExpression'
           && parent.left.name === currentNodeName)) {
-          scope.setAsUsed(currentNodeName);
+          scope.addUsage(path.node);
         }
       }
       this.traverse(path);
