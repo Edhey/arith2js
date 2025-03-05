@@ -1,1 +1,1 @@
-print(gamma(Complex('3')).neg().sub(Complex('2i')).abs()); 
+gamma(Complex('3')).neg().sub(Complex('2i')).abs(); 

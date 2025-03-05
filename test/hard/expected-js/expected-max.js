@@ -1,1 +1,1 @@
-print(max(min(Complex('1').add(Complex('2i')), Complex('3').add(Complex('4i'))), Complex('5').add(Complex('6i')).mul(Complex('7').add(Complex('8i'))))); 
+max(min(Complex('1').add(Complex('2i')), Complex('3').add(Complex('4i'))), Complex('5').add(Complex('6i')).mul(Complex('7').add(Complex('8i')))); 

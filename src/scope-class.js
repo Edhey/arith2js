@@ -31,6 +31,8 @@ class Scope {
   constructor(parent) {
     this.parent = parent;
     this.initialized = new Set();
+    this.definitions = new Map();
+    this.scope = new Map();
     this.used = new Set();
     this.usedBeforeDeclaration = new Set();
     this.letDeclarations = [];
@@ -43,6 +45,15 @@ class Scope {
   add(name) {
     this.initialized.add(name);
     this.letDeclarations.push(buildVariableDeclarator(buildIdentifier(name)));
+  }
+
+  /**
+   * Adds a variable definition to the scope.
+   * @param {string} name - The name of the variable to add.
+   * @param {Object} node - The AST node representing the variable definition
+   */
+  addDefinition(name, node) {
+    this.definitions.set(name, node);
   }
 
   /**

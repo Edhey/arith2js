@@ -24,7 +24,7 @@ function findDependecies(ast) {
   const functionNames = Object.keys(require("./support-lib.js"));
 
   ast.dependencies = new Set([]);
-  visit(ast, {
+  visit(ast.ast, {
     visitCallExpression(path) {
       const node = path.node;
       let name = node.callee.name;
@@ -45,7 +45,7 @@ const scopeAnalysis = (ast) => {
   const Scope = require('./scope-class.js');
   let scope = new Scope(null);
 
-  visit(ast, {
+  visit(ast.ast, {
     visitAssignmentExpression(path) {
       const node = path.node;
       if (node.left.type === 'Identifier') {
@@ -76,7 +76,7 @@ const scopeAnalysis = (ast) => {
   });
 
   if (scope.length > 0) {
-    ast.body.unshift(scope.buildDeclaration());
+    ast.ast.body.unshift(scope.buildDeclaration(ast.ast.loc));
   }
 
   ast.scope = scope;

@@ -57,6 +57,11 @@ async function transpile(inputFile, options) {
 
   ast = findDependecies(ast); // 3. find the dependencies
   ast = scopeAnalysis(ast); // 4. create the scope
+  if (options.ast)
+    console.log(JSON.stringify(ast, null, 2));
+
+  if (options.scope)
+    console.log(ast.scope.stringify());
 
   let output = await codeGeneration(ast); // 5. generate the output code (JS)
 

@@ -84,7 +84,7 @@ performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* actio
 var $0 = $$.length - 1;
 switch (yystate) {
 case 1:
- return buildRoot($$[$0-1]); 
+ return { ast: buildRoot($$[$0-1]) }; 
 break;
 case 2:
  this.$ = buildCallExpression('Complex', [buildLiteral($$[$0])]) 

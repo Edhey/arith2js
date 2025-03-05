@@ -28,7 +28,7 @@ const {
 %%
 // console.log(JSON.stringify($1, null, 2));
 endExpresion: 
-    expresion EOF { return buildRoot($1); } // End of expression
+    expresion EOF { return { ast: buildRoot($1) }; } // End of expression
 ;
 
 expresion: 

@@ -27,11 +27,12 @@ program
   .option("-o, --output <filename>", "file to write the transpiled code")
   .option("-v, --verbose", "show the generated code")
   .option("-a, --ast", "shows the AST")
+  .option("-s, --scope", "shows the scope")
   .option("-d, --declarations", "shows the declaration of the variables")
   .option("-D, --definitions", "shows the definition of the variables")
   .option("-r, --run", "run the generated code")
   .option("-re, --return", "shows the value of the last sentence")
-  .option("-s, --string", "shows the value of the last sentence as a string")
+  .option("-S, --string", "shows the value of the last sentence as a string")
   .description("Transpile an arithmetic expression into a JavaScript program")
   .action(async (file, options) => {
     const transpileResult = await transpile(file, options);

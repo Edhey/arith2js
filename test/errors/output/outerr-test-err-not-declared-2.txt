@@ -1,1 +1,1 @@
-Cannot read properties of undefined (reading 'verbose')
+Cannot read properties of undefined (reading 'ast')
