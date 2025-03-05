@@ -30,10 +30,13 @@ class Scope {
    */
   constructor(parent) {
     this.parent = parent;
+
     this.initialized = new Set();
     this.definitions = new Map();
-    this.scope = new Map();
+
+    this.usages = new Map();
     this.used = new Set();
+    
     this.usedBeforeDeclaration = new Set();
     this.letDeclarations = [];
   }
@@ -54,6 +57,7 @@ class Scope {
    */
   addDefinition(name, node) {
     this.definitions.set(name, node);
+    this.add(name);
   }
 
   /**

@@ -16,29 +16,32 @@
  * @param {Object} child - The child node
  * @returns {Object} - The root node
  */
-function buildRoot(child) {
+function buildRoot(child, location) {
   return {
     type: 'Program',
     body: [
       {
         type: 'ExpressionStatement',
         expression: child,
+        loc: location,
       },
     ],
+    loc: location,
     sourceType: 'script',
   };
 }
 
 /**
  * Build a literal node of the AST
- * @param {string} raw - The raw value of the literal
+ * @param {string} value - The raw value of the literal
  * @returns {Object} - Returns the literal node
  */
-function buildLiteral(raw) {
+function buildLiteral(value, location) {
   return {
     type: 'Literal',
-    value: raw,
-    raw: `"${raw}"`,
+    value: value,
+    raw: `"${value}"`,
+    loc: location
   };
 }
 
@@ -47,10 +50,11 @@ function buildLiteral(raw) {
  * @param {string} name The name of the identifier
  * @returns Returns the identifier node
  */
-function buildIdentifier(name) {
+function buildIdentifier(name, location) {
   return {
     type: 'Identifier',
     name: name,
+    loc: location,
   };
 }
 
@@ -60,7 +64,7 @@ function buildIdentifier(name) {
  * @param {Object[]} args - The arguments of the call expression
  * @returns {Object} - The call expression node
  */
-function buildCallExpression(callee, args) {
+function buildCallExpression(callee, args, location) {
   return {
     type: 'CallExpression',
     callee: {
@@ -68,6 +72,7 @@ function buildCallExpression(callee, args) {
       name: callee,
     },
     arguments: args,
+    loc: location,
   };
 }
 
@@ -79,7 +84,7 @@ function buildCallExpression(callee, args) {
  * @param {boolean} computed If the member is computed
  * @returns Returns the call member expression node
  */
-function buildCallMemberExpression(callee, member, args, computed = false) {
+function buildCallMemberExpression(callee, member, args, computed = false, startLocation, endLocation) {
   return {
     type: 'CallExpression',
     callee: {
@@ -92,6 +97,10 @@ function buildCallMemberExpression(callee, member, args, computed = false) {
       computed: computed,
     },
     arguments: args,
+    loc: {
+      start: startLocation,
+      end: endLocation,
+    },
   };
 }
 
@@ -102,12 +111,16 @@ function buildCallMemberExpression(callee, member, args, computed = false) {
  * @param {Object} right The right side of the assignment
  * @returns Returns the assignment expression node
  */
-function buildAssigmentExpression(left, operator, right) {
+function buildAssigmentExpression(left, operator, right, startLocation, endLocation) {
   return {
     type: 'AssignmentExpression',
     operator: operator,
     left: left,
     right: right,
+    loc: {
+      start: startLocation,
+      end: endLocation,
+    },
   };
 }
 
@@ -116,10 +129,14 @@ function buildAssigmentExpression(left, operator, right) {
  * @param {Object[]} expressions The expressions of the sequence
  * @returns Returns the sequence expression node
  */
-function buildSequenceExpression(expressions) {
+function buildSequenceExpression(expressions, startLocation, endLocation) {
   return {
     type: 'SequenceExpression',
     expressions: expressions,
+    loc: {
+      start: startLocation,
+      end: endLocation,
+    },
   };
 }
 

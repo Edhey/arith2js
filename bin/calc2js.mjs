@@ -28,7 +28,6 @@ program
   .option("-v, --verbose", "show the generated code")
   .option("-a, --ast", "shows the AST")
   .option("-s, --scope", "shows the scope")
-  .option("-d, --declarations", "shows the declaration of the variables")
   .option("-D, --definitions", "shows the definition of the variables")
   .option("-r, --run", "run the generated code")
   .option("-re, --return", "shows the value of the last sentence")

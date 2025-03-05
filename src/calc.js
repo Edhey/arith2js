@@ -84,55 +84,55 @@ performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* actio
 var $0 = $$.length - 1;
 switch (yystate) {
 case 1:
- return { ast: buildRoot($$[$0-1]) }; 
+ return { ast: buildRoot($$[$0-1], _$[$0-1]) }; 
 break;
 case 2:
- this.$ = buildCallExpression('Complex', [buildLiteral($$[$0])]) 
+ this.$ = buildCallExpression('Complex', [buildLiteral($$[$0], _$[$0])], _$[$0]); 
 break;
 case 3:
- this.$ = buildIdentifier('$' + $$[$0]) 
+ this.$ = buildIdentifier('$' + $$[$0], _$[$0]); 
 break;
 case 4:
- this.$ = buildCallMemberExpression($$[$0-2], 'add', [$$[$0]]); 
+ this.$ = buildCallMemberExpression($$[$0-2], 'add', [$$[$0]], false, _$[$0-2], _$[$0]); 
 break;
 case 5:
- this.$ = buildCallMemberExpression($$[$0-2], 'sub', [$$[$0]]); 
+ this.$ = buildCallMemberExpression($$[$0-2], 'sub', [$$[$0]], false, _$[$0-2], _$[$0]); 
 break;
 case 6:
- this.$ = buildCallMemberExpression($$[$0-2], 'mul', [$$[$0]]); 
+ this.$ = buildCallMemberExpression($$[$0-2], 'mul', [$$[$0]], false, _$[$0-2], _$[$0]); 
 break;
 case 7:
- this.$ = buildCallMemberExpression($$[$0-2], 'div', [$$[$0]]); 
+ this.$ = buildCallMemberExpression($$[$0-2], 'div', [$$[$0]], false, _$[$0-2], _$[$0]); 
 break;
 case 8:
- this.$ = buildCallMemberExpression($$[$0], 'neg', []); 
+ this.$ = buildCallMemberExpression($$[$0], 'neg', [], false, _$[$0-1], _$[$0]); 
 break;
 case 9:
- this.$ = buildCallMemberExpression($$[$0-2], 'pow', [$$[$0]]); 
+ this.$ = buildCallMemberExpression($$[$0-2], 'pow', [$$[$0]], false, _$[$0-2], _$[$0]); 
 break;
 case 10:
- this.$ = buildCallMemberExpression($$[$0-1], 'abs', []); 
+ this.$ = buildCallMemberExpression($$[$0-1], 'abs', [], false, _$[$0-2], _$[$0]); 
 break;
 case 11:
- this.$ = buildCallExpression('gamma', [$$[$0-1]]); 
+ this.$ = buildCallExpression('gamma', [$$[$0-1]], _$[$0-1], _$[$0]); 
 break;
 case 12:
- this.$ = buildCallExpression('min', [$$[$0-2], $$[$0]]); 
+ this.$ = buildCallExpression('min', [$$[$0-2], $$[$0]], _$[$0-2], _$[$0]); 
 break;
 case 13:
- this.$ = buildCallExpression('max', [$$[$0-2], $$[$0]]); 
+ this.$ = buildCallExpression('max', [$$[$0-2], $$[$0]], _$[$0-2], _$[$0]); 
 break;
 case 14:
- this.$ = buildAssigmentExpression(buildIdentifier('$' + $$[$0-2]), '=', $$[$0]) 
+ this.$ = buildAssigmentExpression(buildIdentifier('$' + $$[$0-2], _$[$0-2]), '=', $$[$0], _$[$0-2], _$[$0]); 
 break;
 case 15:
- this.$ = buildSequenceExpression([$$[$0-2], $$[$0]]) 
+ this.$ = buildSequenceExpression([$$[$0-2], $$[$0]], _$[$0-2], _$[$0]); 
 break;
 case 16:
  this.$ = $$[$0-1]; 
 break;
 case 17:
- this.$ = buildCallExpression($$[$0-3], [$$[$0-1]]); 
+ this.$ = buildCallExpression($$[$0-3], [$$[$0-1]], _$[$0-3], _$[$0]); 
 break;
 }
 },

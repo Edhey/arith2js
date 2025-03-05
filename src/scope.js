@@ -52,7 +52,7 @@ const scopeAnalysis = (ast) => {
         let name = node.left.name;
         if (name && !scope.has(name)) {
           if (!ast.dependencies.has(name)) {
-            scope.add(name);
+            scope.addDefinition(name, node);
           }
         }
       }
