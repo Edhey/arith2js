@@ -65,4 +65,58 @@ module.exports = [
     expected: 'expected-add.js',
     correctOut: 'correct-out-add.txt'
   },
+  {
+    input: 'test-var-sub.calc',
+    output: 'out-test-var-sub.js',
+    expected: 'expected-test-var-sub.js',
+    correctOut: 'correct-out-test-var-sub.txt'
+  },
+  {
+    input: 'test-var-div.calc',
+    output: 'out-test-var-div.js',
+    expected: 'expected-test-var-div.js',
+    correctOut: 'correct-out-test-var-div.txt'
+  },
+  {
+    input: 'test-var-max.calc',
+    output: 'out-test-var-max.js',
+    expected: 'expected-test-var-max.js',
+    correctOut: 'correct-out-test-var-max.txt'
+  },
+  {
+    input: 'test-var-min.calc',
+    output: 'out-test-var-min.js',
+    expected: 'expected-test-var-min.js',
+    correctOut: 'correct-out-test-var-min.txt'
+  },
+  {
+    input: 'test-var-fact.calc',
+    output: 'out-test-var-fact.js',
+    expected: 'expected-test-var-fact.js',
+    correctOut: 'correct-out-test-var-fact.txt'
+  },
+  {
+    input: 'test-var-exp.calc',
+    output: 'out-test-var-exp.js',
+    expected: 'expected-test-var-exp.js',
+    correctOut: 'correct-out-test-var-exp.txt'
+  },
+  {
+    input: 'test-var-Usub.calc',
+    output: 'out-test-var-Usub.js',
+    expected: 'expected-test-var-Usub.js',
+    correctOut: 'correct-out-test-var-Usub.txt'
+  },
+  {
+    input: 'test-var-plus.calc',
+    output: 'out-test-var-plus.js',
+    expected: 'expected-test-var-plus.js',
+    correctOut: 'correct-out-test-var-plus.txt'
+  },
+  {
+    input: 'test-var-add.calc',
+    output: 'out-test-var-add.js',
+    expected: 'expected-test-var-add.js',
+    correctOut: 'correct-out-test-var-add.txt'
+  },
 ]

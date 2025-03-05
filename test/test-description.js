@@ -65,4 +65,76 @@ module.exports = [
     expected: 'expected-add.js',
     correctOut: 'correct-out-add.txt'
   },
+  {
+    input: 'test-var4.calc',
+    output: 'out-test-var4.js',
+    expected: 'expected-test-var4.js',
+    correctOut: 'correct-out-test-var4.txt'
+  },
+  {
+    input: 'test-var5.calc',
+    output: 'out-test-var5.js',
+    expected: 'expected-test-var5.js',
+    correctOut: 'correct-out-test-var5.txt'
+  },
+  {
+    input: 'test-var6.calc',
+    output: 'out-test-var6.js',
+    expected: 'expected-test-var6.js',
+    correctOut: 'correct-out-test-var6.txt'
+  },
+  {
+    input: 'test-var.calc',
+    output: 'out-test-var.js',
+    expected: 'expected-test-var.js',
+    correctOut: 'correct-out-test-var.txt'
+  },
+  {
+    input: 'test-var2.calc',
+    output: 'out-test-var2.js',
+    expected: 'expected-test-var2.js',
+    correctOut: 'correct-out-test-var2.txt'
+  },
+  {
+    input: 'test-var3.calc',
+    output: 'out-test-var3.js',
+    expected: 'expected-test-var3.js',
+    correctOut: 'correct-out-test-var3.txt'
+  },
+  {
+    input: 'test-var-plus-print.calc',
+    output: 'out-test-var-plus-print.js',
+    expected: 'expected-test-var-plus-print.js',
+    correctOut: 'correct-out-test-var-plus-print.txt'
+  },
+  {
+    input: 'test-var-sub-print.calc',
+    output: 'out-test-var-sub-print.js',
+    expected: 'expected-test-var-sub-print.js',
+    correctOut: 'correct-out-test-var-sub-print.txt'
+  },
+  {
+    input: 'test-var-exp-print.calc',
+    output: 'out-test-var-exp-print.js',
+    expected: 'expected-test-var-exp-print.js',
+    correctOut: 'correct-out-test-var-exp-print.txt'
+  },
+  {
+    input: 'test-var-add-print.calc',
+    output: 'out-test-var-add-print.js',
+    expected: 'expected-test-var-add-print.js',
+    correctOut: 'correct-out-test-var-add-print.txt'
+  },
+  {
+    input: 'test-var-div-print.calc',
+    output: 'out-test-var-div-print.js',
+    expected: 'expected-test-var-div-print.js',
+    correctOut: 'correct-out-test-var-div-print.txt'
+  },
+  {
+    input: 'test-var-fact-print.calc',
+    output: 'out-test-var-fact-print.js',
+    expected: 'expected-test-var-fact-print.js',
+    correctOut: 'correct-out-test-var-fact-print.txt'
+  },
 ]
