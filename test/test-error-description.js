@@ -1,5 +1,10 @@
 module.exports = [
 {
+      input: 'test-err-bad-use1.calc',
+      output: 'outerr-test-err-bad-use1.txt',
+      correctErr: 'correct-test-err-bad-use1.txt'
+    },
+{
       input: 'test-err5.calc',
       output: 'outerr-test-err5.txt',
       correctErr: 'correct-test-err5.txt'
@@ -30,6 +35,11 @@ module.exports = [
       correctErr: 'correct-test-err2.txt'
     },
 {
+      input: 'test-err-variables.calc',
+      output: 'outerr-test-err-variables.txt',
+      correctErr: 'correct-test-err-variables.txt'
+    },
+{
       input: 'test-err7.calc',
       output: 'outerr-test-err7.txt',
       correctErr: 'correct-test-err7.txt'
@@ -38,6 +48,11 @@ module.exports = [
       input: 'test-err-not-declared-2.calc',
       output: 'outerr-test-err-not-declared-2.txt',
       correctErr: 'correct-test-err-not-declared-2.txt'
+    },
+{
+      input: 'test-err-definitions.calc',
+      output: 'outerr-test-err-definitions.txt',
+      correctErr: 'correct-test-err-definitions.txt'
     },
 {
       input: 'test-err6.calc',

@@ -53,7 +53,6 @@ const scopeAnalysis = (ast) => {
         if (!ast.dependencies.has(name)) {
           if (name && !scope.has(name)) {
             scope.addDefinition(node);
-            scope.addUsage(node.left);
           }
         }
       }
@@ -65,7 +64,7 @@ const scopeAnalysis = (ast) => {
       if (/^[$]/.test(currentNodeName)
         && !ast.dependencies.has(currentNodeName)) {
         if (!scope.has(currentNodeName)) {
-          scope.setAsUsedBeforeDeclaration(currentNodeName);
+          scope.setAsUsedBeforeDeclaration(path.node);
         }
         if (!(parent.type === 'AssignmentExpression'
           && parent.left.name === currentNodeName)) {

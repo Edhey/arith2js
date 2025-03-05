@@ -18,7 +18,6 @@ const {
   buildVariableDeclarator,
 } = require('./ast-build.js');
 
-
 /**
  * Represents a scope in which variables can be declared, initialized, and used.
  * This class helps in tracking variable declarations and usage within a given scope.
@@ -37,7 +36,7 @@ class Scope {
     this.used = new Set();
     this.scope = new Map();
 
-    this.usedBeforeDeclaration = new Set();
+    this.usedBeforeDeclaration = [];
     this.letDeclarations = [];
   }
 
@@ -52,7 +51,7 @@ class Scope {
 
   /**
    * Adds a variable definition to the scope.
-   * @param {Object} node - The AST node representing the variable definition
+   * @param {Object} node - The AST node representing the variable definition.
    */
   addDefinition(node) {
     const name = node.left.name;
@@ -93,11 +92,10 @@ class Scope {
 
   /**
    * Marks a variable as used before declaration.
-   * @param {string} name - The name of the variable to mark as used before 
-   * declaration.
+   * @param {string} node - The AST node representing the variable usage.
    */
-  setAsUsedBeforeDeclaration(name) {
-    this.usedBeforeDeclaration.add(name);
+  setAsUsedBeforeDeclaration(node) {
+    this.usedBeforeDeclaration.push(node);
   }
 
   /**
@@ -131,9 +129,11 @@ class Scope {
    * @returns {String[]} array of strings with the not used variables
    */
   notUsedVariablesAnalysis() {
-    const notUsedVariables = this.notUsedVariables();
-    return this.showVariableErrorMessages(notUsedVariables,
-      'Variable declared but not used:');
+    let messages = [];
+    for (const variable of this.notUsedVariables()) {
+      messages.push(`Variable ${variable} declared but not used`);
+    }
+    return this.showVariableErrorMessages(messages);
   }
 
   /**
@@ -145,32 +145,42 @@ class Scope {
   }
 
   /**
-   * Returns the variables that are declared but not used as an array
-   * of strings
-   * @returns {string[]} array of strings with the not used variables
+   * Returns the message with the variables that are declared but not used as an
+   * array of strings
+   * @returns {String[]} array of strings with the not used variables
    */
   notDeclaredVariablesAnalysis() {
-    const notDeclaredVariables = this.notDeclaredVariables();
-    return this.showVariableErrorMessages(notDeclaredVariables,
-      'Variable not declared:');
+    let messages = [];
+    for (const variable of this.notDeclaredVariables()) {
+      messages.push(`Variable ${variable} not declared`);
+    }
+    return this.showVariableErrorMessages(messages);
   }
 
+  /**
+   * Returns the message with the variables that are used before declaration
+   * @returns {Set} set of variables used before declaration
+   */
   usedBeforeDeclarationVariablesAnalysis() {
-    const usedBeforeDeclarationVariables = this.usedBeforeDeclaration;
-    return this.showVariableErrorMessages(usedBeforeDeclarationVariables,
-      'Variable used before declaration:');
+    let messages = [];
+    const usedBeforeDeclaration = this.usedBeforeDeclaration.filter(
+                          node => !this.notDeclaredVariables().has(node.name));
+    for (const node of usedBeforeDeclaration) {
+      messages.push(`Variable ${node.name} used before declaration at line` +
+        ` ${node.loc.first_line}, column ${node.loc.last_column}`);
+    }
+    return this.showVariableErrorMessages(messages);
   }
 
   /**
    * Helper function to show the errors related with variables
+   * @param {String[]} messages - array of strings with the error messages
    * @returns {String} string with the error messages or null if there are no 
    * errors
    */
-  showVariableErrorMessages(variables, message) {
-    if (variables.size > 0) {
-      return Array.from(variables).
-        map(element => element.replace(/^[$]/, '')).
-        map(element => `${message} ${element}`).join('\n');
+  showVariableErrorMessages(messages) {
+    if (messages.length > 0) {
+      return messages.map(message => message.replace(/\$/, '')).join('\n');
     }
     return null;
   }

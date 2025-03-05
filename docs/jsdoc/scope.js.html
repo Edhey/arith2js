@@ -26,7 +26,7 @@ function findDependecies(ast) {
   const functionNames = Object.keys(require("./support-lib.js"));
 
   ast.dependencies = new Set([]);
-  visit(ast, {
+  visit(ast.ast, {
     visitCallExpression(path) {
       const node = path.node;
       let name = node.callee.name;
@@ -47,14 +47,14 @@ const scopeAnalysis = (ast) => {
   const Scope = require('./scope-class.js');
   let scope = new Scope(null);
 
-  visit(ast, {
+  visit(ast.ast, {
     visitAssignmentExpression(path) {
       const node = path.node;
       if (node.left.type === 'Identifier') {
         let name = node.left.name;
-        if (name &amp;&amp; !scope.has(name)) {
-          if (!ast.dependencies.has(name)) {
-            scope.add(name);
+        if (!ast.dependencies.has(name)) {
+          if (name &amp;&amp; !scope.has(name)) {
+            scope.addDefinition(node);
           }
         }
       }
@@ -66,11 +66,11 @@ const scopeAnalysis = (ast) => {
       if (/^[$]/.test(currentNodeName)
         &amp;&amp; !ast.dependencies.has(currentNodeName)) {
         if (!scope.has(currentNodeName)) {
-          scope.setAsUsedBeforeDeclaration(currentNodeName);
+          scope.setAsUsedBeforeDeclaration(path.node);
         }
         if (!(parent.type === 'AssignmentExpression'
           &amp;&amp; parent.left.name === currentNodeName)) {
-          scope.setAsUsed(currentNodeName);
+          scope.addUsage(path.node);
         }
       }
       this.traverse(path);
@@ -78,7 +78,7 @@ const scopeAnalysis = (ast) => {
   });
 
   if (scope.length > 0) {
-    ast.body.unshift(scope.buildDeclaration());
+    ast.ast.body.unshift(scope.buildDeclaration(ast.ast.loc));
   }
 
   ast.scope = scope;

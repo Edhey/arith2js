@@ -16,9 +16,10 @@
 /** 
  * Build the root node of the AST
  * @param {Object} child - The child node
+ * @param {Object} location - The location information
  * @returns {Object} - The root node
  */
-function buildRoot(child) {
+function buildRoot(child, location) {
   return {
     type: 'Program',
     body: [
@@ -27,32 +28,37 @@ function buildRoot(child) {
         expression: child,
       },
     ],
+    loc: location,
     sourceType: 'script',
   };
 }
 
 /**
  * Build a literal node of the AST
- * @param {string} raw - The raw value of the literal
- * @returns {Object} - Returns the literal node
+ * @param {string} value - The raw value of the literal
+ * @param {Object} location - The location information
+ * @returns {Object} - The literal node
  */
-function buildLiteral(raw) {
+function buildLiteral(value, location) {
   return {
     type: 'Literal',
-    value: raw,
-    raw: `"${raw}"`,
+    value: value,
+    raw: `"${value}"`,
+    loc: location
   };
 }
 
 /**
- * Function to build a identifier node
- * @param {string} name The name of the identifier
- * @returns Returns the identifier node
+ * Build an identifier node of the AST
+ * @param {string} name - The name of the identifier
+ * @param {Object} location - The location information
+ * @returns {Object} - The identifier node
  */
-function buildIdentifier(name) {
+function buildIdentifier(name, location) {
   return {
     type: 'Identifier',
     name: name,
+    loc: location,
   };
 }
 
@@ -60,9 +66,10 @@ function buildIdentifier(name) {
  * Build a call expression node of the AST
  * @param {string} callee - The name of the callee
  * @param {Object[]} args - The arguments of the call expression
+ * @param {Object} location - The location information
  * @returns {Object} - The call expression node
  */
-function buildCallExpression(callee, args) {
+function buildCallExpression(callee, args, location) {
   return {
     type: 'CallExpression',
     callee: {
@@ -70,23 +77,26 @@ function buildCallExpression(callee, args) {
       name: callee,
     },
     arguments: args,
+    loc: location,
   };
 }
 
 /**
- * Function to build a call member expression node
- * @param {Object} callee The Object that calls the member
- * @param {Object} member Is the member to call
- * @param {Object} args Are the arguments of the call
- * @param {boolean} computed If the member is computed
- * @returns Returns the call member expression node
+ * Build a call member expression node of the AST
+ * @param {Object} callee - The object that calls the member
+ * @param {string} member - The member to call
+ * @param {Object[]} args - The arguments of the call
+ * @param {boolean} computed - If the member is computed
+ * @param {Object} startLocation - The start location information
+ * @param {Object} endLocation - The end location information
+ * @returns {Object} - The call member expression node
  */
-function buildCallMemberExpression(callee, member, args, computed = false) {
+function buildCallMemberExpression(callee, member, args, computed = false, startLocation, endLocation) {
   return {
     type: 'CallExpression',
     callee: {
       type: 'MemberExpression',
-      Object: callee,
+      object: callee,
       property: {
         type: 'Identifier',
         name: member,
@@ -94,42 +104,58 @@ function buildCallMemberExpression(callee, member, args, computed = false) {
       computed: computed,
     },
     arguments: args,
+    loc: {
+      start: startLocation,
+      end: endLocation,
+    },
   };
 }
 
 /**
- * Function to build an assignment expression node
- * @param {Object} left The left side of the assignment
- * @param {string} operator The operator of the assignment
- * @param {Object} right The right side of the assignment
- * @returns Returns the assignment expression node
+ * Build an assignment expression node of the AST
+ * @param {Object} left - The left side of the assignment
+ * @param {string} operator - The operator of the assignment
+ * @param {Object} right - The right side of the assignment
+ * @param {Object} startLocation - The start location information
+ * @param {Object} endLocation - The end location information
+ * @returns {Object} - The assignment expression node
  */
-function buildAssigmentExpression(left, operator, right) {
+function buildAssigmentExpression(left, operator, right, startLocation, endLocation) {
   return {
     type: 'AssignmentExpression',
     operator: operator,
     left: left,
     right: right,
+    loc: {
+      start: startLocation,
+      end: endLocation,
+    },
   };
 }
 
 /**
- * Function to build a sequence expression node
- * @param {Object[]} expressions The expressions of the sequence
- * @returns Returns the sequence expression node
+ * Build a sequence expression node of the AST
+ * @param {Object[]} expressions - The expressions of the sequence
+ * @param {Object} startLocation - The start location information
+ * @param {Object} endLocation - The end location information
+ * @returns {Object} - The sequence expression node
  */
-function buildSequenceExpression(expressions) {
+function buildSequenceExpression(expressions, startLocation, endLocation) {
   return {
     type: 'SequenceExpression',
     expressions: expressions,
+    loc: {
+      start: startLocation,
+      end: endLocation,
+    },
   };
 }
 
 /**
- * Function to build a variable declaration node
- * @param {Object[]} declarations array of declarations
- * @param {string} kind kind of the declaration
- * @returns {Object} variable declaration node of the AST
+ * Build a variable declaration node of the AST
+ * @param {Object[]} declarations - Array of declarations
+ * @param {string} kind - Kind of the declaration (e.g., 'let', 'const', 'var')
+ * @returns {Object} - The variable declaration node
  */
 function buildVariableDeclaration(declarations, kind = 'let') {
   return {
@@ -140,10 +166,10 @@ function buildVariableDeclaration(declarations, kind = 'let') {
 }
 
 /**
- * Function to build a variable declarator node
- * @param {Object[]} body array of statements
- * @param {Object} init initial value of the variable
- * @returns {Object} node of the AST
+ * Build a variable declarator node of the AST
+ * @param {Object} id - The identifier of the variable
+ * @param {Object} init - The initial value of the variable
+ * @returns {Object} - The variable declarator node
  */
 function buildVariableDeclarator(id, init = null) {
   return {
@@ -163,4 +189,4 @@ module.exports = {
   buildSequenceExpression,
   buildVariableDeclaration,
   buildVariableDeclarator,
-}</code></pre></article></section></div></div></div><div class="search-container" id="PkfLWpAbet" style="display:none"><div class="wrapper" id="iCxFxjkHbP"><button class="icon-button search-close-button" id="VjLlGakifb" aria-label="close search"><svg><use xlink:href="#close-icon"></use></svg></button><div class="search-box-c"><svg><use xlink:href="#search-icon"></use></svg> <input type="text" id="vpcKVYIppa" class="search-input" placeholder="Search..." autofocus></div><div class="search-result-c" id="fWwVHRuDuN"><span class="search-result-c-text">Type anything to view search result</span></div></div></div><div class="mobile-menu-icon-container"><button class="icon-button" id="mobile-menu" data-isopen="false" aria-label="menu"><svg><use xlink:href="#menu-icon"></use></svg></button></div><div id="mobile-sidebar" class="mobile-sidebar-container"><div class="mobile-sidebar-wrapper"><div class="mobile-nav-links"><div class="navbar-item"><a id="" href="https://apuntes-pl.vercel.app/labs/scope-intro" target="_self">PL Lab scope-intro Description</a></div><div class="navbar-item"><a id="" href="../coverage/" target="_self">Coverage Report</a></div><div class="navbar-item"><a id="" href="../" target="_self">Lab documentation</a></div></div><div class="mobile-sidebar-items-c"><div class="sidebar-section-title with-arrow" data-isopen="false" id="sidebar-classes"><div>Classes</div><svg><use xlink:href="#down-icon"></use></svg></div><div class="sidebar-section-children-container"><div class="sidebar-section-children"><a href="Scope.html">Scope</a></div></div><div class="sidebar-section-title with-arrow" data-isopen="false" id="sidebar-global"><div>Global</div><svg><use xlink:href="#down-icon"></use></svg></div><div class="sidebar-section-children-container"><div class="sidebar-section-children"><a href="global.html#Complex">Complex</a></div><div class="sidebar-section-children"><a href="global.html#astTypes">astTypes</a></div><div class="sidebar-section-children"><a href="global.html#buildAssigmentExpression">buildAssigmentExpression</a></div><div class="sidebar-section-children"><a href="global.html#buildCallExpression">buildCallExpression</a></div><div class="sidebar-section-children"><a href="global.html#buildCallMemberExpression">buildCallMemberExpression</a></div><div class="sidebar-section-children"><a href="global.html#buildIdentifier">buildIdentifier</a></div><div class="sidebar-section-children"><a href="global.html#buildLiteral">buildLiteral</a></div><div class="sidebar-section-children"><a href="global.html#buildRoot">buildRoot</a></div><div class="sidebar-section-children"><a href="global.html#buildSequenceExpression">buildSequenceExpression</a></div><div class="sidebar-section-children"><a href="global.html#buildVariableDeclaration">buildVariableDeclaration</a></div><div class="sidebar-section-children"><a href="global.html#buildVariableDeclarator">buildVariableDeclarator</a></div><div class="sidebar-section-children"><a href="global.html#codeGeneration">codeGeneration</a></div><div class="sidebar-section-children"><a href="global.html#fileStream">fileStream</a></div><div class="sidebar-section-children"><a href="global.html#fileStream">fileStream</a></div><div class="sidebar-section-children"><a href="global.html#findDependecies">findDependecies</a></div><div class="sidebar-section-children"><a href="global.html#gamma">gamma</a></div><div class="sidebar-section-children"><a href="global.html#max">max</a></div><div class="sidebar-section-children"><a href="global.html#min">min</a></div><div class="sidebar-section-children"><a href="global.html#print">print</a></div><div class="sidebar-section-children"><a href="global.html#recast">recast</a></div><div class="sidebar-section-children"><a href="global.html#scopeAnalysis">scopeAnalysis</a></div><div class="sidebar-section-children"><a href="global.html#transpile">transpile</a></div><div class="sidebar-section-children"><a href="global.html#writeCode">writeCode</a></div></div></div><div class="mobile-navbar-actions"><div class="navbar-right-item"><button class="icon-button search-button" aria-label="open-search"><svg><use xlink:href="#search-icon"></use></svg></button></div><div class="navbar-right-item"><button class="icon-button theme-toggle" aria-label="toggle-theme"><svg><use class="theme-svg-use" xlink:href="#dark-theme-icon"></use></svg></button></div><div class="navbar-right-item"><button class="icon-button font-size" aria-label="change-font-size"><svg><use xlink:href="#font-size-icon"></use></svg></button></div></div></div></div><script type="text/javascript" src="scripts/core.min.js"></script><script src="scripts/search.min.js" defer="defer"></script><script src="scripts/third-party/fuse.js" defer="defer"></script><script type="text/javascript">var tocbotInstance=tocbot.init({tocSelector:"#eed4d2a0bfd64539bb9df78095dec881",contentSelector:".main-content",headingSelector:"h1, h2, h3",hasInnerContainers:!0,scrollContainer:".main-content",headingsOffset:130,onClick:bringLinkToView})</script></body></html>
+};</code></pre></article></section></div></div></div><div class="search-container" id="PkfLWpAbet" style="display:none"><div class="wrapper" id="iCxFxjkHbP"><button class="icon-button search-close-button" id="VjLlGakifb" aria-label="close search"><svg><use xlink:href="#close-icon"></use></svg></button><div class="search-box-c"><svg><use xlink:href="#search-icon"></use></svg> <input type="text" id="vpcKVYIppa" class="search-input" placeholder="Search..." autofocus></div><div class="search-result-c" id="fWwVHRuDuN"><span class="search-result-c-text">Type anything to view search result</span></div></div></div><div class="mobile-menu-icon-container"><button class="icon-button" id="mobile-menu" data-isopen="false" aria-label="menu"><svg><use xlink:href="#menu-icon"></use></svg></button></div><div id="mobile-sidebar" class="mobile-sidebar-container"><div class="mobile-sidebar-wrapper"><div class="mobile-nav-links"><div class="navbar-item"><a id="" href="https://apuntes-pl.vercel.app/labs/scope-intro" target="_self">PL Lab scope-intro Description</a></div><div class="navbar-item"><a id="" href="../coverage/" target="_self">Coverage Report</a></div><div class="navbar-item"><a id="" href="../" target="_self">Lab documentation</a></div></div><div class="mobile-sidebar-items-c"><div class="sidebar-section-title with-arrow" data-isopen="false" id="sidebar-classes"><div>Classes</div><svg><use xlink:href="#down-icon"></use></svg></div><div class="sidebar-section-children-container"><div class="sidebar-section-children"><a href="Scope.html">Scope</a></div></div><div class="sidebar-section-title with-arrow" data-isopen="false" id="sidebar-global"><div>Global</div><svg><use xlink:href="#down-icon"></use></svg></div><div class="sidebar-section-children-container"><div class="sidebar-section-children"><a href="global.html#Complex">Complex</a></div><div class="sidebar-section-children"><a href="global.html#astTypes">astTypes</a></div><div class="sidebar-section-children"><a href="global.html#buildAssigmentExpression">buildAssigmentExpression</a></div><div class="sidebar-section-children"><a href="global.html#buildCallExpression">buildCallExpression</a></div><div class="sidebar-section-children"><a href="global.html#buildCallMemberExpression">buildCallMemberExpression</a></div><div class="sidebar-section-children"><a href="global.html#buildIdentifier">buildIdentifier</a></div><div class="sidebar-section-children"><a href="global.html#buildLiteral">buildLiteral</a></div><div class="sidebar-section-children"><a href="global.html#buildRoot">buildRoot</a></div><div class="sidebar-section-children"><a href="global.html#buildSequenceExpression">buildSequenceExpression</a></div><div class="sidebar-section-children"><a href="global.html#buildVariableDeclaration">buildVariableDeclaration</a></div><div class="sidebar-section-children"><a href="global.html#buildVariableDeclarator">buildVariableDeclarator</a></div><div class="sidebar-section-children"><a href="global.html#codeGeneration">codeGeneration</a></div><div class="sidebar-section-children"><a href="global.html#fileStream">fileStream</a></div><div class="sidebar-section-children"><a href="global.html#fileStream">fileStream</a></div><div class="sidebar-section-children"><a href="global.html#findDependecies">findDependecies</a></div><div class="sidebar-section-children"><a href="global.html#gamma">gamma</a></div><div class="sidebar-section-children"><a href="global.html#max">max</a></div><div class="sidebar-section-children"><a href="global.html#min">min</a></div><div class="sidebar-section-children"><a href="global.html#print">print</a></div><div class="sidebar-section-children"><a href="global.html#recast">recast</a></div><div class="sidebar-section-children"><a href="global.html#scopeAnalysis">scopeAnalysis</a></div><div class="sidebar-section-children"><a href="global.html#transpile">transpile</a></div><div class="sidebar-section-children"><a href="global.html#writeCode">writeCode</a></div></div></div><div class="mobile-navbar-actions"><div class="navbar-right-item"><button class="icon-button search-button" aria-label="open-search"><svg><use xlink:href="#search-icon"></use></svg></button></div><div class="navbar-right-item"><button class="icon-button theme-toggle" aria-label="toggle-theme"><svg><use class="theme-svg-use" xlink:href="#dark-theme-icon"></use></svg></button></div><div class="navbar-right-item"><button class="icon-button font-size" aria-label="change-font-size"><svg><use xlink:href="#font-size-icon"></use></svg></button></div></div></div></div><script type="text/javascript" src="scripts/core.min.js"></script><script src="scripts/search.min.js" defer="defer"></script><script src="scripts/third-party/fuse.js" defer="defer"></script><script type="text/javascript">var tocbotInstance=tocbot.init({tocSelector:"#eed4d2a0bfd64539bb9df78095dec881",contentSelector:".main-content",headingSelector:"h1, h2, h3",hasInnerContainers:!0,scrollContainer:".main-content",headingsOffset:130,onClick:bringLinkToView})</script></body></html>

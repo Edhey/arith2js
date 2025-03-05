@@ -14,6 +14,7 @@
 /** 
  * Build the root node of the AST
  * @param {Object} child - The child node
+ * @param {Object} location - The location information
  * @returns {Object} - The root node
  */
 function buildRoot(child, location) {
@@ -23,7 +24,6 @@ function buildRoot(child, location) {
       {
         type: 'ExpressionStatement',
         expression: child,
-        loc: location,
       },
     ],
     loc: location,
@@ -34,7 +34,8 @@ function buildRoot(child, location) {
 /**
  * Build a literal node of the AST
  * @param {string} value - The raw value of the literal
- * @returns {Object} - Returns the literal node
+ * @param {Object} location - The location information
+ * @returns {Object} - The literal node
  */
 function buildLiteral(value, location) {
   return {
@@ -46,9 +47,10 @@ function buildLiteral(value, location) {
 }
 
 /**
- * Function to build a identifier node
- * @param {string} name The name of the identifier
- * @returns Returns the identifier node
+ * Build an identifier node of the AST
+ * @param {string} name - The name of the identifier
+ * @param {Object} location - The location information
+ * @returns {Object} - The identifier node
  */
 function buildIdentifier(name, location) {
   return {
@@ -62,6 +64,7 @@ function buildIdentifier(name, location) {
  * Build a call expression node of the AST
  * @param {string} callee - The name of the callee
  * @param {Object[]} args - The arguments of the call expression
+ * @param {Object} location - The location information
  * @returns {Object} - The call expression node
  */
 function buildCallExpression(callee, args, location) {
@@ -77,12 +80,14 @@ function buildCallExpression(callee, args, location) {
 }
 
 /**
- * Function to build a call member expression node
- * @param {Object} callee The Object that calls the member
- * @param {Object} member Is the member to call
- * @param {Object} args Are the arguments of the call
- * @param {boolean} computed If the member is computed
- * @returns Returns the call member expression node
+ * Build a call member expression node of the AST
+ * @param {Object} callee - The object that calls the member
+ * @param {string} member - The member to call
+ * @param {Object[]} args - The arguments of the call
+ * @param {boolean} computed - If the member is computed
+ * @param {Object} startLocation - The start location information
+ * @param {Object} endLocation - The end location information
+ * @returns {Object} - The call member expression node
  */
 function buildCallMemberExpression(callee, member, args, computed = false, startLocation, endLocation) {
   return {
@@ -105,11 +110,13 @@ function buildCallMemberExpression(callee, member, args, computed = false, start
 }
 
 /**
- * Function to build an assignment expression node
- * @param {Object} left The left side of the assignment
- * @param {string} operator The operator of the assignment
- * @param {Object} right The right side of the assignment
- * @returns Returns the assignment expression node
+ * Build an assignment expression node of the AST
+ * @param {Object} left - The left side of the assignment
+ * @param {string} operator - The operator of the assignment
+ * @param {Object} right - The right side of the assignment
+ * @param {Object} startLocation - The start location information
+ * @param {Object} endLocation - The end location information
+ * @returns {Object} - The assignment expression node
  */
 function buildAssigmentExpression(left, operator, right, startLocation, endLocation) {
   return {
@@ -125,9 +132,11 @@ function buildAssigmentExpression(left, operator, right, startLocation, endLocat
 }
 
 /**
- * Function to build a sequence expression node
- * @param {Object[]} expressions The expressions of the sequence
- * @returns Returns the sequence expression node
+ * Build a sequence expression node of the AST
+ * @param {Object[]} expressions - The expressions of the sequence
+ * @param {Object} startLocation - The start location information
+ * @param {Object} endLocation - The end location information
+ * @returns {Object} - The sequence expression node
  */
 function buildSequenceExpression(expressions, startLocation, endLocation) {
   return {
@@ -141,10 +150,10 @@ function buildSequenceExpression(expressions, startLocation, endLocation) {
 }
 
 /**
- * Function to build a variable declaration node
- * @param {Object[]} declarations array of declarations
- * @param {string} kind kind of the declaration
- * @returns {Object} variable declaration node of the AST
+ * Build a variable declaration node of the AST
+ * @param {Object[]} declarations - Array of declarations
+ * @param {string} kind - Kind of the declaration (e.g., 'let', 'const', 'var')
+ * @returns {Object} - The variable declaration node
  */
 function buildVariableDeclaration(declarations, kind = 'let') {
   return {
@@ -155,10 +164,10 @@ function buildVariableDeclaration(declarations, kind = 'let') {
 }
 
 /**
- * Function to build a variable declarator node
- * @param {Object[]} body array of statements
- * @param {Object} init initial value of the variable
- * @returns {Object} node of the AST
+ * Build a variable declarator node of the AST
+ * @param {Object} id - The identifier of the variable
+ * @param {Object} init - The initial value of the variable
+ * @returns {Object} - The variable declarator node
  */
 function buildVariableDeclarator(id, init = null) {
   return {
@@ -178,4 +187,4 @@ module.exports = {
   buildSequenceExpression,
   buildVariableDeclaration,
   buildVariableDeclarator,
-}
+};

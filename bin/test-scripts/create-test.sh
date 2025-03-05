@@ -28,5 +28,5 @@ cp "$input_file" "$input_test"
 bin/calc2js.mjs "$input_test" -o "$output_js"
 
 # Run the generated JavaScript and save the output
-bin/calc2js.mjs -s "$input_test" > "$output_txt"
+bin/calc2js.mjs -S "$input_test" > "$output_txt"
 
