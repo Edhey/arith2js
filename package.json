@@ -1,6 +1,6 @@
 {
   "name": "@ull-esit-pl-2425/arith2js-himar_edhey-hernandez-alu0101552392",
-  "version": "1.5.9",
+  "version": "1.6.0",
   "description": "* See section [Análisis Sintáctico Ascendente en JavaScript](http://crguezl.github.io/pl-html/node43.html) * The example working at  [http://crguezl.github.io/jison-minus/](http://crguezl.github.io/jison-minus/)",
   "main": "bin/calc2js.mjs",
   "type": "commonjs",
@@ -55,6 +55,7 @@
     "c8": "^10.1.3",
     "chai": "^5.2.0",
     "clean-jsdoc-theme": "^4.3.0",
+    "http-server": "^14.1.1",
     "jsdoc": "^4.0.4",
     "mocha": "^11.1.0",
     "nyc": "^17.1.0"
