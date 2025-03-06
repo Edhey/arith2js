@@ -1,4 +1,4 @@
-# Hello Compiler
+# Scope Intro
 
 ## Autor
 Himar Edhey Hernández Alonso - [GitHub](https://github.com/Edhey)
@@ -17,12 +17,15 @@ El proyecto está estructurado de la siguiente manera:
 - `src/`: Contiene el código fuente.
     - `ast-build.js`: Construye el AST.
     - `calc.js`: Analiza y evalúa las expresiones aritméticas.
+    - `code-generation.js`: Genera código JavaScript usando recast.
     - `grammar.jison`: Define la gramática.
     - `lexer.l`: Define las reglas del lexer.
-    - `run.js`: Ejecuta una expresión aritmética.
+    - `scope-class.js`: Define la clase Scope.
+    - `scope.js`: Define el ámbito de las variables.
     - `support-lib.js`: Contiene funciones auxiliares.
     - `templates/`: Contiene plantillas de código JavaScript.
     - `transpile.js`: Convierte el AST en código JavaScript.
+    - `write-code.js`: Escribe el código JavaScript en un archivo.
 - `test/`: Contiene los tests.
   - `data/`: Contiene los datos de los tests simples.
   - `errors/`: Contiene los datos de los tests de errores.
@@ -46,29 +49,65 @@ El proyecto está estructurado de la siguiente manera:
 Este programa permite transpilar expresiones aritméticas a programas en JavaScript y ejecutar expresiones aritméticas directamente.
 
 #### Opciones
-- `-V, --version`: Muestra la versión.
-- `-h, --help`: Muestra la ayuda.
+Uso: calc2js [opciones] <archivo>
 
-### Transpilar una expresión aritmética
-Para transpilar una expresión aritmética a un programa en JavaScript, usa el siguiente comando:
+Transpila una expresión aritmética a un programa en JavaScript
 
+- Argumentos:
+  - `archivo`                  archivo con el código original a transpilar
+
+- Opciones:
+  - `-V, --version`            muestra el número de versión
+  - `-o, --output` <archivo>   archivo donde escribir el código transpiliado
+  - `-v, --verbose`            muestra el código generado
+  - `-a, --ast`                muestra el AST
+  - `-s, --scope`              muestra el ámbito
+  - `-D, --definitions`        muestra la definición de las variables
+  - `-r, --run`                ejecuta el código generado
+  - `-re, --return`            muestra el valor de la última sentencia
+  - `-S, --string`             muestra el valor de la última sentencia como una cadena
+  - `-h, --help`               muestra ayuda para el comando
+
+#### Ejemplos
+Transpilar una expresión aritmética a un programa en JavaScript:
 ```sh
-node bin/calc2js.mjs transpile <archivo.calc> -o <archivo.js>
+node bin/calc2js.mjs examples/example1.txt
 ```
 
-#### Opciones
-- `-o, --output <archivo.js>`: Especifica el archivo de salida.
-- `-v, --verbose`: Muestra el código JavaScript generado.
-
-### Ejecutar una expresión aritmética
-Para ejecutar una expresión aritmética directamente, usa el siguiente comando:
-
+Transpilar una expresión aritmética a un programa en JavaScript y ejecutarla:
 ```sh
-node bin/calc2js.mjs run <archivo.calc>
+node bin/calc2js.mjs examples/example1.txt -r
 ```
 
-#### Opciones
-- `-v, --verbose`: Muestra el código JavaScript generado.
+Transpilar una expresión aritmética a un programa en JavaScript y mostrar el valor de la última sentencia:
+```sh
+node bin/calc2js.mjs examples/example1.txt -re
+```
+
+Transpilar una expresión aritmética a un programa en JavaScript y mostrar el valor de la última sentencia como una cadena:
+```sh
+node bin/calc2js.mjs examples/example1.txt -S
+```
+
+Transpilar una expresión aritmética a un programa en JavaScript y mostrar el código generado:
+```sh
+node bin/calc2js.mjs examples/example1.txt -v
+```
+
+Transpilar una expresión aritmética a un programa en JavaScript y mostrar el AST:
+```sh
+node bin/calc2js.mjs examples/example1.txt -a
+```
+
+Transpilar una expresión aritmética a un programa en JavaScript y mostrar el ámbito:
+```sh
+node bin/calc2js.mjs examples/example1.txt -s
+```
+
+Transpilar una expresión aritmética a un programa en JavaScript y mostrar la definición de las variables:
+```sh
+node bin/calc2js.mjs examples/example1.txt -D
+```
 
 ## Scripts de npm (package.json)
 - `npm test`: Ejecuta los tests.
@@ -79,6 +118,35 @@ node bin/calc2js.mjs run <archivo.calc>
 - `npm run cov`: Ejecuta los tests y genera un reporte de cobertura.
 - `npm run report`: Genera un reporte de cobertura en formato HTML.
 - `npm run compile`: Compila la gramática y el lexer.
+- `npm run trans`: Transpila una expresión aritmética a un programa en JavaScript.
+- `npm run exec`: Ejecuta el código generado.
+- `npm run coverage`: Genera un reporte de cobertura en formato HTML y texto.
+- `npm run jsdocs`: Genera la documentación del código usando JSDoc.
+- `npm run docs`: Limpia y genera la documentación del código y el reporte de cobertura.
+- `npm run clean`: Limpia los archivos generados.
+- `npm run clean:docs`: Limpia la documentación generada.
+- `npm run dev`: Inicia un servidor de desarrollo para visualizar la documentación.
+
+```json
+"scripts": {
+  "test": "npm run compile; mocha test/",
+  "test-example": "npm run compile; mocha test/ --grep 'Example Test'",
+  "test-simple": "npm run compile; mocha test/ --grep 'Simple Test'",
+  "test-hard": "npm run compile; mocha test/ --grep 'Hard Test'",
+  "test-error": "npm run compile; mocha test/ --grep 'Error Test'",
+  "compile": "jison src/grammar.jison src/lexer.l -o src/calc.js",
+  "trans": "./bin/calc2js.mjs",
+  "exec": "./bin/calc2js.mjs --run",
+  "cov": "nyc npm test",
+  "report": "nyc --report --reporter=html --report-dir=docs/coverage -x src/template.js npm test",
+  "coverage": "c8 --reporter=html --reporter=text --report-dir='docs/coverage' npm test",
+  "jsdocs": "jsdoc -c jsdoc.json",
+  "docs": "npm run clean:docs && npm run jsdocs && npm run coverage",
+  "clean": "rm -f src/calc.js && npm run clean:docs",
+  "clean:docs": "rm -fR docs/coverage && rm -fR docs/jsdoc",
+  "dev": "http-server -c-1 -o docs"
+}
+```
 
 ## Tests
 Existen test de ejemplos, test sencillos, test difíciles y test de errores.
@@ -99,21 +167,23 @@ Si quisieras ejecutar alguna de las clases de test en concreto, puedes hacerlo c
 El reporte de cobertura se genera con el siguiente comando:
 
 ```sh
-npm run cov
+npm run coverage
 ```
+153 passing (1s)
 
-  96 passing (332ms)
-
-----------------|---------|----------|---------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-File            | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                                                                                                                                    
-----------------|---------|----------|---------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-All files       |    71.6 |    58.73 |   67.39 |   70.05 |                                                                                                                                                                      
- ast-build.js   |     100 |      100 |     100 |     100 |                                                                                                                                                                      
- calc.js        |   67.18 |    56.66 |   53.12 |   64.13 | ...9,155,160-162,195,206,221-225,238,267-270,286-289,308,316-395,428-449,470,478,484-487,495,516-524,539-542,562-571,580-601,610-612,614,616,618-620,622,644-649,652 
- run.js         |   84.61 |       50 |     100 |   91.66 | 40                                                                                                                                                                   
- support-lib.js |   89.65 |    78.57 |     100 |   92.59 | 70,89                                                                                                                                                                
- transpile.js   |   90.32 |       70 |     100 |   93.33 | 41,76                                                                                                                                                                
-----------------|---------|----------|---------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------|---------|----------|---------|---------|-------------------------------------------------------------------------------------------------------------------------------------------
+File                | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                                                                                                         
+--------------------|---------|----------|---------|---------|-------------------------------------------------------------------------------------------------------------------------------------------
+All files           |   85.53 |     76.3 |   77.94 |   85.53 |                                                                                                                                           
+ ast-build.js       |     100 |      100 |     100 |     100 |                                                                                                                                           
+ calc.js            |   72.09 |    66.66 |   51.61 |   72.09 | ...45-469,488-489,496-497,501-506,513-514,534-543,557-565,580,585-590,598-599,604-609,614,619,636-639,641,643,645,647,649,671-676,679-680 
+ code-generation.js |     100 |    66.66 |     100 |     100 | 33                                                                                                                                        
+ scope-class.js     |     100 |      100 |     100 |     100 |                                                                                                                                           
+ scope.js           |     100 |      100 |     100 |     100 |                                                                                                                                           
+ support-lib.js     |   96.87 |    82.35 |     100 |   96.87 | 70-71,89                                                                                                                                  
+ transpile.js       |   84.14 |    63.63 |     100 |   84.14 | 45-47,65-69,72-76                                                                                                                         
+ write-code.js      |     100 |       75 |     100 |     100 | 23                                                                                                                                        
+--------------------|---------|----------|---------|---------|-------------------------------------------------------------------------------------------------------------------------------------------
 
 Se puede ver el reporte de cobertura en formato HTML con el siguiente comando:
 
@@ -121,9 +191,24 @@ Se puede ver el reporte de cobertura en formato HTML con el siguiente comando:
 npm run report
 ```
 
-Esto crea en el directorio `docs/` documentación en formato HTML sobre las clases y la cobertura de los tests. Puedes usar *live-server* para visualizarlo en tu navegador.
+## Documentación
 
-Este reporte se despliega automáticamente en Github Pages al hacer push. Puedes acceder a él [aquí](https://ull-esit-pl-2425.github.io/arith2js-himar_edhey-hernandez-alu0101552392/).
+La documentación se genera con JSDoc. Cada clase y función tiene su propio comentario de documentación en dicho formato.
+Para generarla , usa el siguiente comando:
+
+```sh
+npm run docs
+```
+
+Finalmente podrás visualizar toda la documentación incluyendo el reporte de cobertura en tu navegador con el siguiente comando:
+
+```sh
+npm run dev
+```
+
+También puedes abrir el index con alguna extensión como *live-server* para visualizarlo en tu navegador.
+
+Esta docuemntación se despliega automáticamente en Github Pages al hacer push. Puedes acceder a él [aquí](https://ull-esit-pl-2425.github.io/arith2js-himar_edhey-hernandez-alu0101552392/).
 
 ## Workflow
 ### Coverage
@@ -131,6 +216,9 @@ Existe una Github Action que ejecuta los tests y genera un reporte de cobertura.
 
 ### Github Registry
 Otra Github Action que publica automáticamente el paquete en el Github Registry al hacer push.
+
+### Clean Install
+Esta Github Action instala las dependencias y ejecuta los tests.
 
 ## Licencia
 Este proyecto está licenciado bajo la Licencia ISC.
