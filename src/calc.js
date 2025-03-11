@@ -72,12 +72,12 @@
   }
 */
 var calc = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,3],$V1=[1,4],$V2=[1,5],$V3=[1,6],$V4=[1,7],$V5=[1,8],$V6=[1,10],$V7=[1,11],$V8=[1,12],$V9=[1,13],$Va=[1,14],$Vb=[1,15],$Vc=[1,16],$Vd=[1,17],$Ve=[1,18],$Vf=[5,8,9,10,11,12,13,14,15,16,18,20],$Vg=[5,8,9,10,11,13,15,16,18,20],$Vh=[5,8,9,13,15,16,18,20],$Vi=[5,13,18,20];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,3],$V1=[1,4],$V2=[1,6],$V3=[1,5],$V4=[1,7],$V5=[1,8],$V6=[1,9],$V7=[1,11],$V8=[1,12],$V9=[1,13],$Va=[1,14],$Vb=[1,15],$Vc=[1,16],$Vd=[1,17],$Ve=[1,18],$Vf=[1,19],$Vg=[5,9,10,11,12,13,14,15,16,17,18,21,26],$Vh=[1,22],$Vi=[5,9,10,11,12,13,15,16,17,21,26],$Vj=[5,9,15,21,26],$Vk=[5,9,10,11,15,16,17,21,26];
 var parser = {trace: function trace () { },
 yy: {},
-symbols_: {"error":2,"endExpresion":3,"expresion":4,"EOF":5,"NUMBER":6,"ID":7,"+":8,"-":9,"*":10,"/":11,"**":12,"|":13,"!":14,"&":15,"@":16,"=":17,",":18,"(":19,")":20,"PID":21,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",6:"NUMBER",7:"ID",8:"+",9:"-",10:"*",11:"/",12:"**",13:"|",14:"!",15:"&",16:"@",17:"=",18:",",19:"(",20:")",21:"PID"},
-productions_: [0,[3,2],[4,1],[4,1],[4,3],[4,3],[4,3],[4,3],[4,2],[4,3],[4,3],[4,2],[4,3],[4,3],[4,3],[4,3],[4,3],[4,4]],
+symbols_: {"error":2,"endExpresion":3,"expresion":4,"EOF":5,"NUMBER":6,"ID":7,"=":8,",":9,"+":10,"-":11,"/":12,"*":13,"**":14,"|":15,"&":16,"@":17,"!":18,"PID":19,"(":20,")":21,"calls":22,"FUN":23,"idOrEmpty":24,"{":25,"}":26,"apply":27,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",6:"NUMBER",7:"ID",8:"=",9:",",10:"+",11:"-",12:"/",13:"*",14:"**",15:"|",16:"&",17:"@",18:"!",19:"PID",20:"(",21:")",23:"FUN",25:"{",26:"}"},
+productions_: [0,[3,2],[4,1],[4,1],[4,3],[4,3],[4,3],[4,3],[4,3],[4,3],[4,3],[4,3],[4,2],[4,3],[4,3],[4,2],[4,4],[4,3],[4,4],[4,2],[4,7],[27,0],[27,3],[27,4],[22,4],[22,3],[22,3],[22,2],[24,0],[24,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -93,51 +93,78 @@ case 3:
  this.$ = buildIdentifier('$' + $$[$0], _$[$0]); 
 break;
 case 4:
- this.$ = buildCallMemberExpression($$[$0-2], 'add', [$$[$0]], false, _$[$0-2], _$[$0]); 
-break;
-case 5:
- this.$ = buildCallMemberExpression($$[$0-2], 'sub', [$$[$0]], false, _$[$0-2], _$[$0]); 
-break;
-case 6:
- this.$ = buildCallMemberExpression($$[$0-2], 'mul', [$$[$0]], false, _$[$0-2], _$[$0]); 
-break;
-case 7:
- this.$ = buildCallMemberExpression($$[$0-2], 'div', [$$[$0]], false, _$[$0-2], _$[$0]); 
-break;
-case 8:
- this.$ = buildCallMemberExpression($$[$0], 'neg', [], false, _$[$0-1], _$[$0]); 
-break;
-case 9:
- this.$ = buildCallMemberExpression($$[$0-2], 'pow', [$$[$0]], false, _$[$0-2], _$[$0]); 
-break;
-case 10:
- this.$ = buildCallMemberExpression($$[$0-1], 'abs', [], false, _$[$0-2], _$[$0]); 
-break;
-case 11:
- this.$ = buildCallExpression('gamma', [$$[$0-1]], _$[$0-1], _$[$0]); 
-break;
-case 12:
- this.$ = buildCallExpression('min', [$$[$0-2], $$[$0]], _$[$0-2], _$[$0]); 
-break;
-case 13:
- this.$ = buildCallExpression('max', [$$[$0-2], $$[$0]], _$[$0-2], _$[$0]); 
-break;
-case 14:
  this.$ = buildAssigmentExpression(buildIdentifier('$' + $$[$0-2], _$[$0-2]), '=', $$[$0], _$[$0-2], _$[$0]); 
 break;
-case 15:
+case 5:
  this.$ = buildSequenceExpression([$$[$0-2], $$[$0]], _$[$0-2], _$[$0]); 
 break;
+case 6:
+ this.$ = buildCallMemberExpression($$[$0-2], 'add', [$$[$0]], false, _$[$0-2], _$[$0]); 
+break;
+case 7:
+ this.$ = buildCallMemberExpression($$[$0-2], 'sub', [$$[$0]], false, _$[$0-2], _$[$0]); 
+break;
+case 8:
+ this.$ = buildCallMemberExpression($$[$0-2], 'div', [$$[$0]], false, _$[$0-2], _$[$0]); 
+break;
+case 9:
+ this.$ = buildCallMemberExpression($$[$0-2], 'mul', [$$[$0]], false, _$[$0-2], _$[$0]); 
+break;
+case 10:
+ this.$ = buildCallMemberExpression($$[$0-2], 'pow', [$$[$0]], false, _$[$0-2], _$[$0]); 
+break;
+case 11:
+ this.$ = buildCallMemberExpression($$[$0-1], 'abs', [], false, _$[$0-2], _$[$0]); 
+break;
+case 12:
+ this.$ = buildCallMemberExpression($$[$0], 'neg', [], false, _$[$0-1], _$[$0]); 
+break;
+case 13:
+ this.$ = buildCallExpression('min', [$$[$0-2], $$[$0]], _$[$0-2], _$[$0]); 
+break;
+case 14:
+ this.$ = buildCallExpression('max', [$$[$0-2], $$[$0]], _$[$0-2], _$[$0]); 
+break;
+case 15:
+ this.$ = buildCallExpression('gamma', [$$[$0-1]], _$[$0-1], _$[$0]); 
+break;
 case 16:
- this.$ = $$[$0-1]; 
+ this.$ = buildCallExpression($$[$0-3], [$$[$0-1]], _$[$0-3], _$[$0]); 
 break;
 case 17:
- this.$ = buildCallExpression($$[$0-3], [$$[$0-1]], _$[$0-3], _$[$0]); 
+ this.$ = $$[$0-1]; 
+break;
+case 18:
+ this.$ = buildParOrCallExpression($$[$0-2], $$[$0], _$[$0-3], _$[$0]); 
+break;
+case 19:
+ this.$ = buildIdentifierOrCalls('$' + $$[$0-1], $$[$0], _$[$0-1], _$[$0]); 
+break;
+case 20:
+ this.$ = buildFunctionExpression($$[$0-4], $$[$0-1], _$[$0-6], _$[$0-1]); 
+break;
+case 21: case 28:
+ this.$ = []; 
+break;
+case 22: case 25:
+ this.$ = [ null ].concat($$[$0]); 
+break;
+case 23: case 24:
+ this.$ = [ $$[$0-2] ].concat($$[$0]); 
+break;
+case 26:
+ this.$ = [ $$[$0-1] ]; 
+break;
+case 27:
+ this.$ = [ null ]; 
+break;
+case 29:
+ this.$ = [ buildIdentifier('$' + $$[$0], _$[$0]) ]; 
 break;
 }
 },
-table: [{3:1,4:2,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4,21:$V5},{1:[3]},{5:[1,9],8:$V6,9:$V7,10:$V8,11:$V9,12:$Va,14:$Vb,15:$Vc,16:$Vd,18:$Ve},o($Vf,[2,2]),o($Vf,[2,3],{17:[1,19]}),{4:20,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4,21:$V5},{4:21,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4,21:$V5},{4:22,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4,21:$V5},{19:[1,23]},{1:[2,1]},{4:24,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4,21:$V5},{4:25,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4,21:$V5},{4:26,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4,21:$V5},{4:27,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4,21:$V5},{4:28,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4,21:$V5},o($Vf,[2,11]),{4:29,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4,21:$V5},{4:30,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4,21:$V5},{4:31,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4,21:$V5},{4:32,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4,21:$V5},o($Vg,[2,8],{12:$Va,14:$Vb}),{8:$V6,9:$V7,10:$V8,11:$V9,12:$Va,13:[1,33],14:$Vb,15:$Vc,16:$Vd,18:$Ve},{8:$V6,9:$V7,10:$V8,11:$V9,12:$Va,14:$Vb,15:$Vc,16:$Vd,18:$Ve,20:[1,34]},{4:35,6:$V0,7:$V1,9:$V2,13:$V3,19:$V4,21:$V5},o($Vh,[2,4],{10:$V8,11:$V9,12:$Va,14:$Vb}),o($Vh,[2,5],{10:$V8,11:$V9,12:$Va,14:$Vb}),o($Vg,[2,6],{12:$Va,14:$Vb}),o($Vg,[2,7],{12:$Va,14:$Vb}),o($Vg,[2,9],{12:$Va,14:$Vb}),o([5,13,15,16,18,20],[2,12],{8:$V6,9:$V7,10:$V8,11:$V9,12:$Va,14:$Vb}),o([5,13,16,18,20],[2,13],{8:$V6,9:$V7,10:$V8,11:$V9,12:$Va,14:$Vb,15:$Vc}),o($Vi,[2,15],{8:$V6,9:$V7,10:$V8,11:$V9,12:$Va,14:$Vb,15:$Vc,16:$Vd}),o($Vi,[2,14],{8:$V6,9:$V7,10:$V8,11:$V9,12:$Va,14:$Vb,15:$Vc,16:$Vd}),o($Vf,[2,10]),o($Vf,[2,16]),{8:$V6,9:$V7,10:$V8,11:$V9,12:$Va,14:$Vb,15:$Vc,16:$Vd,18:$Ve,20:[1,36]},o($Vf,[2,17])],
-defaultActions: {9:[2,1]},
+table: [{3:1,4:2,6:$V0,7:$V1,11:$V2,15:$V3,19:$V4,20:$V5,23:$V6},{1:[3]},{5:[1,10],9:$V7,10:$V8,11:$V9,12:$Va,13:$Vb,14:$Vc,16:$Vd,17:$Ve,18:$Vf},o($Vg,[2,2]),o($Vg,[2,3],{22:21,8:[1,20],20:$Vh}),{4:23,6:$V0,7:$V1,11:$V2,15:$V3,19:$V4,20:$V5,23:$V6},{4:24,6:$V0,7:$V1,11:$V2,15:$V3,19:$V4,20:$V5,23:$V6},{20:[1,25]},{4:26,6:$V0,7:$V1,11:$V2,15:$V3,19:$V4,20:$V5,23:$V6},{20:[1,27]},{1:[2,1]},{4:28,6:$V0,7:$V1,11:$V2,15:$V3,19:$V4,20:$V5,23:$V6},{4:29,6:$V0,7:$V1,11:$V2,15:$V3,19:$V4,20:$V5,23:$V6},{4:30,6:$V0,7:$V1,11:$V2,15:$V3,19:$V4,20:$V5,23:$V6},{4:31,6:$V0,7:$V1,11:$V2,15:$V3,19:$V4,20:$V5,23:$V6},{4:32,6:$V0,7:$V1,11:$V2,15:$V3,19:$V4,20:$V5,23:$V6},{4:33,6:$V0,7:$V1,11:$V2,15:$V3,19:$V4,20:$V5,23:$V6},{4:34,6:$V0,7:$V1,11:$V2,15:$V3,19:$V4,20:$V5,23:$V6},{4:35,6:$V0,7:$V1,11:$V2,15:$V3,19:$V4,20:$V5,23:$V6},o($Vg,[2,15]),{4:36,6:$V0,7:$V1,11:$V2,15:$V3,19:$V4,20:$V5,23:$V6},o($Vg,[2,19]),{4:37,6:$V0,7:$V1,11:$V2,15:$V3,19:$V4,20:$V5,21:[1,38],23:$V6},{9:$V7,10:$V8,11:$V9,12:$Va,13:$Vb,14:$Vc,15:[1,39],16:$Vd,17:$Ve,18:$Vf},o($Vi,[2,12],{14:$Vc,18:$Vf}),{4:40,6:$V0,7:$V1,11:$V2,15:$V3,19:$V4,20:$V5,23:$V6},{9:$V7,10:$V8,11:$V9,12:$Va,13:$Vb,14:$Vc,16:$Vd,17:$Ve,18:$Vf,21:[1,41]},{7:[1,43],21:[2,28],24:42},o($Vj,[2,5],{10:$V8,11:$V9,12:$Va,13:$Vb,14:$Vc,16:$Vd,17:$Ve,18:$Vf}),o($Vk,[2,6],{12:$Va,13:$Vb,14:$Vc,18:$Vf}),o($Vk,[2,7],{12:$Va,13:$Vb,14:$Vc,18:$Vf}),o($Vi,[2,8],{14:$Vc,18:$Vf}),o($Vi,[2,9],{14:$Vc,18:$Vf}),o($Vi,[2,10],{14:$Vc,18:$Vf}),o([5,9,15,16,17,21,26],[2,13],{10:$V8,11:$V9,12:$Va,13:$Vb,14:$Vc,18:$Vf}),o([5,9,15,17,21,26],[2,14],{10:$V8,11:$V9,12:$Va,13:$Vb,14:$Vc,16:$Vd,18:$Vf}),o($Vj,[2,4],{10:$V8,11:$V9,12:$Va,13:$Vb,14:$Vc,16:$Vd,17:$Ve,18:$Vf}),{9:$V7,10:$V8,11:$V9,12:$Va,13:$Vb,14:$Vc,16:$Vd,17:$Ve,18:$Vf,21:[1,44]},o($Vg,[2,27],{22:45,20:$Vh}),o($Vg,[2,11]),{9:$V7,10:$V8,11:$V9,12:$Va,13:$Vb,14:$Vc,16:$Vd,17:$Ve,18:$Vf,21:[1,46]},o($Vg,[2,17],{22:47,20:$Vh}),{21:[1,48]},{21:[2,29]},o($Vg,[2,26],{22:49,20:$Vh}),o($Vg,[2,25]),o($Vg,[2,16]),o($Vg,[2,18]),{25:[1,50]},o($Vg,[2,24]),{4:51,6:$V0,7:$V1,11:$V2,15:$V3,19:$V4,20:$V5,23:$V6},{9:$V7,10:$V8,11:$V9,12:$Va,13:$Vb,14:$Vc,16:$Vd,17:$Ve,18:$Vf,26:[1,52]},o($Vg,[2,20])],
+defaultActions: {10:[2,1],43:[2,29]},
 parseError: function parseError (str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -286,13 +313,16 @@ parse: function parse(input) {
 }};
 
 const { 
+  buildRoot,
   buildLiteral, 
+  buildIdentifier,
   buildCallExpression,
   buildCallMemberExpression,
-  buildIdentifier,
   buildAssigmentExpression,
   buildSequenceExpression,
-  buildRoot
+  buildFunctionExpression,
+  buildIdentifierOrCalls,
+  buildParOrCallExpression,
 } = require('./ast-build.js');
 /* generated by jison-lex 0.3.4 */
 var lexer = (function(){
@@ -641,7 +671,7 @@ case 3:return 6;
 break;
 case 4:return idOrReserved(yy_.yytext);
 break;
-case 5:return 12; // It must be before '*' because it is more specific, otherwise it will be recognized as '*'
+case 5:return 14; // It must be before '*' because it is more specific, otherwise it will be recognized as '*'
 break;
 case 6:return yy_.yytext;
 break;
@@ -649,7 +679,7 @@ case 7:return 5;
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:#.*)/,/^(?:[/][*](.|\n)*?[*][/])/,/^(?:(\d+(\.\d+)?([eE][-+]?\d+)?i?|i\b))/,/^(?:[_$a-zA-Z][$\w]*)/,/^(?:\*\*)/,/^(?:[-+*/!()&@|=,])/,/^(?:$)/],
+rules: [/^(?:\s+)/,/^(?:#.*)/,/^(?:[/][*](.|\n)*?[*][/])/,/^(?:(\d+(\.\d+)?([eE][-+]?\d+)?i?|i\b))/,/^(?:[_$a-zA-Z][$\w]*)/,/^(?:\*\*)/,/^(?:[-+*/!()&@|=,{}])/,/^(?:$)/],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7],"inclusive":true}}
 });
 return lexer;

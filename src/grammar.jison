@@ -1,21 +1,25 @@
 %{
 const { 
+  buildRoot,
   buildLiteral, 
+  buildIdentifier,
   buildCallExpression,
   buildCallMemberExpression,
-  buildIdentifier,
   buildAssigmentExpression,
   buildSequenceExpression,
-  buildRoot
+  buildFunctionExpression,
+  buildIdentifierOrCalls,
+  buildParOrCallExpression,
 } = require('./ast-build.js');
 %}
 
 %token NUMBER
 %token ID
 %token PID
-%nonassoc '|'
+%token FUN
 %left ','
 %right '='
+%nonassoc '|'
 %left '@'
 %left '&'
 %left '+' '-'
@@ -48,16 +52,28 @@ expresion:
       | expresion '!'               { $$ = buildCallExpression('gamma', [$1], @1, @2); } // Factorial
       | PID '(' expresion ')'       { $$ = buildCallExpression($PID, [$3], @1, @4); } // Function call 
       | '(' expresion ')'           { $$ = $2; }  // Parentheses
-      | ID aplly                    { $$ = buildParOrCallMemberExpression(buildIdentifier('$' + $1, @1), $aplly, @1, @2); } // Call member
+      // | ID apply                    { $$ = buildParOrCallMemberExpression(buildIdentifier('$' + $1, @1), $apply, @1, @2); }
+      | '(' expresion ')' calls     { $$ = buildParOrCallExpression($expresion, $calls, @1, @calls); }
+      | ID calls                    { $$ = buildIdentifierOrCalls('$' + $1, $calls, @ID, @calls); } 
+      | FUN '(' idOrEmpty ')' '{' expresion '}'     { $$ = buildFunctionExpression($idOrEmpty, $expresion, @1, @6); } // Function definition
+
 ;
 
 apply:
-     /* empty */ { $$ = []; }
-     | '(' ')' apply { $$ = [ null ].concat($3); }
-     | '(' idOrEmpty ')' apply { $$ = [ $2 ].concat($4); }
+      /* empty */               { $$ = []; }
+    | '(' ')' apply             { $$ = [ null ].concat($apply); }
+    | '(' expresion ')' apply   { $$ = [ $expresion ].concat($apply); }
+//     //  | '(' idOrEmpty ')' apply { $$ = [ $2 ].concat($4); }
+;
+
+calls:
+      '(' expresion ')' calls { $$ = [ $expresion ].concat($calls); }
+    | '(' ')' calls           { $$ = [ null ].concat($calls); }
+    | '(' expresion ')'       { $$ = [ $expresion ]; }
+    | '(' ')'                 { $$ = [ null ]; }
 ;
 
 idOrEmpty: 
-    /* empty */ { $$ = []; }
-    | ID { $$ = [ buildIdentifier('$' + $1, @1) ]; }
+    /* empty */     { $$ = []; }
+    | ID            { $$ = [ buildIdentifier('$' + $1, @1) ]; }
 ;

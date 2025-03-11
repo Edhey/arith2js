@@ -11,6 +11,8 @@
  * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}
  */
 
+const { expression } = require("mathjs");
+
 /** 
  * Build the root node of the AST
  * @param {Object} child - The child node
@@ -52,6 +54,9 @@ function buildLiteral(value, location) {
  * @param {Object} location - The location information
  * @returns {Object} - The identifier node
  */
+// function buildIdentifier(name, location) {
+//   buildIdentifierOrCalls(name, [], location, null);
+// }
 function buildIdentifier(name, location) {
   return {
     type: 'Identifier',
@@ -177,6 +182,83 @@ function buildVariableDeclarator(id, init = null) {
   };
 }
 
+/**
+ * Build a function expression node of the AST
+ * @param {Object[]} params - The parameters of the function
+ * @param {Object} expression - The body of the function
+ * @param {Object} startLocation - The start location information
+ * @param {Object} endLocation - The end location information
+ * @returns {Object} - The function expression node
+ */
+function buildFunctionExpression(params, expression, startLocation, endLocation) {
+  return {
+    type: 'FunctionExpression',
+    id: null,
+    params: params,
+    body: {
+      type: 'BlockStatement',
+      body: [
+        {
+          type: 'ReturnStatement',
+          argument: expression,
+        }
+      ]
+    },
+    generator: false,
+    async: false,
+    expression: false,
+    loc: {
+      start: startLocation,
+      end: endLocation,
+    },
+  };
+}
+
+// function buildIdCalls(id, calls) {
+//   // ! TODO: Implement
+//   let node = id;
+//   for (let i = 0; i < calls.length; i++) {
+//     node = buildCallMemberExpression(node, calls[i].name, calls[i].args, calls[i].computed, calls[i].startLocation, calls[i].endLocation);
+//   }
+//   return node;
+// }
+
+function buildIdentifierOrCalls(name, calls, idLocation, callLocation) {
+  let id = {
+    type: 'Identifier',
+    name: name,
+    loc: idLocation,
+  };
+  if (calls.length === 0) {
+    return id;
+  }
+
+  let node = id;
+  calls.forEach(ast => {
+    let parent = {
+      type: 'CallExpression',
+      callee: node,
+      arguments: ast === null ? [] : [ast],
+      loc: callLocation,
+    };
+    node = parent;
+  });
+  return node;
+}
+
+function buildParOrCallExpression(par, call, parLocation, callLocation) {
+  let node = par;
+  if (call !== null) {
+    node = {
+      type: 'CallExpression',
+      callee: par,
+      arguments: call,
+      loc: callLocation,
+    };
+  }
+  return node;
+}
+
 module.exports = {
   buildRoot,
   buildLiteral,
@@ -187,4 +269,7 @@ module.exports = {
   buildSequenceExpression,
   buildVariableDeclaration,
   buildVariableDeclarator,
+  buildFunctionExpression,
+  buildIdentifierOrCalls,
+  buildParOrCallExpression,
 };

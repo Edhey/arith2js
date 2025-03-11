@@ -17,5 +17,5 @@ number \d+(\.\d+)?([eE][-+]?\d+)?"i"?|"i"
 {number}                              return 'NUMBER';
 [_$a-zA-Z][$\w]*                      return idOrReserved(yytext);
 '**'                                  return '**'; // It must be before '*' because it is more specific, otherwise it will be recognized as '*'
-[-+*/!()&@|=,]                        return yytext;
+[-+*/!()&@|=,{}]                      return yytext;
 <<EOF>>                               return 'EOF';
