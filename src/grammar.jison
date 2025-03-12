@@ -10,6 +10,8 @@ const {
   buildFunctionExpression,
   buildIdentifierOrCalls,
   buildParOrCallExpression,
+  buildLogicalExpression,
+  buildUnaryExpression,
 } = require('./ast-build.js');
 %}
 
@@ -52,6 +54,9 @@ expresion:
       | expresion '&' expresion     { $$ = buildCallExpression('min', [$1, $3], @1, @3); } // Minimum
       | expresion '@' expresion     { $$ = buildCallExpression('max', [$1, $3], @1, @3); } // Maximum 
       | expresion 'ç'               { $$ = buildCallExpression('gamma', [$1], @1, @2); } // Factorial
+      | expresion '&&' expresion    { $$ = buildLogicalExpression($1, '&&', $3, @1, @3); } // Logical AND
+      | expresion '||' expresion    { $$ = buildLogicalExpression($1, '||', $3, @1, @3); } // Logical OR
+      | '!' expresion               { $$ = buildUnaryExpression('!', $2, true, @1, @2); } // Logical NOT
       | PID '(' expresion ')'       { $$ = buildCallExpression($PID, [$3], @1, @4); } // Function call 
       | '(' expresion ')'           { $$ = $2; }  // Parentheses
       | TRUE                        { $$ = buildLiteral(true, @1); } // True
@@ -60,7 +65,6 @@ expresion:
       | '(' expresion ')' calls     { $$ = buildParOrCallExpression($expresion, $calls, @1, @calls); }
       | ID calls                    { $$ = buildIdentifierOrCalls('$' + $1, $calls, @ID, @calls); } 
       | FUN '(' idOrEmpty ')' '{' expresion '}'     { $$ = buildFunctionExpression($idOrEmpty, $expresion, @1, @6); } // Function definition
-
 ;
 
 // apply:

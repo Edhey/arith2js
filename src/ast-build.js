@@ -11,8 +11,6 @@
  * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}
  */
 
-const { expression } = require("mathjs");
-
 /** 
  * Build the root node of the AST
  * @param {Object} child - The child node
@@ -259,6 +257,32 @@ function buildParOrCallExpression(par, call, parLocation, callLocation) {
   return node;
 }
 
+function buildLogicalExpression(left, operator, right, startLocation, endLocation) {
+  return {
+    type: 'LogicalExpression',
+    operator: operator,
+    left: left,
+    right: right,
+    loc: {
+      start: startLocation,
+      end: endLocation,
+    },
+  };
+}
+
+function buildUnaryExpression(operator, argument, prefix, startLocation, endLocation) {
+  return {
+    type: 'UnaryExpression',
+    operator: operator,
+    argument: argument,
+    prefix: prefix,
+    loc: {
+      start: startLocation,
+      end: endLocation,
+    },
+  };
+}
+
 module.exports = {
   buildRoot,
   buildLiteral,
@@ -272,4 +296,6 @@ module.exports = {
   buildFunctionExpression,
   buildIdentifierOrCalls,
   buildParOrCallExpression,
+  buildLogicalExpression,
+  buildUnaryExpression,
 };

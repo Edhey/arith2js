@@ -64,7 +64,7 @@ const scopeAnalysis = (ast) => {
         node.body.body.unshift(currentScope.buildDeclaration());
       }
 
-      currentScope.showErrorMessages("local");
+      currentScope.showErrorMessages("local function");
 
       currentScope = parentScope; // Restore the parent scope
     },
