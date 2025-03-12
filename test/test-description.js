@@ -137,4 +137,52 @@ module.exports = [
     expected: 'expected-test-var-fact-print.js',
     correctOut: 'correct-out-test-var-fact-print.txt'
   },
+  {
+    input: 'test-not1.calc',
+    output: 'out-test-not1.js',
+    expected: 'expected-test-not1.js',
+    correctOut: 'correct-out-test-not1.txt'
+  },
+  {
+    input: 'test-lt1.calc',
+    output: 'out-test-lt1.js',
+    expected: 'expected-test-lt1.js',
+    correctOut: 'correct-out-test-lt1.txt'
+  },
+  {
+    input: 'test-logical-fun2.calc',
+    output: 'out-test-logical-fun2.js',
+    expected: 'expected-test-logical-fun2.js',
+    correctOut: 'correct-out-test-logical-fun2.txt'
+  },
+  {
+    input: 'test-logical-fun.calc',
+    output: 'out-test-logical-fun.js',
+    expected: 'expected-test-logical-fun.js',
+    correctOut: 'correct-out-test-logical-fun.txt'
+  },
+  {
+    input: 'test-equal1.calc',
+    output: 'out-test-equal1.js',
+    expected: 'expected-test-equal1.js',
+    correctOut: 'correct-out-test-equal1.txt'
+  },
+  {
+    input: 'test-chained-print.calc',
+    output: 'out-test-chained-print.js',
+    expected: 'expected-test-chained-print.js',
+    correctOut: 'correct-out-test-chained-print.txt'
+  },
+  {
+    input: 'test-and1.calc',
+    output: 'out-test-and1.js',
+    expected: 'expected-test-and1.js',
+    correctOut: 'correct-out-test-and1.txt'
+  },
+  {
+    input: 'test-or1.calc',
+    output: 'out-test-or1.js',
+    expected: 'expected-test-or1.js',
+    correctOut: 'correct-out-test-or1.txt'
+  },
 ]

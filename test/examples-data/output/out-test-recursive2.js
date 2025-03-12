@@ -2,8 +2,8 @@ const { Complex,print } = require("/home/usuario/practicas/02-Translating-Arithm
 
 /* end of preamble of generated code */
 
-let $f, $h;
+let $fact;
 
-($f = function($x) {
-  return Complex('2').mul($x);
-}, $h = $f.add(Complex('3'))), print($h(Complex('1').add(Complex('i')))); 
+$fact = function($n) {
+  return !$n.equals(Complex('0')) && $n.mul($fact($n.sub(Complex('1')))) || Complex('1');
+}, print($fact(Complex('5'))); 

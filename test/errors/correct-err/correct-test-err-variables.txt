@@ -1,1 +1,3 @@
-Variable c declared but not used
+Errors in global scope:
+Variable c declared but not used at line 3, column 1
+

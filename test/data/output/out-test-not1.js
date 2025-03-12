@@ -1,0 +1,11 @@
+const { complexLessThan,Complex,print } = require("/home/usuario/practicas/02-Translating-Arithmetic-Expressions-to-JavaScript/arith2js-himar_edhey-hernandez-alu0101552392/src/support-lib.js");
+
+/* end of preamble of generated code */
+
+let $isPositive, $isNotPositive;
+
+((($isPositive = function($n) {
+  return complexLessThan(Complex('0'), $n);
+}, $isNotPositive = function($n) {
+  return !$isPositive($n);
+}), print($isNotPositive(Complex('5').neg()))), print($isNotPositive(Complex('5')))), print($isNotPositive(Complex('0'))); 

@@ -15,6 +15,11 @@ module.exports = [
       correctErr: 'correct-test-err.txt'
     },
 {
+      input: 'test-err-chained-fun.calc',
+      output: 'outerr-test-err-chained-fun.txt',
+      correctErr: 'correct-test-err-chained-fun.txt'
+    },
+{
       input: 'test-err3.calc',
       output: 'outerr-test-err3.txt',
       correctErr: 'correct-test-err3.txt'
@@ -28,6 +33,11 @@ module.exports = [
       input: 'test-err4.calc',
       output: 'outerr-test-err4.txt',
       correctErr: 'correct-test-err4.txt'
+    },
+{
+      input: 'test-err-fun-used-before.calc',
+      output: 'outerr-test-err-fun-used-before.txt',
+      correctErr: 'correct-test-err-fun-used-before.txt'
     },
 {
       input: 'test-err2.calc',
@@ -58,6 +68,11 @@ module.exports = [
       input: 'test-err6.calc',
       output: 'outerr-test-err6.txt',
       correctErr: 'correct-test-err6.txt'
+    },
+{
+      input: 'test-err-fun-print.calc',
+      output: 'outerr-test-err-fun-print.txt',
+      correctErr: 'correct-test-err-fun-print.txt'
     },
 {
       input: 'test-err8.calc',

@@ -70,6 +70,10 @@ class Scope {
       this.scope.get(name).usage.push(node);
     }
     this.setAsUsed(name);
+    let parentScope = this.parent;
+    if (parentScope?.has(name)) {
+      parentScope.addUsage(node);
+    }
   }
 
   /**
@@ -190,7 +194,7 @@ class Scope {
     return this.showVariableErrorMessages(messages);
   }
 
-  /**º
+  /**
    * Helper function to show the errors related with variables
    * @param {String[]} messages - array of strings with the error messages
    * @returns {String} string with the error messages or null if there are no 

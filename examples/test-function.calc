@@ -1,1 +1,2 @@
-f = fun(a) { a }
+f = fun(a) { a },
+print(f(4)) # 4
