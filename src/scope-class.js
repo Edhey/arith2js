@@ -32,7 +32,6 @@ class Scope {
 
     this.initialized = new Set(); // Set of name of initialized variables
     this.used = new Set(); // Set of name of used variables
-    this.parentParams = new Set(); // Set of name of parent parameters
     this.definitions = new Map(); // Map (name -> AssignExpression)
     this.scope = new Map(); // Map (name ->{declaration: AssignExpression, usages: [Identifier]})
     this.usedBeforeDeclaration = []; // Array of Identifier nodes
@@ -98,6 +97,22 @@ class Scope {
   }
 
   /**
+   * Checks if a variable is declared in the current scope or any parent scope.
+   * @param {string} name - The name of the variable to check.
+   * @returns {boolean} - True if the variable is declared, false otherwise.
+   */
+  isDeclaredInParentScope(name) {
+    let parentScope = this.parent;
+    while (parentScope) {
+      if (parentScope.has(name)) {
+        return true;
+      }
+      parentScope = parentScope.parent;
+    }
+    return false;
+  }
+
+  /**
    * Checks if a variable is initialized in the current scope.
    * @param {string} name - The name of the variable to check.
    * @returns {boolean} - True if the variable is initialized, false otherwise.
@@ -152,7 +167,8 @@ class Scope {
    */
   notDeclaredVariablesAnalysis() {
     let messages = [];
-    for (const variable of this.notDeclaredVariables().difference(this.parentParams)) {
+    for (const variable of this.notDeclaredVariables()) {
+      if (this.isDeclaredInParentScope(variable)) continue;
       const line = this.scope.get(variable).usage[0].loc.first_line ?? this.scope.get(variable).usage[0].loc.start.first_line;
       const column = this.scope.get(variable).usage[0].loc.last_column ?? this.scope.get(variable).usage[0].loc.start.last_column;
       messages.push(`Variable ${variable} not declared at line ${line}, column ${column}`);    }

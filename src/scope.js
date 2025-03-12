@@ -58,9 +58,6 @@ const scopeAnalysis = (ast) => {
       for (let param of params) {
         currentScope.setAsInitialized(param.name);
       }
-      if (path.parent.node.type !== 'AssignmentExpression') {
-        currentScope.parentParams = parentScope.initialized;
-      }
 
       this.traverse(path);
 
