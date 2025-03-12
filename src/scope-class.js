@@ -30,14 +30,13 @@ class Scope {
   constructor(parent) {
     this.parent = parent;
 
-    this.initialized = new Set();
-    this.definitions = new Map();
-
-    this.used = new Set(); 
-    this.scope = new Map();
-
-    this.usedBeforeDeclaration = [];
-    this.letDeclarations = [];
+    this.initialized = new Set(); // Set of name of initialized variables
+    this.used = new Set(); // Set of name of used variables
+    this.parentParams = new Set(); // Set of name of parent parameters
+    this.definitions = new Map(); // Map (name -> AssignExpression)
+    this.scope = new Map(); // Map (name ->{declaration: AssignExpression, usages: [Identifier]})
+    this.usedBeforeDeclaration = []; // Array of Identifier nodes
+    this.letDeclarations = []; // Array of VariableDeclarator nodes
   }
 
   /**
@@ -153,7 +152,7 @@ class Scope {
    */
   notDeclaredVariablesAnalysis() {
     let messages = [];
-    for (const variable of this.notDeclaredVariables()) {
+    for (const variable of this.notDeclaredVariables().difference(this.parentParams)) {
       const line = this.scope.get(variable).usage[0].loc.first_line ?? this.scope.get(variable).usage[0].loc.start.first_line;
       const column = this.scope.get(variable).usage[0].loc.last_column ?? this.scope.get(variable).usage[0].loc.start.last_column;
       messages.push(`Variable ${variable} not declared at line ${line}, column ${column}`);    }

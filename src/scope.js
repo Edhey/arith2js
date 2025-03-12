@@ -58,13 +58,17 @@ const scopeAnalysis = (ast) => {
       for (let param of params) {
         currentScope.setAsInitialized(param.name);
       }
+      if (path.parent.node.type !== 'AssignmentExpression') {
+        currentScope.parentParams = parentScope.initialized;
+      }
+
       this.traverse(path);
 
       if (currentScope.length > 0) {
         node.body.body.unshift(currentScope.buildDeclaration());
       }
 
-      currentScope.showErrorMessages("local function");
+      currentScope.showErrorMessages("local anonymous function");
 
       currentScope = parentScope; // Restore the parent scope
     },
