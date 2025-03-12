@@ -6,6 +6,10 @@ Himar Edhey Hernández Alonso - [GitHub](https://github.com/Edhey)
 ## Descripción
 Este proyecto transpila expresiones aritméticas a programas en JavaScript. Utiliza Jison para el análisis léxico y sintáctico, y genera un AST (Árbol de Sintaxis Abstracta) que luego se convierte en código JavaScript. Es capaz de funcionar tanto con expresiones aritméticas simples como con expresiones aritméticas complejas, con números enteros, decimales, en notación científica y complejos.
 
+A partir de la versión 1.6.0, se ha añadido la capacidad de manejar variables, que se pueden definir y asignar en las expresiones aritméticas.
+
+A partir de la versión 1.7.0, se ha añadido la capacidad de manejar funciones anónimas, de un solo parámetro, que se pueden utilizar en las expresiones aritméticas. Además, se han añadido operadores lógicos y de comparación. Cambio en factorial antes ! -> ahora ç, pues ahora ! es el operador de negación.
+
 ## Estructura del Proyecto
 El proyecto está estructurado de la siguiente manera:
 
@@ -222,3 +226,6 @@ Esta Github Action instala las dependencias y ejecuta los tests.
 
 ## Licencia
 Este proyecto está licenciado bajo la Licencia ISC.
+
+## IA
+Para realizar este proyecto, se ha utilizado la IA de GitHub mayoritariamente para aumentar la velocidad de desarrollo y la calidad del código. Las sugerencias de código han sido útiles para ello, pero se debe ir con mucho ojo pues no siempre son correctas. Por otra parte, la IA me ha resultado una buena herramienta para poder documentar el código de manera más eficiente. Por último, me he apoyado en ella para entender mejor el por qué de algunos errores y cómo solucionarlos.
