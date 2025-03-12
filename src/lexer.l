@@ -21,5 +21,5 @@ number \d+(\.\d+)?([eE][-+]?\d+)?"i"?|"i"
 '&&'                                  return '&&';
 '||'                                  return '||';
 '=='                                  return '==';
-[-+*/!()&@|=,{}ç]                     return yytext;
+[-+*/!()&@|=,{}ç<]                     return yytext;
 <<EOF>>                               return 'EOF';

@@ -22,6 +22,7 @@ const {
 %left ','
 %right '='
 %left '=='
+%left '<'
 %left '&&' '||'
 %left '!'
 %nonassoc '|'
@@ -56,6 +57,7 @@ expresion:
       | expresion '&' expresion     { $$ = buildCallExpression('min', [$1, $3], @1, @3); } // Minimum
       | expresion '@' expresion     { $$ = buildCallExpression('max', [$1, $3], @1, @3); } // Maximum 
       | expresion 'ç'               { $$ = buildCallExpression('gamma', [$1], @1, @2); } // Factorial
+      | expresion '<' expresion     { $$ = buildCallExpression('complexLessThan', [$1, $3], @1, @3); } // Less than
       | expresion '&&' expresion    { $$ = buildLogicalExpression($1, '&&', $3, @1, @3); } // Logical AND
       | expresion '||' expresion    { $$ = buildLogicalExpression($1, '||', $3, @1, @3); } // Logical OR
       | '!' expresion               { $$ = buildUnaryExpression('!', $2, true, @1, @2); } // Logical NOT

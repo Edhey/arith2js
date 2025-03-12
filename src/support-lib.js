@@ -93,4 +93,17 @@ function max(number1, number2) {
   }
 }
 
-module.exports = { gamma, Complex, print, min, max };
+/**
+ * Function that compares two complex numbers and returns true if the first one is less than the second one.
+ * First, it compares the real part of the numbers, and if they are equal,
+ * it compares the imaginary part.
+ * @param {Complex} complex1 First complex number to compare
+ * @param {Complex} complex2 Second complex number to compare
+ */
+function complexLessThan(complex1, complex2) {
+  if (complex1.re < complex2.re) return true;
+  else if (complex1.re == complex2.re && complex1.im < complex2.im) return true;
+  else return false;
+}
+
+module.exports = { gamma, Complex, print, min, max, complexLessThan };

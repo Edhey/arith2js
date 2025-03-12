@@ -1,7 +1,7 @@
 require('./monkey-patch-case.js');
 let Complex = require('complex.js');
 
-Complex.prototype. lessThan = function (other) {
+Complex.prototype.lessThan = function (other) {
   if (this.re < other.re) return true;
   if (this.re == other.re && this. im < other.im) return true;
   return false;
@@ -19,7 +19,7 @@ for (let op of Operators) {
       return oldComplex [op].call(this, other)
     }
     catch (e) {
-      throw new Error('Complex numbers do not support ${op} for ${other}\n${e}')
+      throw new Error(`Complex numbers do not support ${op} for ${other}\n${e}`)
     }
   }
 }
