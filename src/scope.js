@@ -72,10 +72,8 @@ const scopeAnalysis = (ast) => {
       const node = path.node;
       if (node.left.type === 'Identifier') {
         let name = node.left.name;
-        if (!ast.dependencies.has(name)) {
-          if (name && !currentScope.has(name)) {
+        if (name && !currentScope.has(name) && !ast.dependencies.has(name)) {
             currentScope.addDefinition(node);
-          }
         }
       }
       this.traverse(path);

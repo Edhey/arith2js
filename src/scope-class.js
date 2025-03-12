@@ -30,8 +30,8 @@ class Scope {
   constructor(parent) {
     this.parent = parent;
 
-    this.initialized = new Set(); // Bien
-    this.definitions = new Map(); // Bien
+    this.initialized = new Set();
+    this.definitions = new Map();
 
     this.used = new Set(); 
     this.scope = new Map();
