@@ -19,6 +19,8 @@ const {
 %token FUN
 %left ','
 %right '='
+%left '&&' '||'
+%left '!'
 %nonassoc '|'
 %left '@'
 %left '&'
@@ -26,7 +28,7 @@ const {
 %left '*' '/'
 %nonassoc UMINUS
 %right '**'
-%left '!'
+%left 'ç'
 // %left '(' ')' Esto es gestionado automáticamente por el analizador sintáctico
 
 %%
@@ -49,9 +51,11 @@ expresion:
       | '-' expresion %prec UMINUS  { $$ = buildCallMemberExpression($2, 'neg', [], false, @1, @2); } // Unary minus
       | expresion '&' expresion     { $$ = buildCallExpression('min', [$1, $3], @1, @3); } // Minimum
       | expresion '@' expresion     { $$ = buildCallExpression('max', [$1, $3], @1, @3); } // Maximum 
-      | expresion '!'               { $$ = buildCallExpression('gamma', [$1], @1, @2); } // Factorial
+      | expresion 'ç'               { $$ = buildCallExpression('gamma', [$1], @1, @2); } // Factorial
       | PID '(' expresion ')'       { $$ = buildCallExpression($PID, [$3], @1, @4); } // Function call 
       | '(' expresion ')'           { $$ = $2; }  // Parentheses
+      | TRUE                        { $$ = buildLiteral(true, @1); } // True
+      | FALSE                       { $$ = buildLiteral(false, @1); } // False
       // | ID apply                    { $$ = buildParOrCallMemberExpression(buildIdentifier('$' + $1, @1), $apply, @1, @2); }
       | '(' expresion ')' calls     { $$ = buildParOrCallExpression($expresion, $calls, @1, @calls); }
       | ID calls                    { $$ = buildIdentifierOrCalls('$' + $1, $calls, @ID, @calls); } 
@@ -59,12 +63,12 @@ expresion:
 
 ;
 
-apply:
-      /* empty */               { $$ = []; }
-    | '(' ')' apply             { $$ = [ null ].concat($apply); }
-    | '(' expresion ')' apply   { $$ = [ $expresion ].concat($apply); }
-//     //  | '(' idOrEmpty ')' apply { $$ = [ $2 ].concat($4); }
-;
+// apply:
+//       /* empty */               { $$ = []; }
+//     | '(' ')' apply             { $$ = [ null ].concat($apply); }
+//     | '(' expresion ')' apply   { $$ = [ $expresion ].concat($apply); }
+// //     //  | '(' idOrEmpty ')' apply { $$ = [ $2 ].concat($4); }
+// ;
 
 calls:
       '(' expresion ')' calls { $$ = [ $expresion ].concat($calls); }
