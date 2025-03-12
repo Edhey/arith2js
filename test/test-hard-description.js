@@ -119,4 +119,16 @@ module.exports = [
     expected: 'expected-test-var-add.js',
     correctOut: 'correct-out-test-var-add.txt'
   },
+  {
+    input: 'test-short-circuit-combined.calc',
+    output: 'out-test-short-circuit-combined.js',
+    expected: 'expected-test-short-circuit-combined.js',
+    correctOut: 'correct-out-test-short-circuit-combined.txt'
+  },
+  {
+    input: 'test-function-combined.calc',
+    output: 'out-test-function-combined.js',
+    expected: 'expected-test-function-combined.js',
+    correctOut: 'correct-out-test-function-combined.txt'
+  },
 ]

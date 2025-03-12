@@ -185,4 +185,16 @@ module.exports = [
     expected: 'expected-test-or1.js',
     correctOut: 'correct-out-test-or1.txt'
   },
+  {
+    input: 'test-short-circuit-or.calc',
+    output: 'out-test-short-circuit-or.js',
+    expected: 'expected-test-short-circuit-or.js',
+    correctOut: 'correct-out-test-short-circuit-or.txt'
+  },
+  {
+    input: 'test-short-circuit-and.calc',
+    output: 'out-test-short-circuit-and.js',
+    expected: 'expected-test-short-circuit-and.js',
+    correctOut: 'correct-out-test-short-circuit-and.txt'
+  },
 ]
