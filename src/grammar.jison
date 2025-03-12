@@ -21,6 +21,7 @@ const {
 %token FUN
 %left ','
 %right '='
+%left '=='
 %left '&&' '||'
 %left '!'
 %nonassoc '|'
@@ -51,6 +52,7 @@ expresion:
       | expresion '**' expresion    { $$ = buildCallMemberExpression($1, 'pow', [$3], false, @1, @3); } // Power
       | '|' expresion '|'           { $$ = buildCallMemberExpression($2, 'abs', [], false, @1, @3); } // Absolute value
       | '-' expresion %prec UMINUS  { $$ = buildCallMemberExpression($2, 'neg', [], false, @1, @2); } // Unary minus
+      | expresion '==' expresion    { $$ = buildCallMemberExpression($1, 'equals', [$3], false, @1, @3); } // Equality
       | expresion '&' expresion     { $$ = buildCallExpression('min', [$1, $3], @1, @3); } // Minimum
       | expresion '@' expresion     { $$ = buildCallExpression('max', [$1, $3], @1, @3); } // Maximum 
       | expresion 'ç'               { $$ = buildCallExpression('gamma', [$1], @1, @2); } // Factorial
