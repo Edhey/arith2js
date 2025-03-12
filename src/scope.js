@@ -43,16 +43,38 @@ function findDependecies(ast) {
  */
 const scopeAnalysis = (ast) => {
   const Scope = require('./scope-class.js');
-  let scope = new Scope(null);
+  let currentScope = new Scope(null);
 
   visit(ast.ast, {
+    visitFunction(path) {
+      const node = path.node;
+      const parentScope = currentScope;
+
+      if (!["ArrowFunctionExpression", "FunctionExpression"].includes(node.type)) return false;
+      currentScope = new Scope(parentScope);
+
+      // Add function parameters to the scope
+      const params = node.params;
+      for (let param of params) {
+        currentScope.setAsInitialized(param.name);
+      }
+      this.traverse(path);
+
+      if (currentScope.length > 0) {
+        node.body.body.unshift(currentScope.buildDeclaration());
+      }
+
+      currentScope.showErrorMessages("local");
+
+      currentScope = parentScope; // Restore the parent scope
+    },
     visitAssignmentExpression(path) {
       const node = path.node;
       if (node.left.type === 'Identifier') {
         let name = node.left.name;
         if (!ast.dependencies.has(name)) {
-          if (name && !scope.has(name)) {
-            scope.addDefinition(node);
+          if (name && !currentScope.has(name)) {
+            currentScope.addDefinition(node);
           }
         }
       }
@@ -63,36 +85,25 @@ const scopeAnalysis = (ast) => {
       const currentNodeName = path.node.name;
       if (/^[$]/.test(currentNodeName)
         && !ast.dependencies.has(currentNodeName)) {
-        if (!scope.has(currentNodeName)) {
-          scope.setAsUsedBeforeDeclaration(path.node);
+        if (!currentScope.has(currentNodeName)) {
+          currentScope.setAsUsedBeforeDeclaration(path.node);
         }
         if (!(parent.type === 'AssignmentExpression'
           && parent.left.name === currentNodeName)) {
-          scope.addUsage(path.node);
+          currentScope.addUsage(path.node);
         }
       }
       this.traverse(path);
     },
   });
 
-  if (scope.length > 0) {
-    ast.ast.body.unshift(scope.buildDeclaration(ast.ast.loc));
+  if (currentScope.length > 0) {
+    ast.ast.body.unshift(currentScope.buildDeclaration(ast.ast.loc));
   }
 
-  ast.scope = scope;
+  ast.scope = currentScope;
 
-  let notDeclaredMessage = scope.notDeclaredVariablesAnalysis();
-  if (notDeclaredMessage) {
-    console.error(notDeclaredMessage);
-  }
-  let notUsedMessage = scope.notUsedVariablesAnalysis();
-  if (notUsedMessage) {
-    console.error(notUsedMessage);
-  }
-  let usedBeforeDeclarationMessage = scope.usedBeforeDeclarationVariablesAnalysis();
-  if (usedBeforeDeclarationMessage) {
-    console.error(usedBeforeDeclarationMessage);
-  }
+  currentScope.showErrorMessages("global");
   return ast;
 };
 

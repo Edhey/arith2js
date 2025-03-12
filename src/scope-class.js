@@ -30,10 +30,10 @@ class Scope {
   constructor(parent) {
     this.parent = parent;
 
-    this.initialized = new Set();
-    this.definitions = new Map();
+    this.initialized = new Set(); // Bien
+    this.definitions = new Map(); // Bien
 
-    this.used = new Set();
+    this.used = new Set(); 
     this.scope = new Map();
 
     this.usedBeforeDeclaration = [];
@@ -131,7 +131,9 @@ class Scope {
   notUsedVariablesAnalysis() {
     let messages = [];
     for (const variable of this.notUsedVariables()) {
-      messages.push(`Variable ${variable} declared but not used`);
+      const line = this.scope.get(variable).declaration.loc.first_line ?? this.scope.get(variable).declaration.loc.start.first_line;
+      const column = this.scope.get(variable).declaration.loc.last_column ?? this.scope.get(variable).declaration.loc.start.last_column;
+      messages.push(`Variable ${variable} declared but not used at line ${line}, column ${column}`);
     }
     return this.showVariableErrorMessages(messages);
   }
@@ -152,8 +154,9 @@ class Scope {
   notDeclaredVariablesAnalysis() {
     let messages = [];
     for (const variable of this.notDeclaredVariables()) {
-      messages.push(`Variable ${variable} not declared`);
-    }
+      const line = this.scope.get(variable).usage[0].loc.first_line ?? this.scope.get(variable).usage[0].loc.start.first_line;
+      const column = this.scope.get(variable).usage[0].loc.last_column ?? this.scope.get(variable).usage[0].loc.start.last_column;
+      messages.push(`Variable ${variable} not declared at line ${line}, column ${column}`);    }
     return this.showVariableErrorMessages(messages);
   }
 
@@ -172,7 +175,7 @@ class Scope {
     return this.showVariableErrorMessages(messages);
   }
 
-  /**
+  /**º
    * Helper function to show the errors related with variables
    * @param {String[]} messages - array of strings with the error messages
    * @returns {String} string with the error messages or null if there are no 
@@ -183,6 +186,30 @@ class Scope {
       return messages.map(message => message.replace(/\$/, '')).join('\n');
     }
     return null;
+  }
+
+  showErrorMessages(name) {
+    let notDeclaredMessage = this.notDeclaredVariablesAnalysis();
+    let notUsedMessage = this.notUsedVariablesAnalysis();
+    let usedBeforeDeclarationMessage = this.usedBeforeDeclarationVariablesAnalysis();
+    let message = '';
+    if (notDeclaredMessage) {
+      message += notDeclaredMessage + '\n';
+    }
+    if (notUsedMessage) {
+      message += notUsedMessage + '\n';
+    }
+    if (usedBeforeDeclarationMessage) {
+      message += usedBeforeDeclarationMessage + '\n';
+    }
+    if (message) {
+      if (name) {
+        console.error("Errors in " + name  + " scope:");
+      } else {
+        console.error("Errors in scope:");
+      }
+      console.error(message);
+    }
   }
 
   /**
