@@ -21,5 +21,14 @@ for (let op in Operators) {
       default:
         throw new Error(`Unsupported ${op} for type ${typeof other}`)
     }
-  }
+  };
+  
+}
+for (let op in Operators) {
+  Number.prototype[op] = function (other) {
+    if (typeof other === 'function') {
+      return other(this)[Operators[op]](this);
+    }
+    return eval(`${this} ${Operators[op]} ${other}`);
+  };
 }
