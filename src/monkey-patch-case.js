@@ -1,18 +1,22 @@
 let Operators = {
-  add: '+',  mul: '*',  div: '/',  equals: '==',  pow: '**',  neg: '-' // ... etc.
+  add: '+',  mul: '*',  div: '/',  equals: '==',  pow: '**',  neg: '-'
 };
- 
+
 for (let op in Operators) {
-  Boolean.prototype[op] = function (other) { /* ... */   };
   Function.prototype[op] = function (other) {
     switch (typeof other) {
-      case 'boolean':  return (...x) => this(...x)[op](Number(other))
-      case 'object': /* ... */
+      case 'boolean':  return (...x) => this(...x)[op](Number(other));
       case 'function':
         try {
-          return (...x) => this(...x)[op](other(...x))
+          return (...x) => this(...x)[op](other(...x));
         } catch (e) {
-          throw new Error(`Unsupported ${op} for function ${other}`)
+          throw new Error(`Unsupported ${op} for function ${other}`);
+        }
+      case 'object':
+        try {
+          return (...x) => this(...x)[op](other);
+        } catch (e) {
+          throw new Error(`Unsupported ${op} for object ${other}`)
         }
       default:
         throw new Error(`Unsupported ${op} for type ${typeof other}`)
