@@ -54,10 +54,10 @@ expresion:
       | '|' expresion '|'           { $$ = buildCallMemberExpression($2, 'abs', [], false, @1, @3); } // Absolute value
       | '-' expresion %prec UMINUS  { $$ = buildCallMemberExpression($2, 'neg', [], false, @1, @2); } // Unary minus
       | expresion '==' expresion    { $$ = buildCallMemberExpression($1, 'equals', [$3], false, @1, @3); } // Equality
+      | expresion '<' expresion     { $$ = buildCallMemberExpression($1, 'lessThan', [$3], false, @1, @3); } // Less than
       | expresion '&' expresion     { $$ = buildCallExpression('min', [$1, $3], @1, @3); } // Minimum
       | expresion '@' expresion     { $$ = buildCallExpression('max', [$1, $3], @1, @3); } // Maximum 
       | expresion 'ç'               { $$ = buildCallExpression('gamma', [$1], @1, @2); } // Factorial
-      | expresion '<' expresion     { $$ = buildCallExpression('complexLessThan', [$1, $3], @1, @3); } // Less than
       | expresion '&&' expresion    { $$ = buildLogicalExpression($1, '&&', $3, @1, @3); } // Logical AND
       | expresion '||' expresion    { $$ = buildLogicalExpression($1, '||', $3, @1, @3); } // Logical OR
       | '!' expresion               { $$ = buildUnaryExpression('!', $2, true, @1, @2); } // Logical NOT
