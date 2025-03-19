@@ -17,7 +17,7 @@ for (let op in Operators) {
   // Monkey patching the operators for the Function prototype
   Function.prototype[op] = function (other) {
     switch (typeof other) {
-      case 'boolean': return (...x) => this(...x)[op](Number(other));
+      case 'boolean': return (...x) => this(...x)[op](Complex(Number(other)));
       case 'function':
         try {
           return (...x) => this(...x)[op](other(...x));
@@ -38,7 +38,7 @@ for (let op in Operators) {
   // Monkey patching the operators for the Boolean prototype
   Boolean.prototype[op] = function (other) {
     switch (typeof other) {
-      case 'boolean': return Complex(Number(this))[op](Number(other));
+      case 'boolean': return Complex(Number(this))[op](Complex(Number(other)));
       case 'function':
         try {
           return other[op](Complex(Number(this)));

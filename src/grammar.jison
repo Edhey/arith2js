@@ -19,6 +19,7 @@ const {
 %token ID
 %token PID
 %token FUN
+%token STRING
 %left ','
 %right '='
 %left '=='
@@ -60,7 +61,7 @@ expresion:
       | expresion 'ç'               { $$ = buildCallExpression('gamma', [$1], @1, @2); } // Factorial
       | expresion '&&' expresion    { $$ = buildLogicalExpression($1, '&&', $3, @1, @3); } // Logical AND
       | expresion '||' expresion    { $$ = buildLogicalExpression($1, '||', $3, @1, @3); } // Logical OR
-      | '!' expresion               { $$ = buildUnaryExpression('!', $2, true, @1, @2); } // Logical NOT
+      | '!' expresion               { $$ = buildCallMemberExpression($2, 'not', [], false, @1, @2); } // Logical NOT
       | PID '(' expresion ')'       { $$ = buildCallExpression($PID, [$3], @1, @4); } // Function call 
       | '(' expresion ')'           { $$ = $2; }  // Parentheses
       | TRUE                        { $$ = buildLiteral(true, @1); } // True
@@ -69,6 +70,7 @@ expresion:
       | '(' expresion ')' calls     { $$ = buildIdentifierOrCalls($expresion, $calls, @1, @calls); }
       | ID calls                    { $$ = buildIdentifierOrCalls('$' + $1, $calls, @ID, @calls); } 
       | FUN '(' idOrEmpty ')' '{' expresion '}'     { $$ = buildFunctionExpression($idOrEmpty, $expresion, @1, @6); } // Function definition
+      | STRING                      { $$ = buildLiteral($1, @1); } // String
 ;
 
 calls:
