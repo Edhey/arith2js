@@ -156,7 +156,7 @@ case 24:
  this.$ = buildLiteral(false, _$[$0]); 
 break;
 case 25:
- this.$ = buildParOrCallExpression($$[$0-2], $$[$0], _$[$0-3], _$[$0]); 
+ this.$ = buildIdentifierOrCalls($$[$0-2], $$[$0], _$[$0-3], _$[$0]); 
 break;
 case 26:
  this.$ = buildIdentifierOrCalls('$' + $$[$0-1], $$[$0], _$[$0-1], _$[$0]); 

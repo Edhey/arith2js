@@ -216,46 +216,38 @@ function buildFunctionExpression(params, expression, startLocation, endLocation)
 //   // ! TODO: Implement
 //   let node = id;
 //   for (let i = 0; i < calls.length; i++) {
-//     node = buildCallMemberExpression(node, calls[i].name, calls[i].args, calls[i].computed, calls[i].startLocation, calls[i].endLocation);
+//     node = buildCallExpression(node, calls[i].name, calls[i].args, calls[i].computed, calls[i].startLocation, calls[i].endLocation);
 //   }
 //   return node;
 // }
 
-function buildIdentifierOrCalls(name, calls, idLocation, callLocation) {
-  let id = {
-    type: 'Identifier',
-    name: name,
-    loc: idLocation,
-  };
-  if (calls.length === 0) {
-    return id;
-  }
+function buildIdentifierOrCalls(baseCall, calls, idLocation, callLocation) {
+  let baseExpression = typeof baseCall === 'string' ? buildIdentifier(baseCall, idLocation) : baseCall;
 
-  let node = id;
   calls.forEach(ast => {
     let parent = {
       type: 'CallExpression',
-      callee: node,
+      callee: baseExpression,
       arguments: ast === null ? [] : [ast],
       loc: callLocation,
     };
-    node = parent;
+    baseExpression = parent;
   });
-  return node;
+  return baseExpression;
 }
 
-function buildParOrCallExpression(par, call, parLocation, callLocation) {
-  let node = par;
-  if (call !== null) {
-    node = {
-      type: 'CallExpression',
-      callee: par,
-      arguments: call,
-      loc: callLocation,
-    };
-  }
-  return node;
-}
+// function buildParOrCallExpression(par, call, parLocation, callLocation) {
+//   let node = par;
+//   if (call !== null) {
+//     node = {
+//       type: 'CallExpression',
+//       callee: par,
+//       arguments: call,
+//       loc: callLocation,
+//     };
+//   }
+//   return node;
+// }
 
 function buildLogicalExpression(left, operator, right, startLocation, endLocation) {
   return {
@@ -295,7 +287,7 @@ module.exports = {
   buildVariableDeclarator,
   buildFunctionExpression,
   buildIdentifierOrCalls,
-  buildParOrCallExpression,
+  // buildParOrCallExpression,
   buildLogicalExpression,
   buildUnaryExpression,
 };

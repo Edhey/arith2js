@@ -8,7 +8,7 @@ const oldComplex = Object.create(null);
  * Represents the operators that can be used in the function
  * @type {{add: string, mul: string, div: string, equals: string, pow: string, neg: string}}
  */
-const Operators = {
+const ComplexOperators = {
   add: '+', mul: '*', div: '/', equals: '==', pow: '**', neg: '-'
 };
 
@@ -22,14 +22,16 @@ const Operators = {
  * @returns {boolean} - True if the first complex number is less than the second
  *                      one and false otherwise
 */
-// TODO Use this method to implement the lessThan operator
 Complex.prototype.lessThan = function (other) {
   if (this.re < other.re) return true;
   if (this.re == other.re && this.im < other.im) return true;
   return false;
 }
 
-for (let op in Operators) {
+/**
+ * Monkey patching the operators for the Complex prototype
+ */
+for (let op in ComplexOperators) {
   oldComplex[op] = Complex.prototype[op];
   Complex.prototype[op] = function (other) {
     try {

@@ -66,17 +66,10 @@ expresion:
       | TRUE                        { $$ = buildLiteral(true, @1); } // True
       | FALSE                       { $$ = buildLiteral(false, @1); } // False
       // | ID apply                    { $$ = buildParOrCallMemberExpression(buildIdentifier('$' + $1, @1), $apply, @1, @2); }
-      | '(' expresion ')' calls     { $$ = buildParOrCallExpression($expresion, $calls, @1, @calls); }
+      | '(' expresion ')' calls     { $$ = buildIdentifierOrCalls($expresion, $calls, @1, @calls); }
       | ID calls                    { $$ = buildIdentifierOrCalls('$' + $1, $calls, @ID, @calls); } 
       | FUN '(' idOrEmpty ')' '{' expresion '}'     { $$ = buildFunctionExpression($idOrEmpty, $expresion, @1, @6); } // Function definition
 ;
-
-// apply:
-//       /* empty */               { $$ = []; }
-//     | '(' ')' apply             { $$ = [ null ].concat($apply); }
-//     | '(' expresion ')' apply   { $$ = [ $expresion ].concat($apply); }
-// //     //  | '(' idOrEmpty ')' apply { $$ = [ $2 ].concat($4); }
-// ;
 
 calls:
       '(' expresion ')' calls { $$ = [ $expresion ].concat($calls); }
