@@ -48,9 +48,13 @@ const scopeAnalysis = (ast) => {
   visit(ast.ast, {
     visitFunction(path) {
       const node = path.node;
+      if (node.type !== 'FunctionExpression') {
+        this.traverse(path);
+        return false;
+      }
       const parentScope = currentScope;
 
-      if (!["ArrowFunctionExpression", "FunctionExpression"].includes(node.type)) return false;
+      if (!["FunctionExpression"].includes(node.type)) return false;
       currentScope = new Scope(parentScope);
 
       // Add function parameters to the scope

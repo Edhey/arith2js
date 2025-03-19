@@ -149,8 +149,8 @@ class Scope {
   notUsedVariablesAnalysis() {
     let messages = [];
     for (const variable of this.notUsedVariables()) {
-      const line = this.scope.get(variable).declaration.loc.first_line ?? this.scope.get(variable).declaration.loc.start.first_line;
-      const column = this.scope.get(variable).declaration.loc.last_column ?? this.scope.get(variable).declaration.loc.start.last_column;
+      const line = this.scope.get(variable).declaration.loc?.first_line ?? this.scope.get(variable).declaration.loc?.start.first_line ?? 'unknow';
+      const column = this.scope.get(variable).declaration.loc?.last_column ?? this.scope.get(variable).declaration.loc?.start.last_column ?? 'unknow';
       messages.push(`Variable ${variable} declared but not used at line ${line}, column ${column}`);
     }
     return this.showVariableErrorMessages(messages);
@@ -173,8 +173,8 @@ class Scope {
     let messages = [];
     for (const variable of this.notDeclaredVariables()) {
       if (this.isDeclaredInParentScope(variable)) continue;
-      const line = this.scope.get(variable).usage[0].loc.first_line ?? this.scope.get(variable).usage[0].loc.start.first_line;
-      const column = this.scope.get(variable).usage[0].loc.last_column ?? this.scope.get(variable).usage[0].loc.start.last_column;
+      const line = this.scope.get(variable).usage[0].loc?.first_line ?? this.scope.get(variable).usage[0].loc?.start.first_line ?? 'unknow'
+      const column = this.scope.get(variable).usage[0].loc?.last_column ?? this.scope.get(variable).usage[0].loc?.start.last_column ?? 'unknow'
       messages.push(`Variable ${variable} not declared at line ${line}, column ${column}`);    }
     return this.showVariableErrorMessages(messages);
   }

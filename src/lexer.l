@@ -1,5 +1,5 @@
 %{
-const reservedwords = ["fun", "true", "false", "i"]
+const reservedwords = ["fun", "true", "false", "i", "while", "for"]
 const predefinedIds = ["print", "write" ] // predefined identifiers
 
 const removeQuotes = text => text.slice(1, -1);
@@ -25,5 +25,5 @@ string \"((?:[^"\\]|\\.)*)\"
 '&&'                                  return '&&';
 '||'                                  return '||';
 '=='                                  return '==';
-[-+*/!()&@|=,{}ç<]                     return yytext;
+[-+*/!()&@|=,{}ç<;]                    return yytext;
 <<EOF>>                               return 'EOF';
