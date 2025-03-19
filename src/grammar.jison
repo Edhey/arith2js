@@ -43,46 +43,46 @@ const {
 
 %%
 // console.log(JSON.stringify($1, null, 2));
-endExpresion: 
-    expresion EOF { return { ast: buildRoot($1, @1) }; } // End of expression
+endExpression: 
+    expression EOF { return { ast: buildRoot($1, @1) }; } // End of expression
 ;
 
-expresion: 
+expression: 
       NUMBER                          { $$ = buildCallExpression(buildIdentifier('Complex', @1), [buildLiteral($1, @1)], @1); } // Complex Number
       | ID                            { $$ = buildIdentifier('$' + $1, @1); } // Identifier
-      | ID '=' expresion              { $$ = buildAssigmentExpression(buildIdentifier('$' + $1, @1), '=', $3, @1, @3); } // Assigment
-      | expresion ',' expresion       { $$ = buildSequenceExpression([$1, $3], @1, @3); } // Sequence
-      | expresion '+' expresion       { $$ = buildCallMemberExpression($1, 'add', [$3], false, @1, @3); } // Addition
-      | expresion '-' expresion       { $$ = buildCallMemberExpression($1, 'sub', [$3], false, @1, @3); } // Subtraction 
-      | expresion '/' expresion       { $$ = buildCallMemberExpression($1, 'div', [$3], false, @1, @3); } // Division
-      | expresion '*' expresion       { $$ = buildCallMemberExpression($1, 'mul', [$3], false, @1, @3); } // Multiplication
-      | expresion '**' expresion      { $$ = buildCallMemberExpression($1, 'pow', [$3], false, @1, @3); } // Power
-      | '|' expresion '|'             { $$ = buildCallMemberExpression($2, 'abs', [], false, @1, @3); } // Absolute value
-      | '-' expresion %prec UMINUS    { $$ = buildCallMemberExpression($2, 'neg', [], false, @1, @2); } // Unary minus
-      | expresion '==' expresion      { $$ = buildCallMemberExpression($1, 'equals', [$3], false, @1, @3); } // Equality
-      | expresion '<' expresion       { $$ = buildCallMemberExpression($1, 'lessThan', [$3], false, @1, @3); } // Less than
-      | expresion '&' expresion       { $$ = buildCallExpression(buildIdentifier('min', @2), [$1, $3], @1, @3); } // Minimum
-      | expresion '@' expresion       { $$ = buildCallExpression(buildIdentifier('max', @2), [$1, $3], @1, @3); } // Maximum 
-      | expresion '&&' expresion      { $$ = buildLogicalExpression($1, '&&', $3, @1, @3); } // Logical AND
-      | expresion '||' expresion      { $$ = buildLogicalExpression($1, '||', $3, @1, @3); } // Logical OR
-      | '!' expresion                 { $$ = buildCallMemberExpression($2, 'not', [], false, @1, @2); } // Logical NOT
-      | expresion '!'                 { $$ = buildCallExpression(buildIdentifier('gamma', @2), [$1], @1, @2); } // Factorial
-      | PID '(' expresion ')'         { $$ = buildCallExpression(buildIdentifier($PID, @1), [$3], @1, @4); } // Function call 
-      | '(' expresion ')'             { $$ = $2; }  // Parentheses
+      | ID '=' expression              { $$ = buildAssigmentExpression(buildIdentifier('$' + $1, @1), '=', $3, @1, @3); } // Assigment
+      | expression ',' expression       { $$ = buildSequenceExpression([$1, $3], @1, @3); } // Sequence
+      | expression '+' expression       { $$ = buildCallMemberExpression($1, 'add', [$3], false, @1, @3); } // Addition
+      | expression '-' expression       { $$ = buildCallMemberExpression($1, 'sub', [$3], false, @1, @3); } // Subtraction 
+      | expression '/' expression       { $$ = buildCallMemberExpression($1, 'div', [$3], false, @1, @3); } // Division
+      | expression '*' expression       { $$ = buildCallMemberExpression($1, 'mul', [$3], false, @1, @3); } // Multiplication
+      | expression '**' expression      { $$ = buildCallMemberExpression($1, 'pow', [$3], false, @1, @3); } // Power
+      | '|' expression '|'             { $$ = buildCallMemberExpression($2, 'abs', [], false, @1, @3); } // Absolute value
+      | '-' expression %prec UMINUS    { $$ = buildCallMemberExpression($2, 'neg', [], false, @1, @2); } // Unary minus
+      | expression '==' expression      { $$ = buildCallMemberExpression($1, 'equals', [$3], false, @1, @3); } // Equality
+      | expression '<' expression       { $$ = buildCallMemberExpression($1, 'lessThan', [$3], false, @1, @3); } // Less than
+      | expression '&' expression       { $$ = buildCallExpression(buildIdentifier('min', @2), [$1, $3], @1, @3); } // Minimum
+      | expression '@' expression       { $$ = buildCallExpression(buildIdentifier('max', @2), [$1, $3], @1, @3); } // Maximum 
+      | expression '&&' expression      { $$ = buildLogicalExpression($1, '&&', $3, @1, @3); } // Logical AND
+      | expression '||' expression      { $$ = buildLogicalExpression($1, '||', $3, @1, @3); } // Logical OR
+      | '!' expression                 { $$ = buildCallMemberExpression($2, 'not', [], false, @1, @2); } // Logical NOT
+      | expression '!'                 { $$ = buildCallExpression(buildIdentifier('gamma', @2), [$1], @1, @2); } // Factorial
+      | PID '(' printList ')'         { $$ = buildCallExpression(buildIdentifier($PID, @1), $3, @1, @4); } // Function call 
+      | '(' expression ')'             { $$ = $2; }  // Parentheses
       | TRUE                          { $$ = buildLiteral(true, @1); } // True
       | FALSE                         { $$ = buildLiteral(false, @1); } // False
       // | ID apply                   { $$ = buildParOrCallMemberExpression(buildIdentifier('$' + $1, @1), $apply, @1, @2); }
-      | '(' expresion ')' calls       { $$ = buildIdentifierOrCalls($expresion, $calls, @1, @calls); }
+      | '(' expression ')' calls       { $$ = buildIdentifierOrCalls($expression, $calls, @1, @calls); }
       | ID calls                      { $$ = buildIdentifierOrCalls('$' + $1, $calls, @ID, @calls); } 
-      | FUN '(' idOrEmpty ')' '{' expresion '}'     { $$ = buildFunctionExpression($idOrEmpty, $expresion, @1, @6); } // Function definition
+      | FUN '(' idOrEmpty ')' '{' expression '}'     { $$ = buildFunctionExpression($idOrEmpty, $expression, @1, @6); } // Function definition
       | STRING                                      { $$ = buildLiteral($1, @1); } // String
-      | WHILE expresion '{'expresion'}'             { $$ = buildWhileStatement($expresion1, $expresion2, @1, @5);}
-      | FOR '(' expresion ';' expresion ';' expresion ')' '{' expresion '}' { $$ = buildForStatement($expresion1, $expresion2, $expresion3, $expresion4, @1, @11); };
+      | WHILE expression '{'expression'}'             { $$ = buildWhileStatement($expression1, $expression2, @1, @5);}
+      | FOR '(' expression ';' expression ';' expression ')' '{' expression '}' { $$ = buildForStatement($expression1, $expression2, $expression3, $expression4, @1, @11); };
 
 calls:
-      '(' expresion ')' calls { $$ = [ $expresion ].concat($calls); }
+      '(' expression ')' calls { $$ = [ $expression ].concat($calls); }
     | '(' ')' calls           { $$ = [ null ].concat($calls); }
-    | '(' expresion ')'       { $$ = [ $expresion ]; }
+    | '(' expression ')'       { $$ = [ $expression ]; }
     | '(' ')'                 { $$ = [ null ]; }
 ;
 
@@ -93,6 +93,6 @@ idOrEmpty:
 
 printList:
     /* empty */     { $$ = []; }
-    | expresion ';' printList { $$ = [ $expresion ].concat($printList); }
-    | expresion     { $$ = [ $expresion ]; }
+    | expression ';' printList { $$ = [ $expression ].concat($printList); }
+    | expression     { $$ = [ $expression ]; }
 ;

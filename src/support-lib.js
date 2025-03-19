@@ -45,11 +45,15 @@ function gamma(zz) {
 }
 
 /**
- * Function to print a value
- * @param value Array of values to print
+ * Function to print a values
+ * @param {Array} values Array of values to print
  */
-function print(value) {
-  console.log(value.toString());  
+function print(...values) {
+  let result = '';
+  for (value of values) {
+    result += value.toString() + ' ';
+  }
+  console.log(result.trim());
 }
 
 /**
