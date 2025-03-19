@@ -10,8 +10,8 @@
   * @desc Handler for complex operations
   */
 
- let oldComplex = {};
- const Complex = require('complex.js');
+let oldComplex = {};
+const Complex = require('complex.js');
 const { operationHandlers, implementedTypes } = require('../monkey-patch-handlers.js');
 const lodash = require('lodash');
 
@@ -66,12 +66,25 @@ lodash.set(operationHandlers, 'complex.add.string', function (other) {
 });
 
 /**
+ * Multiplies a complex to a string
+ * @param {Complex} other complex to mul to the string
+ * @returns concatenated string and complex
+ */
+lodash.set(operationHandlers, 'complex.mul.string', function (other) {
+  if (other.im !== 0) {
+    throw new Error(`Error: Unsupported ${operator} for type ${typeof other}` +
+      ' with imaginary part');
+  }
+  return other.repeat(this.re);
+});
+
+/**
  * Not operator for a complex
  * @returns false if the complex is not zero,
  * true otherwise
  */
 lodash.set(operationHandlers, 'complex.not', function () {
-  return this === Complex(0);
+  return oldComplex['equals'].call(this, Complex(0));
 });
 
 /**

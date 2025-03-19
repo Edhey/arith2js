@@ -46,7 +46,7 @@ function gamma(zz) {
 
 /**
  * Function to print a value
- * @param {Complex} value Is the value to print
+ * @param value Array of values to print
  */
 function print(value) {
   console.log(value.toString());  
