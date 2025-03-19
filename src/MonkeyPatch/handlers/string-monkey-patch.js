@@ -26,12 +26,11 @@ lodash.set(operationHandlers, 'string.not', function () {
 });
 
 const comparisonOperators = {
-  equals: '===',
+  equals: '==',
   lessThan: '<',
   greaterThan: '>',
   lessThanOrEqual: '<=',
   greaterThanOrEqual: '>=',
-  notEquals: '!=='
 };
 
 /**
@@ -42,6 +41,15 @@ for (const operator in comparisonOperators) {
     return eval(`this ${comparisonOperators[operator]} other`);
   });
 }
+
+/**
+ * Not operator for a string
+ * @returns false if the string is not empty,
+ * true otherwise
+ */
+lodash.set(operationHandlers, 'string.not', function () {
+  return this == '';
+});
 
 /**
  * Adds a string to a string

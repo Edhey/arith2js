@@ -70,5 +70,5 @@ lodash.set(operationHandlers, 'boolean.add.string', function (other) {
  * @returns Returns the negation of the boolean
  */
 lodash.set(operationHandlers, 'boolean.not', function () {
-  return this === false;
+  return this == false;
 });

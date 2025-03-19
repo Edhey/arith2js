@@ -26,14 +26,13 @@ const Operators = {
   add: '+', mul: '*', div: '/', equals: '==', pow: '**', sub: '-'
 };
 
-
 for (let operator in Operators) {
   /**
    * Operates a function with a boolean. Coertion of the boolean to a complex
    * @param {Boolean} other It is the boolean to operate
    * @returns Returns a function that operates the function with the boolean as a complex
    */
-  lodash.set(operationHandlers, `function.${operator}.boolean`, function(other) {
+  lodash.set(operationHandlers, `function.${operator}.boolean`, function (other) {
     return (...x) => this(...x)[operator](Complex(Number(other)));
   });
 
@@ -42,7 +41,7 @@ for (let operator in Operators) {
    * @param {Function} other It is the function to operate
    * @returns Returns a function that operates the function with the function result
    */
-  lodash.set(operationHandlers, `function.${operator}.function`, function(other) {
+  lodash.set(operationHandlers, `function.${operator}.function`, function (other) {
     try {
       return (...x) => this(...x)[operator](other(...x));
     } catch (e) {
@@ -57,7 +56,7 @@ for (let operator in Operators) {
    * complex
    * @throws Error if the object is not a Complex
    */
-  lodash.set(operationHandlers, `function.${operator}.complex`, function(other) {
+  lodash.set(operationHandlers, `function.${operator}.complex`, function (other) {
     return (...x) => this(...x)[operator](other);
   });
 }
@@ -67,18 +66,25 @@ for (let operator in Operators) {
  * @param {String} other It is the string to concatenate
  * @returns Returns the concatenation of the function with the string
  */
-lodash.set(operationHandlers, 'function.add.string', function(other) {
+lodash.set(operationHandlers, 'function.add.string', function (other) {
   return (...x) => this(...x).add(other);
+});
+
+/**
+ * Not operation for a function
+ * @returns Returns the not operation for the function
+ */
+lodash.set(operationHandlers, 'function.not', function () {
+  return (...x) => this(...x).not();
 });
 
 /**
  * Function to negate a function
  * @returns Returns the negation of the function
  */
-lodash.set(operationHandlers, 'function.neg', () => {
+lodash.set(operationHandlers, 'function.neg', function() {
   return (...x) => {
     let r = this(...x);
     return r?.neg() || -r;
   };
 });
-

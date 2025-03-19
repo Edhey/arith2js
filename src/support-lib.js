@@ -33,14 +33,14 @@ const SQRT2PI = Complex(Math.sqrt(2 * Math.PI)); // sqrt(2 * PI)
 */
 function gamma(zz) {
   if (zz.equals(Complex(0))) { return Complex(1); }
-  z = zz.sub(1);
+  z = zz.sub(Complex(1));
   let x = P[0];
-  let t = z.add(7.5); // z + 7.5
+  let t = z.add(Complex(7.5)); // z + 7.5
 
   for (let i = 1; i < P.length; i++) {
-    x = x.add(P[i].div(z.add(i))); // x += P[i] / (z + i);
+    x = x.add(P[i].div(z.add(Complex(i)))); // x += P[i] / (z + i);
   }
-  let result = SQRT2PI.mul(t.pow(z.add(0.5))).mul(t.neg().exp()).mul(x); // sqrt(2 * PI) * t^(z + 0.5) * e^(-t) * x;
+  let result = SQRT2PI.mul(t.pow(z.add(Complex(0.5)))).mul(t.neg().exp()).mul(x); // sqrt(2 * PI) * t^(z + 0.5) * e^(-t) * x;
   return zz.mul(result);
 }
 

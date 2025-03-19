@@ -1,5 +1,23 @@
 module.exports = [
 {
+      input: 'test-string.calc',
+      output: 'out-test-string.js',
+      expected: 'expected-test-string.js',
+      correctOut: 'correct-out-test-string.txt'
+    },
+{
+      input: 'test-not-complex.calc',
+      output: 'out-test-not-complex.js',
+      expected: 'expected-test-not-complex.js',
+      correctOut: 'correct-out-test-not-complex.txt'
+    },
+{
+      input: 'test-fact2.calc',
+      output: 'out-test-fact2.js',
+      expected: 'expected-test-fact2.js',
+      correctOut: 'correct-out-test-fact2.txt'
+    },
+{
       input: 'test-fun3.calc',
       output: 'out-test-fun3.js',
       expected: 'expected-test-fun3.js',
@@ -22,6 +40,12 @@ module.exports = [
       output: 'out-test6.js',
       expected: 'expected-test6.js',
       correctOut: 'correct-out-test6.txt'
+    },
+{
+      input: 'test-fact.calc',
+      output: 'out-test-fact.js',
+      expected: 'expected-test-fact.js',
+      correctOut: 'correct-out-test-fact.txt'
     },
 {
       input: 'test-function.calc',
@@ -54,6 +78,12 @@ module.exports = [
       correctOut: 'correct-out-test-oneplusfun.txt'
     },
 {
+      input: 'test-fun-add1.calc',
+      output: 'out-test-fun-add1.js',
+      expected: 'expected-test-fun-add1.js',
+      correctOut: 'correct-out-test-fun-add1.txt'
+    },
+{
       input: 'test13.calc',
       output: 'out-test13.js',
       expected: 'expected-test13.js',
@@ -64,6 +94,18 @@ module.exports = [
       output: 'out-test-fun-scop2.js',
       expected: 'expected-test-fun-scop2.js',
       correctOut: 'correct-out-test-fun-scop2.txt'
+    },
+{
+      input: 'test-fun-not.calc',
+      output: 'out-test-fun-not.js',
+      expected: 'expected-test-fun-not.js',
+      correctOut: 'correct-out-test-fun-not.txt'
+    },
+{
+      input: 'test-fun-add4.calc',
+      output: 'out-test-fun-add4.js',
+      expected: 'expected-test-fun-add4.js',
+      correctOut: 'correct-out-test-fun-add4.txt'
     },
 {
       input: 'test1.calc',
@@ -90,6 +132,18 @@ module.exports = [
       correctOut: 'correct-out-test12.txt'
     },
 {
+      input: 'test-complex-bool.calc',
+      output: 'out-test-complex-bool.js',
+      expected: 'expected-test-complex-bool.js',
+      correctOut: 'correct-out-test-complex-bool.txt'
+    },
+{
+      input: 'test-symmetry.calc',
+      output: 'out-test-symmetry.js',
+      expected: 'expected-test-symmetry.js',
+      correctOut: 'correct-out-test-symmetry.txt'
+    },
+{
       input: 'test-recursive2.calc',
       output: 'out-test-recursive2.js',
       expected: 'expected-test-recursive2.js',
@@ -100,6 +154,12 @@ module.exports = [
       output: 'out-test16.js',
       expected: 'expected-test16.js',
       correctOut: 'correct-out-test16.txt'
+    },
+{
+      input: 'test-type-promotion.calc',
+      output: 'out-test-type-promotion.js',
+      expected: 'expected-test-type-promotion.js',
+      correctOut: 'correct-out-test-type-promotion.txt'
     },
 {
       input: 'test10.calc',
@@ -156,10 +216,28 @@ module.exports = [
       correctOut: 'correct-out-test5.txt'
     },
 {
+      input: 'test-fun-add2-symmetry.calc',
+      output: 'out-test-fun-add2-symmetry.js',
+      expected: 'expected-test-fun-add2-symmetry.js',
+      correctOut: 'correct-out-test-fun-add2-symmetry.txt'
+    },
+{
+      input: 'test-fun-add2.calc',
+      output: 'out-test-fun-add2.js',
+      expected: 'expected-test-fun-add2.js',
+      correctOut: 'correct-out-test-fun-add2.txt'
+    },
+{
       input: 'test-max.calc',
       output: 'out-test-max.js',
       expected: 'expected-test-max.js',
       correctOut: 'correct-out-test-max.txt'
+    },
+{
+      input: 'test-negfun2.calc',
+      output: 'out-test-negfun2.js',
+      expected: 'expected-test-negfun2.js',
+      correctOut: 'correct-out-test-negfun2.txt'
     },
 {
       input: 'test7.calc',

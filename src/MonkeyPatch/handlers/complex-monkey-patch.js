@@ -11,14 +11,14 @@
   */
 
  let oldComplex = {};
-const Complex = require('complex.js');
+ const Complex = require('complex.js');
 const { operationHandlers, implementedTypes } = require('../monkey-patch-handlers.js');
 const lodash = require('lodash');
 
 implementedTypes.push(Complex);
 
 Operators = {
-  add: '+', mul: '*', div: '/', equals: '==', pow: '**', sub: '-'
+  add: '+', mul: '*', div: '/', pow: '**', sub: '-', equals: '=='
 }
 
 for (const op in Operators) {
@@ -80,10 +80,20 @@ lodash.set(operationHandlers, 'complex.not', function () {
  * @returns true if the complex is less than the other,
  * false otherwise
  */
-lodash.set(operationHandlers, 'complex.lessThan', function (other) {
+lodash.set(operationHandlers, 'complex.lessThan.complex', function (other) {
   if (this.re < other.re) return true;
   if (this.re == other.re && this.im < other.im) return true;
   return false;
+});
+
+/**
+ * Check if a complex is greater than another
+ * @param {Complex} other complex to compare with
+ * @returns true if the complex is greater than the other,
+ * false otherwise
+ */
+lodash.set(operationHandlers, 'complex.greaterThan.complex', function (other) {
+  return !this.lessOrEqualThan(other);
 });
 
 /**
@@ -102,18 +112,8 @@ lodash.set(operationHandlers, 'complex.notEquals.complex', function (other) {
  * @returns true if the complex is less or equal than the number,
  * false otherwise
  */
-lodash.set(operationHandlers, 'complex.lessOrEqualThan.complex', function (other) {
+lodash.set(operationHandlers, 'complex.lessEqualThan.complex', function (other) {
   return this.lessThan(other) || this.equals(other);
-});
-
-/**
- * Check if a complex is greater than another
- * @param {Complex} other complex to compare with
- * @returns true if the complex is greater than the other,
- * false otherwise
- */
-lodash.set(operationHandlers, 'complex.greaterThan.complex', function (other) {
-  return !this.lessOrEqualThan(other);
 });
 
 /**
@@ -122,18 +122,19 @@ lodash.set(operationHandlers, 'complex.greaterThan.complex', function (other) {
  * @returns true if the complex is greater or equal than the other,
  * false otherwise
  */
-lodash.set(operationHandlers, 'complex.greaterOrEqualThan.complex', function (other) {
+lodash.set(operationHandlers, 'complex.greaterEqualThan.complex', function (other) {
   return !this.lessThan(other);
 });
 
-for (const op in Operators) {
-  Complex.prototype[op] = function (other) {
-    if (other) {
-      return operationHandlers.complex[op][typeof other](other);
-    }
-    return operationHandlers.complex[op](other);
-  }
-}
+
+/**
+ * Complex negation
+ * @returns negated complex
+*/
+oldComplex['neg'] = Complex.prototype['neg'];
+lodash.set(operationHandlers, 'complex.neg', function () {
+  return oldComplex['neg'].call(this);
+});
 
 module.exports = {
   Complex

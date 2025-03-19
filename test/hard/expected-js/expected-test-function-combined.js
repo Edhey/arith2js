@@ -30,7 +30,7 @@ let $isPositive, $isLessThanTen, $isGreaterThanFive, $isEqualToThree, $add, $sub
   $isPositive(Complex('7').neg()) && $isLessThanTen(Complex('7').neg()) || $isGreaterThanFive(Complex('7').neg())
 )), print(
   $isPositive(Complex('15')) && $isLessThanTen(Complex('15')) || $isGreaterThanFive(Complex('15'))
-)), print($isEqualToThree(Complex('3')) && !$isEqualToThree(Complex('4')))), print($isEqualToThree(Complex('4')) || !$isEqualToThree(Complex('3')))), print(
+)), print($isEqualToThree(Complex('3')) && $isEqualToThree(Complex('4')).not())), print($isEqualToThree(Complex('4')) || $isEqualToThree(Complex('3')).not())), print(
   $add(Complex('3'))(Complex('4')).lessThan($multiply(Complex('2'))(Complex('4')))
 )), print(
   $divide(Complex('20'))(Complex('4')).lessThan($subtract(Complex('10'))(Complex('5')))

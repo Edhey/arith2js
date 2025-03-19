@@ -12,19 +12,21 @@
  *
  */
 
+const { not } = require("mathjs");
+
 const operationHandlers = {
   'default': (left, operator, rigth) => {
-    throw new Error(`Operator ${typeof left} don't support the operator ` 
-                    + `${operator} for type ${typeof rigth}`)
+    throw new Error(`Operation ${left} ${operator} ${rigth} not supported`);
   }
 };
 
 const AritmeticOperators = {
-  add: '+', mul: '*', div: '/', equals: '==', pow: '**', sub: '-'
+  add: '+', mul: '*', div: '/', equals: '==', pow: '**', sub: '-', neg: '-'
 };
 
 const ComparisonOperators = {
-  equals: '==', notEquals: '!=', lessThan: '<', greaterThan: '>', lessEqual: '<=', greaterEqual: '>=' 
+  equals: '==', notEquals: '!=', lessThan: '<', greaterThan: '>', 
+  lessEqualThan: '<=', greaterEqualThan: '>=', not: '!'
 };
 
 const Operators = {

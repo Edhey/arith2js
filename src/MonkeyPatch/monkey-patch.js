@@ -23,7 +23,11 @@ for (const type of implementedTypes) {
       const firstType = (typeof this === 'object' && this instanceof Complex) ?
         'complex' : this.constructor.name.toLowerCase();
       if (other === undefined || other === null) {
-        return operationHandlers[firstType][operator];
+        const unaryOperation = operationHandlers[firstType][operator];
+        if (unaryOperation) {
+          return unaryOperation.call(this);
+        }
+        return operationHandlers.default(firstType, operator, 'undefined');
       }
       const secondType = (typeof other === 'object' && other instanceof Complex) ?
         'complex' : other.constructor.name.toLowerCase();
