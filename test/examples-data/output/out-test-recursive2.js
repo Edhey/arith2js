@@ -5,5 +5,5 @@ const { Complex,print } = require("/home/usuario/practicas/02-Translating-Arithm
 let $fact;
 
 $fact = function($n) {
-  return !$n.equals(Complex('0')) && $n.mul($fact($n.sub(Complex('1')))) || Complex('1');
+  return $n.equals(Complex('0')).not() && $n.mul($fact($n.sub(Complex('1')))) || Complex('1');
 }, print($fact(Complex('5'))); 

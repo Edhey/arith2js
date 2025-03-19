@@ -25,7 +25,6 @@ const {
 %left '=='
 %left '&&' '||'
 %left '<'
-%left '!'
 %nonassoc '|'
 %left '@'
 %left '&'
@@ -33,7 +32,7 @@ const {
 %left '*' '/'
 %nonassoc UMINUS
 %right '**'
-%left 'ç'
+%left '!'
 // %left '(' ')' Esto es gestionado automáticamente por el analizador sintáctico
 
 %%
@@ -58,10 +57,10 @@ expresion:
       | expresion '<' expresion     { $$ = buildCallMemberExpression($1, 'lessThan', [$3], false, @1, @3); } // Less than
       | expresion '&' expresion     { $$ = buildCallExpression('min', [$1, $3], @1, @3); } // Minimum
       | expresion '@' expresion     { $$ = buildCallExpression('max', [$1, $3], @1, @3); } // Maximum 
-      | expresion 'ç'               { $$ = buildCallExpression('gamma', [$1], @1, @2); } // Factorial
       | expresion '&&' expresion    { $$ = buildLogicalExpression($1, '&&', $3, @1, @3); } // Logical AND
       | expresion '||' expresion    { $$ = buildLogicalExpression($1, '||', $3, @1, @3); } // Logical OR
       | '!' expresion               { $$ = buildCallMemberExpression($2, 'not', [], false, @1, @2); } // Logical NOT
+      | expresion '!'               { $$ = buildCallExpression('gamma', [$1], @1, @2); } // Factorial
       | PID '(' expresion ')'       { $$ = buildCallExpression($PID, [$3], @1, @4); } // Function call 
       | '(' expresion ')'           { $$ = $2; }  // Parentheses
       | TRUE                        { $$ = buildLiteral(true, @1); } // True

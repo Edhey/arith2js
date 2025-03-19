@@ -1,8 +1,8 @@
 a = 3,
 b = a + 2,
-c = bç,
+c = b!,
 print(c),
 d = c + 1,
 print(d),
-e = dç,
+e = d!,
 print(e)

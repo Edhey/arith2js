@@ -57,6 +57,10 @@ for (let op in Operators) {
   };
 }
 
+Boolean.prototype.not = function () {
+  return this == false
+}
+
 // const BooleanOperators = {
 //   equals: '==' // The only operator that can be used with booleans
 // };
