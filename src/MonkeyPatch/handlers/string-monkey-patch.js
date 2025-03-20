@@ -14,10 +14,10 @@ const { operationHandlers, implementedTypes, allOperators } = require('../monkey
 const Complex = require('complex.js');
 const lodash = require('lodash');
 
+// Initialize the string operators in the operationHandlers
 for(const operator in allOperators) {
   lodash.set(operationHandlers, `string.${operator}`, Object.create(Object.prototype));
 }
-
 implementedTypes.push(String);
 
 /**
@@ -42,7 +42,7 @@ const comparisonOperators = {
  * Handler for comparison operators
  */
 for (const operator in comparisonOperators) {
-  lodash.set(operationHandlers, `string.${operator}`, function (other) {
+  lodash.set(operationHandlers, `string.${operator}.string`, function (other) {
     return eval(`this ${comparisonOperators[operator]} other`);
   });
 }

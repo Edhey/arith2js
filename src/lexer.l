@@ -16,6 +16,7 @@ string \"((?:[^"\\]|\\.)*)\"
 %%
 \s+                                   /* skip whites */;
 '#'.*                                 /* skip comments */;
+[/][/].*                              /* skip single line comments */;
 [/][*](.|\n)*?[*][/]                  /* skip multiple line comments | The * is greedy so we need to make it lazy with ? */;
 {number}                              return 'NUMBER';
 {string}                              { yytext = removeQuotes(yytext); return 'STRING'; }

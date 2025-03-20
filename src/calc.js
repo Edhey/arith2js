@@ -707,34 +707,36 @@ case 0:/* skip whites */;
 break;
 case 1:/* skip comments */;
 break;
-case 2:/* skip multiple line comments | The * is greedy so we need to make it lazy with ? */;
+case 2:/* skip single line comments */;
 break;
-case 3:return 6;
+case 3:/* skip multiple line comments | The * is greedy so we need to make it lazy with ? */;
 break;
-case 4: yy_.yytext = removeQuotes(yy_.yytext); return 35; 
+case 4:return 6;
 break;
-case 5:return idOrReserved(yy_.yytext);
+case 5: yy_.yytext = removeQuotes(yy_.yytext); return 35; 
 break;
-case 6:return 16;
+case 6:return idOrReserved(yy_.yytext);
 break;
-case 7:return 14; // It must be before '*' because it is more specific, otherwise it will be recognized as '*'
+case 7:return 16;
 break;
-case 8:return 21;
+case 8:return 14; // It must be before '*' because it is more specific, otherwise it will be recognized as '*'
 break;
-case 9:return 22;
+case 9:return 21;
 break;
-case 10:return 16;
+case 10:return 22;
 break;
-case 11:return 17;
+case 11:return 16;
 break;
-case 12:return yy_.yytext;
+case 12:return 17;
 break;
-case 13:return 5;
+case 13:return yy_.yytext;
+break;
+case 14:return 5;
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:#.*)/,/^(?:[/][*](.|\n)*?[*][/])/,/^(?:(\d+(\.\d+)?([eE][-+]?\d+)?i?|i\b))/,/^(?:("((?:[^"\\]|\\.)*)"))/,/^(?:[_$a-zA-Z][$\w]*)/,/^(?:==)/,/^(?:\*\*)/,/^(?:&&)/,/^(?:\|\|)/,/^(?:==)/,/^(?:!=)/,/^(?:[-+*/!()&@|=,{}ç<;])/,/^(?:$)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13],"inclusive":true}}
+rules: [/^(?:\s+)/,/^(?:#.*)/,/^(?:[/][/].*)/,/^(?:[/][*](.|\n)*?[*][/])/,/^(?:(\d+(\.\d+)?([eE][-+]?\d+)?i?|i\b))/,/^(?:("((?:[^"\\]|\\.)*)"))/,/^(?:[_$a-zA-Z][$\w]*)/,/^(?:==)/,/^(?:\*\*)/,/^(?:&&)/,/^(?:\|\|)/,/^(?:==)/,/^(?:!=)/,/^(?:[-+*/!()&@|=,{}ç<;])/,/^(?:$)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],"inclusive":true}}
 });
 return lexer;
 })();

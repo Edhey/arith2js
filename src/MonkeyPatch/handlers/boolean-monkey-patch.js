@@ -16,10 +16,10 @@ const { Complex } = require('complex.js');
 const { operationHandlers, implementedTypes, allOperators } = require('../monkey-patch-handlers.js');
 const lodash = require('lodash');
 
+// Initialize the boolean operators in the operationHandlers
 for(const operator in allOperators) {
   lodash.set(operationHandlers, `boolean.${operator}`, Object.create(Object.prototype));
 }
-
 implementedTypes.push(Boolean);
 
 AritmeticOperators = {
