@@ -10,6 +10,8 @@ A partir de la versión 1.6.0, se ha añadido la capacidad de manejar variables,
 
 A partir de la versión 1.7.0, se ha añadido la capacidad de manejar funciones anónimas, de un solo parámetro, que se pueden utilizar en las expresiones aritméticas. Además, se han añadido operadores lógicos y de comparación. Cambio en factorial antes ! -> ahora ç, pues ahora ! es el operador de negación.
 
+En la versión 1.8.0, se ha añadido la capacidad de usar bucles for y while que funcionan como expresiones aritméticas. Se usa monkey patching para añadir las diferentes funciones entre tipos y operandos, habiéndose extendido el uso del programa para tipos Complex, Boolean, String y Function.
+
 ## Estructura del Proyecto
 El proyecto está estructurado de la siguiente manera:
 
