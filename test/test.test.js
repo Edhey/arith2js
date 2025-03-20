@@ -12,9 +12,11 @@
  */
 
 const TestExample = require('./test-example-description.js');
+const TestBasic = require('./test-basic-description.js');
 const TestSimple = require('./test-description.js');
 const TestHard = require('./test-hard-description.js');
 const TestErrorSyntax = require('./test-error-description.js');
+const TestBasicErrorSyntax = require('./test-basic-error-description.js');
 
 const { checkTranspile, checkRunConsoleLog, checkRunConsoleError } = require('./test-utils.js');
 
@@ -26,6 +28,16 @@ const ExampleTest = TestExample.map(testDescription => ({
   output: __dirname + '/examples-data/output/' + testDescription.output,
   expected: __dirname + '/examples-data/expected-js/' + testDescription.expected,
   correctOut: __dirname + '/examples-data/correct-out/' + testDescription.correctOut,
+}));
+
+/**
+ * Test data for the basic tests
+ */
+const BasicTest = TestBasic.map(testDescription => ({
+  input: __dirname + '/basic/input/' + testDescription.input,
+  output: __dirname + '/basic/output/' + testDescription.output,
+  expected: __dirname + '/basic/expected-js/' + testDescription.expected,
+  correctOut: __dirname + '/basic/correct-out/' + testDescription.correctOut,
 }));
 
 /**
@@ -56,8 +68,16 @@ const ErrorSyntaxTest = TestErrorSyntax.map(testDescription => ({
   input: __dirname + '/errors/syntax-error/' + testDescription.input,
   output: __dirname + '/errors/output/' + testDescription.output,
   correctErr: __dirname + '/errors/correct-err/' + testDescription.correctErr,
-})
-);
+}));
+
+/**
+ * Test data for the basic error syntax tests
+ */
+const BasicErrorTest = TestBasicErrorSyntax.map(testDescription => ({
+  input: __dirname + '/basic-errors/basic-syntax-error/' + testDescription.input,
+  output: __dirname + '/basic-errors/output/' + testDescription.output,
+  correctErr: __dirname + '/basic-errors/correct-err/' + testDescription.correctErr,
+}));
 
 /**
  * Example Tests
@@ -83,6 +103,31 @@ describe('Example Test', function () {
     for (let i = 0; i < ExampleTest.length; i++) {
       it(`run function with ${ExampleTest[i].input}`, async function () {
         await checkRunConsoleLog(ExampleTest[i]);
+      });
+    }
+  });
+});
+
+describe('Basic Tests', function () {
+  /**
+   * Transpile the simple tests and check the output
+   */
+  describe('Basic Transpile Tests', function () {
+    for (let i = 0; i < BasicTest.length; i++) {
+      it(`transpile(${BasicTest[i].input}, ${BasicTest[i].output})`, async function () {
+        await checkTranspile(BasicTest[i]);
+      });
+    }
+  });
+
+  /**
+   * Run the simple tests and check the output
+   * Using mocking to check the output
+   */
+  describe('Basic Run Tests', function () {
+    for (let i = 0; i < BasicTest.length; i++) {
+      it(`run function with ${BasicTest[i].input}`, async function () {
+        await checkRunConsoleLog(BasicTest[i]);
       });
     }
   });
@@ -154,6 +199,18 @@ describe('Syntax Error Tests', function () {
   for (let i = 0; i < ErrorSyntaxTest.length; i++) {
     it(`check syntax errors(${ErrorSyntaxTest[i].input}, ${ErrorSyntaxTest[i].output})`, async () => {
       await checkRunConsoleError(ErrorSyntaxTest[i]);
+    });
+  }
+});
+
+/**
+ * Basic Syntax Error Tests
+ * Run the simple tests and check the output
+ */
+describe('Basic Syntax Error Tests', function () {
+  for (let i = 0; i < BasicErrorTest.length; i++) {
+    it(`check syntax errors(${BasicErrorTest[i].input}, ${BasicErrorTest[i].output})`, async () => {
+      await checkRunConsoleError(BasicErrorTest[i]);
     });
   }
 });

@@ -1,4 +1,0 @@
-Parse error on line 1:
-5 + * 3
-----^
-Expecting 'NUMBER', 'ID', '-', '|', '!', 'PID', '(', 'TRUE', 'FALSE', 'FUN', 'STRING', 'WHILE', 'FOR', got '*'

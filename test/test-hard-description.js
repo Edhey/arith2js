@@ -131,4 +131,76 @@ module.exports = [
     expected: 'expected-test-function-combined.js',
     correctOut: 'correct-out-test-function-combined.txt'
   },
+  {
+    input: 'fun-equal-simmetry.calc',
+    output: 'out-fun-equal-simmetry.js',
+    expected: 'expected-fun-equal-simmetry.js',
+    correctOut: 'correct-out-fun-equal-simmetry.txt'
+  },
+  {
+    input: 'not.calc',
+    output: 'out-not.js',
+    expected: 'expected-not.js',
+    correctOut: 'correct-out-not.txt'
+  },
+  {
+    input: 'fun-sub-simmetry.calc',
+    output: 'out-fun-sub-simmetry.js',
+    expected: 'expected-fun-sub-simmetry.js',
+    correctOut: 'correct-out-fun-sub-simmetry.txt'
+  },
+  {
+    input: 'not-complex.calc',
+    output: 'out-not-complex.js',
+    expected: 'expected-not-complex.js',
+    correctOut: 'correct-out-not-complex.txt'
+  },
+  {
+    input: 'fun-not-complex.calc',
+    output: 'out-fun-not-complex.js',
+    expected: 'expected-fun-not-complex.js',
+    correctOut: 'correct-out-fun-not-complex.txt'
+  },
+  {
+    input: 'fun-not-2.calc',
+    output: 'out-fun-not-2.js',
+    expected: 'expected-fun-not-2.js',
+    correctOut: 'correct-out-fun-not-2.txt'
+  },
+  {
+    input: 'fun-div-simmetry.calc',
+    output: 'out-fun-div-simmetry.js',
+    expected: 'expected-fun-div-simmetry.js',
+    correctOut: 'correct-out-fun-div-simmetry.txt'
+  },
+  {
+    input: 'fun-neg.calc',
+    output: 'out-fun-neg.js',
+    expected: 'expected-fun-neg.js',
+    correctOut: 'correct-out-fun-neg.txt'
+  },
+  {
+    input: 'fun-mul-simmetry.calc',
+    output: 'out-fun-mul-simmetry.js',
+    expected: 'expected-fun-mul-simmetry.js',
+    correctOut: 'correct-out-fun-mul-simmetry.txt'
+  },
+  {
+    input: 'string-concatenation.calc',
+    output: 'out-string-concatenation.js',
+    expected: 'expected-string-concatenation.js',
+    correctOut: 'correct-out-string-concatenation.txt'
+  },
+  {
+    input: 'test-function-combined.calc',
+    output: 'out-test-function-combined.js',
+    expected: 'expected-test-function-combined.js',
+    correctOut: 'correct-out-test-function-combined.txt'
+  },
+  {
+    input: 'fun-add-simmetry.calc',
+    output: 'out-fun-add-simmetry.js',
+    expected: 'expected-fun-add-simmetry.js',
+    correctOut: 'correct-out-fun-add-simmetry.txt'
+  },
 ]
