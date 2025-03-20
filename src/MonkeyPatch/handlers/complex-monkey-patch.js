@@ -12,13 +12,17 @@
 
 let oldComplex = {};
 const Complex = require('complex.js');
-const { operationHandlers, implementedTypes } = require('../monkey-patch-handlers.js');
+const { operationHandlers, implementedTypes, allOperators } = require('../monkey-patch-handlers.js');
 const lodash = require('lodash');
+
+for(const operator in allOperators) {
+  lodash.set(operationHandlers, `complex.${operator}`, Object.create(Object.prototype));
+}
 
 implementedTypes.push(Complex);
 
 Operators = {
-  add: '+', mul: '*', div: '/', pow: '**', sub: '-', equals: '=='
+  add: '+', mul: '*', div: '/', pow: '**', sub: '-', equals: '==', notEquals: '!=',
 }
 
 for (const op in Operators) {
@@ -71,9 +75,9 @@ lodash.set(operationHandlers, 'complex.add.string', function (other) {
  * @returns concatenated string and complex
  */
 lodash.set(operationHandlers, 'complex.mul.string', function (other) {
-  if (other.im !== 0) {
-    throw new Error(`Error: Unsupported ${operator} for type ${typeof other}` +
-      ' with imaginary part');
+  if (this.im !== 0) {
+    throw new Error('Error: Unsupported * for string and complex with ' + 
+      'imaginary part');
   }
   return other.repeat(this.re);
 });

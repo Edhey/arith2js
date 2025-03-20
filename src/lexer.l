@@ -25,5 +25,6 @@ string \"((?:[^"\\]|\\.)*)\"
 '&&'                                  return '&&';
 '||'                                  return '||';
 '=='                                  return '==';
+'!='                                  return '!=';
 [-+*/!()&@|=,{}ç<;]                    return yytext;
 <<EOF>>                               return 'EOF';

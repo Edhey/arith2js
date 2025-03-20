@@ -45,7 +45,7 @@ function gamma(zz) {
 }
 
 /**
- * Function to print a values
+ * Function to print values
  * @param {Array} values Array of values to print
  */
 function print(...values) {
@@ -53,7 +53,15 @@ function print(...values) {
   for (value of values) {
     result += value.toString() + ' ';
   }
-  console.log(result.trim());
+  console.log(result.slice(0, -1));
+}
+
+/**
+ * Imites the print function
+ * @param {Array} values Array of values to print
+ */
+function write(...values) {
+  print(...values);
 }
 
 /**
@@ -111,4 +119,4 @@ function complexLessThan(complex1, complex2) {
   else return false;
 }
 
-module.exports = { gamma, Complex, print, min, max, complexLessThan };
+module.exports = { gamma, Complex, print, write, min, max, complexLessThan };

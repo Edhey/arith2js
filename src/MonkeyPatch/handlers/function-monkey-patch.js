@@ -13,8 +13,12 @@
  */
 
 const { Complex } = require('complex.js');
-const { operationHandlers, implementedTypes } = require('../monkey-patch-handlers.js');
+const { operationHandlers, implementedTypes, allOperators } = require('../monkey-patch-handlers.js');
 const lodash = require('lodash');
+
+for(const operator in allOperators) {
+  lodash.set(operationHandlers, `function.${operator}`, Object.create(Object.prototype));
+}
 
 implementedTypes.push(Function);
 
@@ -23,7 +27,7 @@ implementedTypes.push(Function);
  * @type {{add: string, mul: string, div: string, equals: string, pow: string, neg: string}}
  */
 const Operators = {
-  add: '+', mul: '*', div: '/', equals: '==', pow: '**', sub: '-'
+  add: '+', mul: '*', div: '/', equals: '==', pow: '**', sub: '-', equals: '==', notEquals: '!=',
 };
 
 for (let operator in Operators) {

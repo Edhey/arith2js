@@ -10,9 +10,13 @@
   * @desc Handler for string operations
   */
 
-const { operationHandlers, implementedTypes } = require('../monkey-patch-handlers.js');
+const { operationHandlers, implementedTypes, allOperators } = require('../monkey-patch-handlers.js');
 const Complex = require('complex.js');
 const lodash = require('lodash');
+
+for(const operator in allOperators) {
+  lodash.set(operationHandlers, `string.${operator}`, Object.create(Object.prototype));
+}
 
 implementedTypes.push(String);
 
@@ -27,6 +31,7 @@ lodash.set(operationHandlers, 'string.not', function () {
 
 const comparisonOperators = {
   equals: '==',
+  notEquals: '!=',
   lessThan: '<',
   greaterThan: '>',
   lessThanOrEqual: '<=',

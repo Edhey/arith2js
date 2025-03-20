@@ -15,10 +15,10 @@ require('./handlers/boolean-monkey-patch.js');
 const { Complex } = require('./handlers/complex-monkey-patch.js');
 require('./handlers/function-monkey-patch.js');
 require('./handlers/string-monkey-patch.js');
-const { Operators, implementedTypes, operationHandlers } = require('./monkey-patch-handlers.js');
+const { allOperators, implementedTypes, operationHandlers } = require('./monkey-patch-handlers.js');
 
 for (const type of implementedTypes) {
-  for (const operator in Operators) {
+  for (const operator in allOperators) {
     type.prototype[operator] = function (other) {
       const firstType = (typeof this === 'object' && this instanceof Complex) ?
         'complex' : this.constructor.name.toLowerCase();

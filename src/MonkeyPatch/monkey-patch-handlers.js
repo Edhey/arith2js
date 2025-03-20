@@ -29,7 +29,7 @@ const ComparisonOperators = {
   lessEqualThan: '<=', greaterEqualThan: '>=', not: '!'
 };
 
-const Operators = {
+const allOperators = {
   ...AritmeticOperators,
   ...ComparisonOperators
 };
@@ -39,7 +39,7 @@ const implementedTypes = [];
 module.exports = {
   operationHandlers,
   implementedTypes,
-  Operators,
+  allOperators,
   AritmeticOperators,
   ComparisonOperators
 };
