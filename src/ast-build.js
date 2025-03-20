@@ -369,6 +369,77 @@ function buildWhileStatement(conditionStatement, bodyStatement, startLocation,
 }
 
 /**
+ * Builds a do-while statement AST node.
+ * @param {Object} bodyStatement - The body of the while statement.
+ * @param {Object} conditionStatement - The condition of the while statement.
+ * @param {Object} startLocation - The start location of the do statement.
+ * @param {Object} endLocation - The end location of the while statement.
+ * @returns {Object} The AST node representing the while statement.
+ */
+function buildDoWhileStatement(bodyStatement, conditionStatement, startLocation,
+  endLocation) {
+  const variableDeclaration = buildVariableDeclaration([
+    buildVariableDeclarator(
+      buildIdentifier('result'),
+      buildLiteral(false)
+    )
+  ]);
+  const doWhileStatement = {
+    type: 'DoWhileStatement',
+    test: conditionStatement,
+    body: {
+      type: 'BlockStatement',
+      body: [{
+        type: 'ExpressionStatement',
+        expression: {
+          type: 'AssignmentExpression',
+          operator: '=',
+          left: {
+            type: 'Identifier',
+            name: 'result',
+          },
+          right: bodyStatement
+        }
+      }]
+    },
+    loc: {
+      start: startLocation,
+      end: endLocation,
+    },
+  };
+  const returnStatement = {
+    type: 'ReturnStatement',
+    argument: buildIdentifier('result'),
+  };
+  const blockStatement = {
+    type: 'BlockStatement',
+    body: [
+      variableDeclaration,
+      doWhileStatement,
+      returnStatement
+    ],
+  };
+  const arrowFunctionExpression = {
+    type: 'ArrowFunctionExpression',
+    id: null,
+    params: [],
+    body: blockStatement,
+    loc: {
+      start: startLocation,
+      end: endLocation,
+    },
+  }
+  return buildCallExpression(
+    arrowFunctionExpression, 
+    [], 
+    {
+      start: startLocation,
+      end: endLocation,
+    }
+  );
+}
+
+/**
  * Builds a for statement AST node.
  * @param {Object} init - The initialization part of the for statement.
  * @param {Object} test - The test condition of the for statement.
@@ -454,5 +525,6 @@ module.exports = {
   buildLogicalExpression,
   buildUnaryExpression,
   buildForStatement,
-  buildWhileStatement
+  buildWhileStatement,
+  buildDoWhileStatement
 };

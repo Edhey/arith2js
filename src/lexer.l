@@ -1,5 +1,5 @@
 %{
-const reservedwords = ["fun", "true", "false", "i", "while", "for"]
+const reservedwords = ["fun", "true", "false", "i", "while", "for", "do"]
 const predefinedIds = ["print", "write" ] // predefined identifiers
 
 const removeQuotes = text => text.slice(1, -1);

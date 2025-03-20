@@ -2,8 +2,6 @@ const { Complex,write } = require("/home/usuario/practicas/02-Translating-Arithm
 
 /* end of preamble of generated code */
 
-let $a, $b;
-
 (() => {
   let result = false;
 

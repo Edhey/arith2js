@@ -12,6 +12,7 @@ const {
   buildParOrCallExpression,
   buildLogicalExpression,
   buildUnaryExpression,
+  buildDoWhileStatement,
   buildWhileStatement,
   buildForStatement,
 } = require('./ast-build.js');
@@ -78,6 +79,7 @@ expression:
       | FUN '(' idOrEmpty ')' '{' expression '}'              { $$ = buildFunctionExpression($idOrEmpty, $expression, @1, @6); } // Function definition
       | STRING                                                { $$ = buildLiteral($1, @1); } // String
       | WHILE expression '{'expression'}'                     { $$ = buildWhileStatement($expression1, $expression2, @1, @5);}
+      | DO '{' expression '}' WHILE '(' expression ')'        { $$ = buildDoWhileStatement($expression1, $expression2, @1, @3, @7); }
       | FOR '(' expression ';' expression ';' expression ')' '{' expression '}' { $$ = buildForStatement($expression1, $expression2, $expression3, $expression4, @1, @11); };
 
 calls:
