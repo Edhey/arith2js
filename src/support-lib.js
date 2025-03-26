@@ -17,7 +17,7 @@
 
 require('./MonkeyPatch/monkey-patch.js');
 const { Complex } = require('./MonkeyPatch/handlers/complex-monkey-patch.js');
-const { FunctionObject } = require('./function-object.js');
+const { FunctionObject, functionObject } = require('./function-object.js');
 
 const P = [Complex(0.99999999999980993),
 Complex(676.5203681218851), Complex(-1259.1392167224028), Complex(771.32342877765313),
@@ -120,4 +120,4 @@ function complexLessThan(complex1, complex2) {
   else return false;
 }
 
-module.exports = { gamma, Complex, print, write, min, max, complexLessThan, FunctionObject };
+module.exports = { gamma, Complex, print, write, min, max, complexLessThan, FunctionObject, functionObject };

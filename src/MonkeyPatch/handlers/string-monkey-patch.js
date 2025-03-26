@@ -70,7 +70,7 @@ lodash.set(operationHandlers, 'string.add.string', function (other) {
  * @param {function} other function to add to the string
  * @returns added function
  */
-lodash.set(operationHandlers, 'string.add.function', function (other) {
+lodash.set(operationHandlers, 'string.add.functionobject', function (other) {
   try {
     return (...args) => this.add((other(...args)));
   } catch (error) {

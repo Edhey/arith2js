@@ -12,8 +12,6 @@
  *
  */
 
-const { not } = require("mathjs");
-
 const operationHandlers = {
   'default': (left, operator, rigth) => {
     throw new Error(`Operation ${left} ${operator} ${rigth} not supported`);

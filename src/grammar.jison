@@ -76,7 +76,7 @@ expression:
       // | ID apply                      { $$ = buildParOrCallMemberExpression(buildIdentifier('$' + $1, @1), $apply, @1, @2); }
       | '(' expression ')' calls         { $$ = buildIdentifierOrCalls($expression, $calls, @1, @calls); }
       | ID calls                         { $$ = buildIdentifierOrCalls('$' + $1, $calls, @ID, @calls); } 
-      | FUN '(' idOrEmpty ')' '{' expression '}'              { $$ = buildFunctionExpression($idOrEmpty, $expression, @1, @6); } // Function definition
+      | FUN '(' idOrEmpty ')' '{' expression '}'              { $$ = buildCallExpression(buildIdentifier('functionObject', @1), [buildFunctionExpression($idOrEmpty, $expression, @1, @6)]); } // Function definition
       | STRING                                                { $$ = buildLiteral($1, @1); } // String
       | WHILE expression '{'expression'}'                     { $$ = buildWhileStatement($expression1, $expression2, @1, @5);}
       | DO '{' expression '}' WHILE '(' expression ')'        { $$ = buildDoWhileStatement($expression1, $expression2, @1, @3, @7); }

@@ -48,7 +48,7 @@ for (const op in Operators) {
    * @param {function} other function to operate with
    * @returns result of the operation
    */
-  lodash.set(operationHandlers, `complex.${op}.function`, function (other) {
+  lodash.set(operationHandlers, `complex.${op}.functionobject`, function (other) {
     try {
       return (...args) => this[op](other(...args));
     } catch (error) {

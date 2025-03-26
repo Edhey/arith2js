@@ -41,7 +41,7 @@ for (let op in AritmeticOperators) {
    * @param {Function} other It is the function to operate
    * @returns Returns the operation of the boolean with the function
    */
-  lodash.set(operationHandlers, `boolean.${op}.function`, function (other) {
+  lodash.set(operationHandlers, `boolean.${op}.functionobject`, function (other) {
     try {
       return (...args) => this[op](other(...args));
     } catch (e) {

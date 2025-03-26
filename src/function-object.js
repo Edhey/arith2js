@@ -13,16 +13,19 @@
  */
 
 const CallableInstance = require('callable-instance');
+const { Complex } = require('complex.js');
 
 class FunctionObject extends CallableInstance {
   constructor(rawFunction) {
     super("_call");
     this.rawFunction = rawFunction;
     this.cache = new Map();
-    this.function = function (...args) {
+    this.wrappedFunction = function (...args) {
       if (args.length) {
         let arg = args[0];
-        arg = arg.toString(); // TODO check
+        if (arg instanceof Complex) {
+          arg = arg.toString(); // TODO check
+        }
         if (this?.cache && this.cache.get(arg)) {
           return this.cache.get(arg);
         }
@@ -32,15 +35,15 @@ class FunctionObject extends CallableInstance {
   }
 
   _call(arg) {
-    return this.function(arg) ?? null;
+    return this.wrappedFunction(arg) ?? null;
   }
 
   // toFunction() {
-  //   return this.function;
+  //   return this.wrappedFunction;
   // }
 
   // toString() {
-  //   return this.function.toString();
+  //   return this.wrappedFunction.toString();
   // }
 
   setCache(arg, value) {
@@ -58,4 +61,9 @@ class FunctionObject extends CallableInstance {
   }
 }
 
-module.exports = { FunctionObject };
+function functionObject(rawFunction) {
+  if (rawFunction instanceof FunctionObject) return rawFunction;
+  return new FunctionObject(rawFunction);
+}
+
+module.exports = { FunctionObject, functionObject };

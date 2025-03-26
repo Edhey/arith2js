@@ -165,7 +165,7 @@ case 27:
  this.$ = buildIdentifierOrCalls('$' + $$[$0-1], $$[$0], _$[$0-1], _$[$0]); 
 break;
 case 28:
- this.$ = buildFunctionExpression($$[$0-4], $$[$0-1], _$[$0-6], _$[$0-1]); 
+ this.$ = buildCallExpression(buildIdentifier('functionObject', _$[$0-6]), [buildFunctionExpression($$[$0-4], $$[$0-1], _$[$0-6], _$[$0-1])]); 
 break;
 case 29:
  this.$ = buildLiteral($$[$0], _$[$0]); 
