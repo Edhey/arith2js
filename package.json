@@ -43,6 +43,7 @@
   "license": "ISC",
   "dependencies": {
     "ast-types": "^0.14.2",
+    "callable-instance": "^2.0.0",
     "commander": "^10.0.0",
     "espree": "^10.3.0",
     "jison": "^0.4.18",
