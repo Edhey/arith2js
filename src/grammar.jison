@@ -69,7 +69,7 @@ expression:
       | expression '||' expression       { $$ = buildLogicalExpression($1, '||', $3, @1, @3); } // Logical OR
       | '!' expression                   { $$ = buildCallMemberExpression($2, 'not', [], false, @1, @2); } // Logical NOT
       | expression '!'                   { $$ = buildCallExpression(buildIdentifier('gamma', @2), [$1], @1, @2); } // Factorial
-      | PID '(' printList ')'            { $$ = buildCallExpression(buildIdentifier($PID, @1), $3, @1, @4); } // Function call 
+      | PID '(' argsList ')'            { $$ = buildCallExpression(buildIdentifier($PID, @1), $3, @1, @4); } // Function call 
       | '(' expression ')'               { $$ = $2; }  // Parentheses
       | TRUE                             { $$ = buildLiteral(true, @1); } // True
       | FALSE                            { $$ = buildLiteral(false, @1); } // False
@@ -80,7 +80,9 @@ expression:
       | STRING                                                { $$ = buildLiteral($1, @1); } // String
       | WHILE expression '{'expression'}'                     { $$ = buildWhileStatement($expression1, $expression2, @1, @5);}
       | DO '{' expression '}' WHILE '(' expression ')'        { $$ = buildDoWhileStatement($expression1, $expression2, @1, @3, @7); }
-      | FOR '(' expression ';' expression ';' expression ')' '{' expression '}' { $$ = buildForStatement($expression1, $expression2, $expression3, $expression4, @1, @11); };
+      | '[' argsList ']'                                      { $$ = $$ = buildCallExpression(buildIdentifier('arrayObject', @1), [$argsList]); } // Array definition
+      | FOR '(' expression ';' expression ';' expression ')' '{' expression '}' { $$ = buildForStatement($expression1, $expression2, $expression3, $expression4, @1, @11); }
+;
 
 calls:
       '(' expression ')' calls { $$ = [ $expression ].concat($calls); }
@@ -94,8 +96,8 @@ idOrEmpty:
     | ID            { $$ = [ buildIdentifier('$' + $1, @1) ]; }
 ;
 
-printList:
+argsList:
     /* empty */     { $$ = []; }
-    | expression ';' printList { $$ = [ $expression ].concat($printList); }
+    | expression ';' argsList { $$ = [ $expression ].concat($argsList); }
     | expression     { $$ = [ $expression ]; }
 ;

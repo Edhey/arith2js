@@ -38,13 +38,13 @@ class FunctionObject extends CallableInstance {
     return this.wrappedFunction(arg) ?? null;
   }
 
-  // toFunction() {
-  //   return this.wrappedFunction;
-  // }
+  toFunction() {
+    return this.wrappedFunction;
+  }
 
-  // toString() {
-  //   return this.wrappedFunction.toString();
-  // }
+  toString() {
+    return this.wrappedFunction.toString();
+  }
 
   setCache(arg, value) {
     if (arg instanceof Complex) {
