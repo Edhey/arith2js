@@ -17,7 +17,6 @@ const CallableInstance = require("callable-instance");
 class ArrayFunctionObject extends CallableInstance {
   constructor(...array) {
     super("_call");
-    // The idea is to cache the values of the function in a map
     this.array = array;
   }
 
@@ -37,24 +36,15 @@ class ArrayFunctionObject extends CallableInstance {
     aux[index] = cacheValue;
   }
 
-  _call(...args) {
-    let aux = this.array;
-    for (let i = 0; i < args.length; i++) {
-      let index = args[i];
-      if (index.re < 0 && index.im === 0 && Number.isInteger(index.re)) {
-        index.re = aux.length + index.re;
-      }
-      aux = aux[index]?.array;
+  _call(index) {
+    if (index.re < 0 && index.im === 0 && Number.isInteger(index.re)) {
+      index.re = this.array.length + index.re;
     }
-    return aux;
+    return this.array[index];
   }
 
   toFunction() {
     return this.array;
-  }
-
-  toString() {
-    return this.array.toString();
   }
 }
 
