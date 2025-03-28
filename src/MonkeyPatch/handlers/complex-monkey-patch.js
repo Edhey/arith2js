@@ -14,6 +14,7 @@ let oldComplex = {};
 const Complex = require('complex.js');
 const { operationHandlers, implementedTypes, allOperators } = require('../monkey-patch-handlers.js');
 const lodash = require('lodash');
+const { functionObject } = require('../../function-object.js');
 
 // Initialize the complex operators in the operationHandlers
 for(const operator in allOperators) {
@@ -50,7 +51,7 @@ for (const op in Operators) {
    */
   lodash.set(operationHandlers, `complex.${op}.functionobject`, function (other) {
     try {
-      return (...args) => this[op](other(...args));
+      return functionObject((...args) => this[op](other(...args)));
     } catch (error) {
       throw new Error(
         `Error: Unsupported ${op} for type ${typeof other}` +

@@ -13,6 +13,7 @@
 const { operationHandlers, implementedTypes, allOperators } = require('../monkey-patch-handlers.js');
 const Complex = require('complex.js');
 const lodash = require('lodash');
+const { functionObject } = require('../../function-object.js');
 
 // Initialize the string operators in the operationHandlers
 for(const operator in allOperators) {
@@ -72,7 +73,7 @@ lodash.set(operationHandlers, 'string.add.string', function (other) {
  */
 lodash.set(operationHandlers, 'string.add.functionobject', function (other) {
   try {
-    return (...args) => this.add((other(...args)));
+    return functionObject((...args) => this.add((other(...args))));
   } catch (error) {
     throw new Error(
       `Error: Unsupported add for type ${typeof other}` +

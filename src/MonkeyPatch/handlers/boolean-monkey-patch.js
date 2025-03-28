@@ -13,6 +13,7 @@
  */
 
 const { Complex } = require('complex.js');
+const { functionObject } = require('../../function-object.js');
 const { operationHandlers, implementedTypes, allOperators } = require('../monkey-patch-handlers.js');
 const lodash = require('lodash');
 
@@ -43,7 +44,7 @@ for (let op in AritmeticOperators) {
    */
   lodash.set(operationHandlers, `boolean.${op}.functionobject`, function (other) {
     try {
-      return (...args) => this[op](other(...args));
+      return functionObject((...args) => this[op](other(...args)));
     } catch (e) {
       throw new Error(`Unsupported ${op} for function ${other}`);
     }

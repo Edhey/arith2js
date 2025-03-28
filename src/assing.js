@@ -12,13 +12,22 @@
  *
  */
 
-const { functionObject } = require('./function-object');
- 
-function assign(f, cacheArgs, cacheValue) {
-    for(let i = 0; i < cacheArgs.length; i++) {
-        let cacheArgument = cacheArgs[i];
-        // Fill the gaps
+/**
+ * For the given function, assign the function call with the arguments provided 
+ * to the value especified in the parameter cacheValue.
+ * @param {FunctionObject} otherFunction It the function (callableInstance) 
+ * to be assigned.
+ * @param {Array} cacheArgs The arguments to be assigned to the function.
+ * @param {Array} cacheValue The values to be assigned to the function.  
+ */
+function assign(otherFunction, cacheArgs, cacheValue) {
+  for (let i = 0; i < cacheArgs.length; i++) {
+    let cacheArgument = cacheArgs[i];
+    let cacheValueArgument = cacheValue[i];
+    if (cacheArgument !== undefined && cacheValueArgument !== undefined) {
+      otherFunction.setCache(cacheArgument, cacheValueArgument);
     }
+  }
 }
- 
+
 module.exports = { assign };

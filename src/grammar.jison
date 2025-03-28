@@ -51,7 +51,7 @@ endExpression:
 expression: 
       NUMBER                             { $$ = buildCallExpression(buildIdentifier('Complex', @1), [buildLiteral($1, @1)], @1); } // Complex Number
       | ID                               { $$ = buildIdentifier('$' + $1, @1); } // Identifier
-      | ID '=' expression                { $$ = buildAssigmentExpression(buildIdentifier('$' + $1, @1), '=', $3, @1, @3); } // Assigment
+      | expression '=' expression        { $$ = buildAssigmentExpression($1, '=', $3, @1, @3); } // Assigment
       | expression ',' expression        { $$ = buildSequenceExpression([$1, $3], @1, @3); } // Sequence
       | expression '+' expression        { $$ = buildCallMemberExpression($1, 'add', [$3], false, @1, @3); } // Addition
       | expression '-' expression        { $$ = buildCallMemberExpression($1, 'sub', [$3], false, @1, @3); } // Subtraction 

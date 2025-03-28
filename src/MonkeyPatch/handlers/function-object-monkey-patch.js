@@ -13,7 +13,7 @@
  */
 
 const { Complex } = require('complex.js');
-const { FunctionObject } = require('../../function-object.js');
+const { FunctionObject, functionObject } = require('../../function-object.js');
 const { operationHandlers, implementedTypes, allOperators } = require('../monkey-patch-handlers.js');
 const lodash = require('lodash');
 
@@ -38,7 +38,7 @@ for (let operator in Operators) {
    * @returns Returns a FunctionObject that operates the function with the boolean as a complex
    */
   lodash.set(operationHandlers, `functionobject.${operator}.boolean`, function (other) {
-    return new FunctionObject((...x) => this(...x)[operator](Complex(Number(other))));
+    return functionObject((...x) => this(...x)[operator](Complex(Number(other))));
   });
 
   /**
@@ -62,7 +62,7 @@ for (let operator in Operators) {
    * @throws Error if the object is not a Complex
    */
   lodash.set(operationHandlers, `functionobject.${operator}.complex`, function (other) {
-    return new FunctionObject((...x) => this(...x)[operator](other));
+    return functionObject((...x) => this(...x)[operator](other));
   });
 }
 
@@ -72,7 +72,7 @@ for (let operator in Operators) {
  * @returns Returns a FunctionObject representing the concatenation of the function with the string
  */
 lodash.set(operationHandlers, 'functionobject.add.string', function (other) {
-  return new FunctionObject((...x) => this(...x).add(other));
+  return functionObject((...x) => this(...x).add(other));
 });
 
 /**
@@ -80,7 +80,7 @@ lodash.set(operationHandlers, 'functionobject.add.string', function (other) {
  * @returns Returns a FunctionObject representing the not operation for the function
  */
 lodash.set(operationHandlers, 'functionobject.not', function () {
-  return new FunctionObject((...x) => this(...x).not());
+  return functionObject((...x) => this(...x).not());
 });
 
 /**
@@ -88,7 +88,7 @@ lodash.set(operationHandlers, 'functionobject.not', function () {
  * @returns Returns a FunctionObject representing the negation of the function
  */
 lodash.set(operationHandlers, 'functionobject.neg', function() {
-  return new FunctionObject((...x) => {
+  return functionObject((...x) => {
     let r = this(...x);
     return r?.neg() || -r;
   });

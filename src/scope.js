@@ -14,6 +14,7 @@
  */
 
 const astTypes = require('ast-types');
+const { assign } = require('./assing.js');
 const visit = astTypes.visit;
 
 /**
@@ -81,6 +82,8 @@ const scopeAnalysis = (ast) => {
             && /^[$]/.test(name)) {
             currentScope.addDefinition(node);
         }
+      } else if (node.left.type === 'CallExpression') {
+        assign(node.left.callee, node.left.arguments, node.right)
       }
       this.traverse(path);
     },
