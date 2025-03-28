@@ -89,6 +89,16 @@ function buildCallExpression(callee, args, location) {
  * @returns {Object} - The call member expression node
  */
 function buildCallMemberExpression(callee, member, args, computed = false, startLocation, endLocation) {
+  const processArgument = (arg) => {
+    if (Array.isArray(arg)) {
+      return {
+        type: 'ArrayExpression',
+        elements: arg.map(processArgument),
+      };
+    }
+    return arg;
+  };
+
   return {
     type: 'CallExpression',
     callee: {
@@ -100,7 +110,7 @@ function buildCallMemberExpression(callee, member, args, computed = false, start
       },
       computed: computed,
     },
-    arguments: args,
+    arguments: args.map(processArgument),
     loc: {
       start: startLocation,
       end: endLocation,

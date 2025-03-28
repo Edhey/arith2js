@@ -51,8 +51,9 @@ endExpression:
 expression: 
       NUMBER                             { $$ = buildCallExpression(buildIdentifier('Complex', @1), [buildLiteral($1, @1)], @1); } // Complex Number
       | ID                               { $$ = buildIdentifier('$' + $1, @1); } // Identifier
-      | expression '=' expression        { $$ = buildAssigmentExpression($1, '=', $3, @1, @3); } // Assigment
       | expression ',' expression        { $$ = buildSequenceExpression([$1, $3], @1, @3); } // Sequence
+      | ID '=' expression                { $$ = buildAssigmentExpression(buildIdentifier('$' + $1, @1), '=', $3, @1, @3); } // Assigment
+      | ID calls '=' expression          { $$ = buildCallMemberExpression(buildIdentifier('$' + $1, @1), 'assign', [$calls, $expression], false, @1, @4); } // Assigment with calls
       | expression '+' expression        { $$ = buildCallMemberExpression($1, 'add', [$3], false, @1, @3); } // Addition
       | expression '-' expression        { $$ = buildCallMemberExpression($1, 'sub', [$3], false, @1, @3); } // Subtraction 
       | expression '/' expression        { $$ = buildCallMemberExpression($1, 'div', [$3], false, @1, @3); } // Division

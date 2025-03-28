@@ -52,18 +52,22 @@ class FunctionObject extends CallableInstance {
     return this.wrappedFunction.toString();
   }
 
-  setCache(arg, value) {
-    if (arg instanceof Complex) {
-      arg = arg.toString(); // TODO check
+  /**
+ * For the given function, assign the function call with the arguments provided 
+ * to the value especified in the parameter cacheValue.
+ * @param {FunctionObject} otherFunction It the function (callableInstance) 
+ * to be assigned.
+ * @param {Array} cacheArgs The arguments to be assigned to the function.
+ * @param {Array} cacheValue The values to be assigned to the function.  
+ */
+  assign(cacheArgs, cacheValue) {
+    for (let i = 0; i < cacheArgs.length; i++) {
+      let cacheArgument = cacheArgs[i];
+      let cacheValueArgument = cacheValue[i];
+      if (cacheArgument !== undefined && cacheValueArgument !== undefined) {
+        this.cache.set(cacheArgument, cacheValueArgument);
+      }
     }
-    this.cache.set(arg, value);
-  }
-
-  getCache(arg) {
-    if (arg instanceof Complex) {
-      arg = arg.toString();
-    }
-    return this.cache.get(arg);
   }
 }
 
