@@ -14,6 +14,7 @@
 
 const CallableInstance = require('callable-instance');
 const { Complex } = require('complex.js');
+const { CustomMap } = require('./custom-map.js');
 
 /**
  * @class FunctionObject
@@ -26,12 +27,9 @@ class FunctionObject extends CallableInstance {
   constructor(rawFunction) {
     super("_call");
     this.rawFunction = rawFunction;
-    this.cache = new Map();
-    this.wrappedFunction = function (...args) {
+    this.cache = new CustomMap();
+    this.wrappedFunction = (...args) => { // Cambiado a función flecha
       for (let argument of args) {
-        if (argument instanceof Complex) {
-          argument = argument.toString(); // TODO check
-        }
         if (this.cache && this.cache.get(argument)) {
           return this.cache.get(argument);
         }
@@ -41,6 +39,9 @@ class FunctionObject extends CallableInstance {
   }
 
   _call(arg) {
+    if (this.cache && this.cache.has(arg)) {
+      return this.cache.get(arg);
+    }
     return this.wrappedFunction(arg) ?? null;
   }
 
@@ -58,16 +59,32 @@ class FunctionObject extends CallableInstance {
  * @param {FunctionObject} otherFunction It the function (callableInstance) 
  * to be assigned.
  * @param {Array} cacheArgs The arguments to be assigned to the function.
- * @param {Array} cacheValue The values to be assigned to the function.  
+ * @param {Array} cacheValue The value to be assigned to the function in the 
+ * call with the arguments provided.   
  */
   assign(cacheArgs, cacheValue) {
-    for (let i = 0; i < cacheArgs.length; i++) {
-      let cacheArgument = cacheArgs[i];
-      let cacheValueArgument = cacheValue[i];
-      if (cacheArgument !== undefined && cacheValueArgument !== undefined) {
-        this.cache.set(cacheArgument, cacheValueArgument);
+    let currentFunction = this.wrappedFunction;
+    this.wrappedFunction = this._assing(currentFunction, cacheArgs, cacheValue, 0);
+    return this.wrappedFunction;
+  }
+
+  _assing(currentFunction, cacheArgs, cacheValue, index) {
+    let cacheArgument = cacheArgs[index];
+    
+    return function(...args) {
+      let auxFunction = currentFunction;
+      if (cacheArgument == null) {
+        throw new Error("Invalid null argument on the left side of the assignment");
       }
-    }
+      if (args[0].equals && args[0]?.equals(cacheArgument) || args[0] === cacheArgument) {
+        if (cacheArgs.length === index + 1) {
+          return cacheValue;
+        }
+        auxFunction = currentFunction(...args);
+        return this._assing(auxFunction, cacheArgs, cacheValue, index + 1);
+      }
+      return currentFunction(...args);
+    };
   }
 }
 

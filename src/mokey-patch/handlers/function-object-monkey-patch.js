@@ -13,7 +13,7 @@
  */
 
 const { Complex } = require('complex.js');
-const { FunctionObject, functionObject } = require('../../function-object.js');
+const { FunctionObject, functionObject } = require('../../function-object/function-object.js');
 const { operationHandlers, implementedTypes, allOperators } = require('../monkey-patch-handlers.js');
 const lodash = require('lodash');
 

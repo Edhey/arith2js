@@ -70,7 +70,7 @@ expression:
       | expression '||' expression       { $$ = buildLogicalExpression($1, '||', $3, @1, @3); } // Logical OR
       | '!' expression                   { $$ = buildCallMemberExpression($2, 'not', [], false, @1, @2); } // Logical NOT
       | expression '!'                   { $$ = buildCallExpression(buildIdentifier('gamma', @2), [$1], @1, @2); } // Factorial
-      | PID '(' argsList ')'            { $$ = buildCallExpression(buildIdentifier($PID, @1), $3, @1, @4); } // Function call 
+      | PID '(' argsList ')'             { $$ = buildCallExpression(buildIdentifier($PID, @1), $3, @1, @4); } // Function call 
       | '(' expression ')'               { $$ = $2; }  // Parentheses
       | TRUE                             { $$ = buildLiteral(true, @1); } // True
       | FALSE                            { $$ = buildLiteral(false, @1); } // False

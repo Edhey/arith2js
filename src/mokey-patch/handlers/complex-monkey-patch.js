@@ -14,7 +14,7 @@ let oldComplex = {};
 const Complex = require('complex.js');
 const { operationHandlers, implementedTypes, allOperators } = require('../monkey-patch-handlers.js');
 const lodash = require('lodash');
-const { functionObject } = require('../../function-object.js');
+const { functionObject } = require('../../function-object/function-object.js');
 
 // Initialize the complex operators in the operationHandlers
 for(const operator in allOperators) {
