@@ -6,15 +6,14 @@
  * Práctica 3 - Hello Compilers
  *
  * @author Himar Edhey Hernández Alonso
- * @since Wed 26 Feb 2025
+ * @since Thu 27 Mar 2025
  * @desc This file defines the FunctionObject class, which is a subclass of the 
  * CallableInstance class.
  * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}
  */
 
 const CallableInstance = require('callable-instance');
-const { Complex } = require('complex.js');
-const { CustomMap } = require('./custom-map.js');
+const { StoreMap } = require('./store-map.js');
 
 /**
  * @class FunctionObject
@@ -27,7 +26,7 @@ class FunctionObject extends CallableInstance {
   constructor(rawFunction) {
     super("_call");
     this.rawFunction = rawFunction;
-    this.cache = new CustomMap();
+    this.cache = new StoreMap();
     this.wrappedFunction = (...args) => { // Cambiado a función flecha
       for (let argument of args) {
         if (this.cache && this.cache.get(argument)) {
@@ -39,9 +38,6 @@ class FunctionObject extends CallableInstance {
   }
 
   _call(arg) {
-    if (this.cache && this.cache.has(arg)) {
-      return this.cache.get(arg);
-    }
     return this.wrappedFunction(arg) ?? null;
   }
 
@@ -50,7 +46,7 @@ class FunctionObject extends CallableInstance {
   }
 
   toString() {
-    return this.wrappedFunction.toString();
+    return this.rawFunction.toString();
   }
 
   /**

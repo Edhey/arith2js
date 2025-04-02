@@ -6,7 +6,7 @@
  * Práctica 3 - Hello Compilers
  *
  * @author Himar Edhey Hernández Alonso
- * @since Wed 26 Feb 2025
+ * @since Thu 27 Mar 2025
  * @desc This file defines the FunctionObject class, which is a subclass of the 
  * CallableInstance class.
  * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}

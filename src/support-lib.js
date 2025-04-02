@@ -55,7 +55,7 @@ function print(...values) {
   for (value of values) {
     result += value.toString() + ' ';
   }
-  console.log(result.slice(0, -1));
+  console.log(result.slice(0, -1).toString());
 }
 
 /**
