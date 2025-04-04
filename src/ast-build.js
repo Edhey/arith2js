@@ -79,6 +79,24 @@ function buildCallExpression(callee, args, location) {
 }
 
 /**
+ * Build an array expression node of the AST
+ * @param {Object[]} elements - The elements of the array
+ * @param {Object} startLocation - The start location information
+ * @param {Object} endLocation - The end location information
+ * @returns {Object} - The array expression node
+ */
+function buildArrayExpression(elements, startLocation, endLocation) {
+  return {
+    type: 'ArrayExpression',
+    elements: elements,
+    loc: {
+      start: startLocation,
+      end: endLocation,
+    },
+  };
+}
+
+/**
  * Build a call member expression node of the AST
  * @param {Object} callee - The object that calls the member
  * @param {string} member - The member to call
@@ -89,16 +107,6 @@ function buildCallExpression(callee, args, location) {
  * @returns {Object} - The call member expression node
  */
 function buildCallMemberExpression(callee, member, args, computed = false, startLocation, endLocation) {
-  const processArgument = (arg) => {
-    if (Array.isArray(arg)) {
-      return {
-        type: 'ArrayExpression',
-        elements: arg.map(processArgument),
-      };
-    }
-    return arg;
-  };
-
   return {
     type: 'CallExpression',
     callee: {
@@ -110,7 +118,7 @@ function buildCallMemberExpression(callee, member, args, computed = false, start
       },
       computed: computed,
     },
-    arguments: args.map(processArgument),
+    arguments: args,
     loc: {
       start: startLocation,
       end: endLocation,
@@ -536,5 +544,6 @@ module.exports = {
   buildUnaryExpression,
   buildForStatement,
   buildWhileStatement,
-  buildDoWhileStatement
+  buildDoWhileStatement,
+  buildArrayExpression
 };

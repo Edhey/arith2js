@@ -14,6 +14,7 @@
 
 const CallableInstance = require('callable-instance');
 const { StoreMap } = require('./store-map.js');
+const { equal } = require('assert');
 
 /**
  * @class FunctionObject
@@ -59,6 +60,9 @@ class FunctionObject extends CallableInstance {
  * call with the arguments provided.   
  */
   assign(cacheArgs, cacheValue) {
+    if (cacheArgs.length === 0) {
+      throw new Error("Invalid empty argument on the left side of the assignment");
+    }
     let currentFunction = this.wrappedFunction;
     this.wrappedFunction = this._assing(currentFunction, cacheArgs, cacheValue, 0);
     return this.wrappedFunction;
@@ -67,12 +71,19 @@ class FunctionObject extends CallableInstance {
   _assing(currentFunction, cacheArgs, cacheValue, index) {
     let cacheArgument = cacheArgs[index];
     
-    return function(...args) {
+    return (...args) => {
       let auxFunction = currentFunction;
       if (cacheArgument == null) {
         throw new Error("Invalid null argument on the left side of the assignment");
       }
-      if (args[0].equals && args[0]?.equals(cacheArgument) || args[0] === cacheArgument) {
+      let equal = false;
+      try {
+        args[0]?.equals(cacheArgument);
+        equal = args[0].equals(cacheArgument);
+      } catch (e) {
+        equal = args[0] === cacheArgument;
+      }
+      if (equal) {
         if (cacheArgs.length === index + 1) {
           return cacheValue;
         }

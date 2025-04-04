@@ -51,6 +51,9 @@ for (const op in Operators) {
    */
   lodash.set(operationHandlers, `complex.${op}.functionobject`, function (other) {
     try {
+      if (op === 'equals' || op === 'notEquals') {
+        return this[op](other(this));
+      }
       return functionObject((...args) => this[op](other(...args)));
     } catch (error) {
       throw new Error(

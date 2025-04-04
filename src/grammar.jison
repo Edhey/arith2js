@@ -15,6 +15,7 @@ const {
   buildDoWhileStatement,
   buildWhileStatement,
   buildForStatement,
+  buildArrayExpression
 } = require('./ast-build.js');
 %}
 
@@ -53,7 +54,7 @@ expression:
       | ID                               { $$ = buildIdentifier('$' + $1, @1); } // Identifier
       | expression ',' expression        { $$ = buildSequenceExpression([$1, $3], @1, @3); } // Sequence
       | ID '=' expression                { $$ = buildAssigmentExpression(buildIdentifier('$' + $1, @1), '=', $3, @1, @3); } // Assigment
-      | ID calls '=' expression          { $$ = buildCallMemberExpression(buildIdentifier('$' + $1, @1), 'assign', [$calls, $expression], false, @1, @4); } // Assigment with calls
+      | ID calls '=' expression          { $$ = buildCallMemberExpression(buildIdentifier('$' + $1, @1), 'assign', [buildArrayExpression($calls, @calls, @calls), $expression], false, @1, @4); } // Assigment with calls
       | expression '+' expression        { $$ = buildCallMemberExpression($1, 'add', [$3], false, @1, @3); } // Addition
       | expression '-' expression        { $$ = buildCallMemberExpression($1, 'sub', [$3], false, @1, @3); } // Subtraction 
       | expression '/' expression        { $$ = buildCallMemberExpression($1, 'div', [$3], false, @1, @3); } // Division
@@ -77,7 +78,7 @@ expression:
       // | ID apply                      { $$ = buildParOrCallMemberExpression(buildIdentifier('$' + $1, @1), $apply, @1, @2); }
       | '(' expression ')' calls         { $$ = buildIdentifierOrCalls($expression, $calls, @1, @calls); }
       | ID calls                         { $$ = buildIdentifierOrCalls('$' + $1, $calls, @ID, @calls); } 
-      | FUN '(' idOrEmpty ')' '{' expression '}'              { $$ = buildCallExpression(buildIdentifier('functionObject', @1), [buildFunctionExpression($idOrEmpty, $expression, @1, @6)]); } // Function definition
+      | FUN '(' idListOrEmpty ')' '{' expression '}'          { $$ = buildCallExpression(buildIdentifier('functionObject', @1), [buildFunctionExpression($idListOrEmpty, $expression, @1, @6)]); } // Function definition
       | STRING                                                { $$ = buildLiteral($1, @1); } // String
       | WHILE expression '{'expression'}'                     { $$ = buildWhileStatement($expression1, $expression2, @1, @5);}
       | DO '{' expression '}' WHILE '(' expression ')'        { $$ = buildDoWhileStatement($expression1, $expression2, @1, @3, @7); }
@@ -86,19 +87,19 @@ expression:
 ;
 
 calls:
-      '(' expression ')' calls { $$ = [ $expression ].concat($calls); }
-    | '(' ')' calls           { $$ = [ null ].concat($calls); }
-    | '(' expression ')'       { $$ = [ $expression ]; }
-    | '(' ')'                 { $$ = [ null ]; }
-;
-
-idOrEmpty: 
-    /* empty */     { $$ = []; }
-    | ID            { $$ = [ buildIdentifier('$' + $1, @1) ]; }
+      '(' argsList ')' calls { $$ = [ ...$argsList ].concat($calls); }
+    | '(' ')' calls           { $$ = [ ].concat($calls); }
+    | '(' argsList ')'       { $$ = [ ...$argsList ]; }
+    | '(' ')'                 { $$ = [ ]; }
 ;
 
 argsList:
-    /* empty */     { $$ = []; }
-    | expression ';' argsList { $$ = [ $expression ].concat($argsList); }
+      expression ';' argsList { $$ = [ $expression ].concat($argsList); }
     | expression     { $$ = [ $expression ]; }
+;
+
+idListOrEmpty: 
+    /* empty */     { $$ = []; }
+    | ID            { $$ = [ buildIdentifier('$' + $1, @1) ]; }
+    | ID ';' idListOrEmpty { $$ = [ buildIdentifier('$' + $1, @1) ].concat($idListOrEmpty); }
 ;

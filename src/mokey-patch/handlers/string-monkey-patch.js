@@ -113,6 +113,10 @@ lodash.set(operationHandlers, 'string.mul.complex', function (other) {
   return this.repeat(other.re);
 });
 
+lodash.set(operationHandlers, 'string.equals.complex', function (other) {
+  return false
+});
+
 for (const op in Operators) {
   String.prototype[op] = function (other) {
     if (other) {

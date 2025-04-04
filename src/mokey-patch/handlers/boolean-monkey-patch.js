@@ -23,11 +23,11 @@ for(const operator in allOperators) {
 }
 implementedTypes.push(Boolean);
 
-AritmeticOperators = {
+BasicBooleanOperators = {
   add: '+', sub: '-', equals: '==', notEquals: '!='
 };
 
-for (let op in AritmeticOperators) {
+for (let op in BasicBooleanOperators) {
   /**
    * Coertion of a boolean to a complex to operate with other as a complex
    * @param {Boolean} other It is the boolean to operate
