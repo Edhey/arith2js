@@ -16,7 +16,7 @@ const { FunctionObject } = require("./function-object");
 
 class ObjectFunctionObject extends FunctionObject {
   constructor(object) {
-    const objectInitialFunction = () => un;
+    const objectInitialFunction = () => undefined;
     super(objectInitialFunction);
     this.object = object;
     for (const key in object) {

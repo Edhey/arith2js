@@ -26,19 +26,11 @@ class FunctionObject extends CallableInstance {
   constructor(rawFunction) {
     super("_call");
     this.rawFunction = rawFunction;
-    // this.cache = new StoreMap();
-    this.wrappedFunction = (...args) => { // Cambiado a función flecha
-      for (let argument of args) {
-        // if (this.cache && this.cache.get(argument)) {
-          // return this.cache.get(argument);
-        // }
-      }
-      return this.rawFunction(...args);
-    };
+    this.wrappedFunction = rawFunction;
   }
 
   _call(arg) {
-    return this.rawFunction(arg) ?? null;
+    return this.wrappedFunction(arg) ?? null;
   }
 
   toFunction() {
@@ -62,9 +54,9 @@ class FunctionObject extends CallableInstance {
     if (cacheArgs.length === 0) {
       throw new Error("Invalid empty argument on the left side of the assignment");
     }
-    let currentFunction = this.rawFunction;
-    this.rawFunction = this._assing(currentFunction, cacheArgs, cacheValue, 0);
-    return this.rawFunction;
+    let currentFunction = this.wrappedFunction;
+    this.wrappedFunction = this._assing(currentFunction, cacheArgs, cacheValue, 0);
+    return this.wrappedFunction;
   }
 
   _assing(currentFunction, cacheArgs, cacheValue, index) {

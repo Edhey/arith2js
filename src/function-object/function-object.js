@@ -38,7 +38,7 @@ class FunctionObject extends CallableInstance {
   }
 
   toString() {
-    return this.rawFunction.toString();
+    return this.wrappedFunction.toString();
   }
 
   /**

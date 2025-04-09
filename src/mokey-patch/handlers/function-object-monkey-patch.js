@@ -48,7 +48,7 @@ for (let operator in Operators) {
    */
   lodash.set(operationHandlers, `functionobject.${operator}.functionobject`, function (other) {
     try {
-      return new FunctionObject((...x) => this(...x)[operator](other(...x)));
+      return functionObject((...x) => this(...x)[operator](other(...x)));
     } catch (e) {
       throw new Error(`Unsupported ${operator} for function ${other}`);
     }
@@ -92,4 +92,12 @@ lodash.set(operationHandlers, 'functionobject.neg', function() {
     let r = this(...x);
     return r?.neg() || -r;
   });
+});
+
+lodash.set(operationHandlers, 'functionobject.equals.functionobject', function (other) {
+  return this === other;
+});
+
+lodash.set(operationHandlers, 'functionobject.notEquals.functionobject', function () {
+  return true;
 });

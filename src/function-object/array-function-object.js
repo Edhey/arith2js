@@ -29,10 +29,12 @@ class ArrayFunctionObject extends FunctionObject {
 
   toString() {
     let output = "[ ";
-    for (let i = new Complex(0); i < this.array.length; i++) {
+    for (let i = 0; i < this.array.length; i++) {
+      i = new Complex(i);
       const value = this._call(i);
-      output += value === null ? "null" : value.toString(); 
+      output += (value ? value.toString() : "null") + ", ";
     }
+    return output.slice(0, -2) + " ]";
   }
 }
 
@@ -41,3 +43,7 @@ function arrayObject(...array) {
 }
 
 module.exports = { ArrayFunctionObject, arrayObject };
+
+// if (!cacheArgs.every(arg => arg instanceof Complex)) {
+//   throw new Error("Cannot use non numeric values in the index of an array");
+// }
