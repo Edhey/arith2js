@@ -12,39 +12,27 @@
  * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}
  */
 
-const CallableInstance = require("callable-instance");
+const { FunctionObject } = require("./function-object");
+const { Complex } = require('complex.js');
 
-class ArrayFunctionObject extends CallableInstance {
+class ArrayFunctionObject extends FunctionObject {
   constructor(...array) {
-    super("_call");
+    const arrayInitialFunction = (index) => null;
+    super(arrayInitialFunction);
     this.array = array;
+    for (let i = 0; i < array.length; i++) {
+      i = new Complex(i);
+      const value = (typeof array[i] !== "number") ? array[i] : new Complex(array[i]);
+      this.assign([i], value);
+    }
   }
 
-  assign(cacheArgs, cacheValue) {
-    let aux = this.array;
-    for (let i = 0; i < cacheArgs.length - 1; i++) {
-      let index = cacheArgs[i];
-      if (index.re < 0 && index.im === 0 && Number.isInteger(index.re)) {
-        index.re = aux.length + index.re;
-      }
-      aux = aux[index]?.array;
+  toString() {
+    let output = "[ ";
+    for (let i = new Complex(0); i < this.array.length; i++) {
+      const value = this._call(i);
+      output += value === null ? "null" : value.toString(); 
     }
-    let index = cacheArgs[cacheArgs.length - 1];
-    if (index.re < 0 && index.im === 0 && Number.isInteger(index.re)) {
-      index.re = aux.length + index.re;
-    }
-    aux[index] = cacheValue;
-  }
-
-  _call(index) {
-    if (index.re < 0 && index.im === 0 && Number.isInteger(index.re)) {
-      index.re = this.array.length + index.re;
-    }
-    return this.array[index];
-  }
-
-  toFunction() {
-    return this.array;
   }
 }
 

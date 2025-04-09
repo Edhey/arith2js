@@ -22,12 +22,19 @@ const { allOperators, implementedTypes, operationHandlers } = require('./monkey-
 for (const type of implementedTypes) {
   for (const operator in allOperators) {
     type.prototype[operator] = function (other) {
-      const firstType = (typeof this === 'object' && this instanceof Complex) ?
-        'complex' : this.constructor.name.toLowerCase();
-      if (other === undefined || other === null) {
+      const thisValue = this;
+      if (this === null) {
+        thisValue = Complex(0);
+      }
+      if (other === null) {
+        other = Complex(0);
+      }
+      const firstType = (typeof thisValue === 'object' && thisValue instanceof Complex) ?
+        'complex' : thisValue.constructor.name.toLowerCase();
+      if (other === undefined) {
         const unaryOperation = operationHandlers[firstType][operator];
         if (unaryOperation) {
-          return unaryOperation.call(this);
+          return unaryOperation.call(thisValue);
         }
         return operationHandlers.default(firstType, operator, 'undefined');
       }
@@ -36,7 +43,7 @@ for (const type of implementedTypes) {
 
       const operation = operationHandlers[firstType][operator][secondType];
       if (operation) {
-        return operation.call(this, other);
+        return operation.call(thisValue, other);
       }
       return operationHandlers.default(firstType, operator, secondType);
     }

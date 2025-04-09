@@ -14,7 +14,6 @@
 
 const CallableInstance = require('callable-instance');
 const { StoreMap } = require('./store-map.js');
-const { equal } = require('assert');
 
 /**
  * @class FunctionObject
@@ -27,15 +26,7 @@ class FunctionObject extends CallableInstance {
   constructor(rawFunction) {
     super("_call");
     this.rawFunction = rawFunction;
-    this.cache = new StoreMap();
-    this.wrappedFunction = (...args) => { // Cambiado a función flecha
-      for (let argument of args) {
-        if (this.cache && this.cache.get(argument)) {
-          return this.cache.get(argument);
-        }
-      }
-      return this.rawFunction(...args);
-    };
+    this.wrappedFunction = rawFunction;
   }
 
   _call(arg) {

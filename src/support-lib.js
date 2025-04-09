@@ -53,7 +53,7 @@ function gamma(zz) {
 function print(...values) {
   let result = '';
   for (value of values) {
-    result += value.toString() + ' ';
+    result += value ? value.toString() + ' ' : 'null ';
   }
   console.log(result.slice(0, -1).toString());
 }

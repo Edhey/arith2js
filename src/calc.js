@@ -180,7 +180,7 @@ case 32:
  this.$ = buildDoWhileStatement($$[$0-5], $$[$0-1], _$[$0-7], _$[$0-5], _$[$0-1]); 
 break;
 case 33:
- this.$ = this.$ = buildCallExpression(buildIdentifier('arrayObject', _$[$0-2]), [$$[$0-1]]); 
+ this.$ = buildCallExpression(buildIdentifier('arrayObject', _$[$0-2]), $$[$0-1]); 
 break;
 case 34:
  this.$ = buildForStatement($$[$0-8], $$[$0-6], $$[$0-4], $$[$0-1], _$[$0-10], _$[$0]); 
