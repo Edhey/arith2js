@@ -38,7 +38,13 @@ program
     if (options.run | options.string | options.return) {
       const output = await eval(transpileResult);
       if (options.string) {
-        console.log(JSON.stringify(output) ?? "");
+        try {
+          console.log(output.toString());
+        } catch (error) {
+          if (output !== undefined) {
+            console.log(output);
+          }
+        }
       } else if (options.return) {
         console.log(output !== undefined ? output : "");
       }

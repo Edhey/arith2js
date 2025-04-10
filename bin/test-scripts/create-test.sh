@@ -11,18 +11,18 @@ set -e  # Exit immediately if a command exits with a non-zero status.
 
 input_file="$1"
 base_name=$(basename "$input_file" | sed 's/\.calc$//')  # Remove .calc extension
-output_js="test/examples-data/expected-js/expected-${base_name}.js"
-output_txt="test/examples-data/correct-out/correct-out-${base_name}.txt"
-input_test="test/examples-data/input/${base_name}.calc"
+output_js="test/data/expected-js/expected-${base_name}.js"
+output_txt="test/data/correct-out/correct-out-${base_name}.txt"
+input_test="test/data/input/${base_name}.calc"
 
 # Create directories if they don't exist
-mkdir -p test/examples-data/input
-mkdir -p test/examples-data/output
-mkdir -p test/examples-data/expected-js
-mkdir -p test/examples-data/correct-out
+mkdir -p test/data/input
+mkdir -p test/data/output
+mkdir -p test/data/expected-js
+mkdir -p test/data/correct-out
 
 # Copy the input file
-cp "$input_file" "$input_test"
+# cp "$input_file" "$input_test"
 
 # Transpile the code
 bin/calc2js.mjs "$input_test" -o "$output_js"
