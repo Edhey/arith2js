@@ -1,1 +1,1 @@
-expected 'Parseerroronline1:^Expecting\'NUMBER\…' to equal 'Parseerroronline1:^Expecting\'NUMBER\…'
+expected 'expected\'expected\\'expected\\\'expe…' to equal 'Parseerroronline1:^Expecting\'NUMBER\…'

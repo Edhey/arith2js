@@ -3,4 +3,3 @@ false
 19
 (...x) => this(...x)[operator](other)
 29
-

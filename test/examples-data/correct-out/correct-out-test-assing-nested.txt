@@ -3,4 +3,3 @@
 function($y) {
   return $y.mul($y);
 }
-

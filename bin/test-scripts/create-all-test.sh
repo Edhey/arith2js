@@ -9,8 +9,8 @@
 set -e  # Exit immediately if a command exits with a non-zero status.
 
 # Configuration
-INPUT_DIR="test/data/input/"
-OUTPUT_FILE="test/test-description.js"
+INPUT_DIR="examples/"
+OUTPUT_FILE="test/test-example-description.js"
 ERROR_OUTPUT_FILE="test/test-error-description.js"
 CREATE_TEST_SCRIPT="bin/test-scripts/create-test.sh" # Path to create-test.sh
 CREATE_ERR_TEST_SCRIPT="bin/test-scripts/create-err-test.sh" # Path to create-err-test.sh
