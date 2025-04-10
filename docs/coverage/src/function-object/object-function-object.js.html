@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/MonkeyPatch/monkey-patch.js</title>
+    <title>Code coverage report for src/function-object/object-function-object.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/MonkeyPatch</a> monkey-patch.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/function-object</a> object-function-object.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.68% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>38/41</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">87.5% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>14/16</span>
+                <span class='fraction'>36/36</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
-                <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.68% </span>
+                <span class="strong">75% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>3/4</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>38/41</span>
+                <span class='fraction'>36/36</span>
             </div>
         
             
@@ -98,12 +98,7 @@
 <a name='L33'></a><a href='#L33'>33</a>
 <a name='L34'></a><a href='#L34'>34</a>
 <a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a>
-<a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a>
-<a name='L40'></a><a href='#L40'>40</a>
-<a name='L41'></a><a href='#L41'>41</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L36'></a><a href='#L36'>36</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -121,76 +116,66 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">52x</span>
-<span class="cline-any cline-yes">1230x</span>
-<span class="cline-any cline-yes">1230x</span>
-<span class="cline-any cline-yes">1230x</span>
-<span class="cline-any cline-yes">98x</span>
-<span class="cline-any cline-yes">98x</span>
-<span class="cline-any cline-yes">98x</span>
-<span class="cline-any cline-yes">98x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1230x</span>
-<span class="cline-any cline-yes">1230x</span>
-<span class="cline-any cline-yes">1230x</span>
-<span class="cline-any cline-yes">1230x</span>
-<span class="cline-any cline-yes">1132x</span>
-<span class="cline-any cline-yes">1132x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1230x</span>
-<span class="cline-any cline-yes">52x</span>
-<span class="cline-any cline-yes">4x</span></td><td class="text"><pre class="prettyprint lang-js">/**
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">/**
  * Universidad de La Laguna
  * Escuela Superior de Ingeniería y Tecnología
  * Grado en Ingeniería Informática
- * Procesadores del lenguage
- * Práctica 6 - While and for loops
+ * Asignatura Procesadores de Lenguajes
+ * Práctica 3 - Hello Compilers
  *
- * @author Himar Edhey Hernandez Alonso
- * @since Wed 19 Mar 2025 
- * @desc Patches the objects to add new operations
- * @see https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392
+ * @author Himar Edhey Hernández Alonso
+ * @since Thu 27 Mar 2025
+ * @desc This file defines the ObjectFunctionObject class, which is a subclass 
+ * of the FunctionObject class.
+ * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}
  */
 &nbsp;
-require('./handlers/boolean-monkey-patch.js');
-const { Complex } = require('./handlers/complex-monkey-patch.js');
-require('./handlers/function-monkey-patch.js');
-require('./handlers/string-monkey-patch.js');
-const { allOperators, implementedTypes, operationHandlers } = require('./monkey-patch-handlers.js');
+const { FunctionObject } = require("./function-object");
 &nbsp;
-for (const type of implementedTypes) {
-  for (const operator in allOperators) {
-    type.prototype[operator] = function (other) {
-      const firstType = (typeof this === 'object' &amp;&amp; this instanceof Complex) ?
-        'complex' : this.constructor.name.toLowerCase();
-      if (other === undefined || other === null) {
-        const unaryOperation = operationHandlers[firstType][operator];
-        if (unaryOperation) {
-          return unaryOperation.call(this);
-        }
-<span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >        return operationHandlers.default(firstType, operator, 'undefined');</span></span>
-<span class="cstat-no" title="statement not covered" >      }</span>
-      const secondType = (typeof other === 'object' &amp;&amp; other instanceof Complex) ?
-        'complex' : other.constructor.name.toLowerCase();
-      const operation = operationHandlers[firstType][operator][secondType];
-      if (operation) {
-        return operation.call(this, other);
-      }
-<span class="cstat-no" title="statement not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >      return operationHandlers.default(firstType, operator, secondType);</span></span>
+class ObjectFunctionObject extends FunctionObject {
+  constructor(object) {
+    const objectInitialFunction = <span class="fstat-no" title="function not covered" >() =&gt; undefined;</span>
+    super(objectInitialFunction);
+    this.object = object;
+    for (const key in object) {
+      this.assign([key], object[key]);
     }
   }
-}</pre></td></tr></table></pre>
+&nbsp;
+  toString() {
+    return JSON.stringify(this.object);
+  }
+}
+&nbsp;
+function objectFunctionObject(object) {
+  return new ObjectFunctionObject(object);
+}
+&nbsp;
+module.exports = { ObjectFunctionObject, objectFunctionObject };</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-03-20T02:51:06.035Z
+                at 2025-04-10T07:01:23.039Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
