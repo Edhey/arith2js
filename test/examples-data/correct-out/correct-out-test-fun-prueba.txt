@@ -1,0 +1,4 @@
+false
+13
+(...x) => this(...x)[operator](other)
+

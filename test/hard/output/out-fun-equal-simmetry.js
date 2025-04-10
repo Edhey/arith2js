@@ -8,4 +8,4 @@ let $f;
   return functionObject(function($y) {
     return $x.add($y);
   });
-}), print($f.equals($f)(Complex('3'))(Complex('5')))), print(Complex('2').equals(Complex('2')))), print(true.equals(true))), print('hola'.equals('hola')); 
+}), print($f.equals($f))), print(Complex('2').equals(Complex('2')))), print(true.equals(true))), print('hola'.equals('hola')); 
