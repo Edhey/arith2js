@@ -12,6 +12,7 @@
  * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}
  */
 
+const { re } = require("mathjs");
 const { FunctionObject } = require("./function-object");
 const { Complex } = require('complex.js');
 
@@ -25,6 +26,9 @@ class ArrayFunctionObject extends FunctionObject {
       const value = (typeof array[i] !== "number") ? array[i] : new Complex(array[i]);
       this.assign([i], value);
     }
+    this.wrappedFunction = this._assing(this.wrappedFunction, ['concat'], this.concat, 0);
+    this.wrappedFunction = this._assing(this.wrappedFunction, ['length'], this.getLength, 0);
+    this.inmediatFunctions = ['length'];
   }
 
   toString() {
@@ -34,6 +38,13 @@ class ArrayFunctionObject extends FunctionObject {
       output += (value ? value.toString() : "null") + ", ";
     }
     return output.slice(0, -2) + " ]";
+  }
+
+  _call(index) {
+    if (this.inmediatFunctions.includes(index)) {
+      return this.wrappedFunction(index)();
+    }
+    return this.wrappedFunction(index);
   }
 
   assign(cacheArgs, cacheValue) {
@@ -54,7 +65,7 @@ class ArrayFunctionObject extends FunctionObject {
 
   _assing(currentFunction, cacheArgs, cacheValue, index) {
     let cacheArgument = cacheArgs[index];
-    
+
     return (...args) => {
       let auxFunction = currentFunction;
       if (cacheArgument == null) {
@@ -76,6 +87,24 @@ class ArrayFunctionObject extends FunctionObject {
       }
       return currentFunction(...args);
     };
+  }
+
+  concat = (...args) => {
+    const concatArray = this.indexArray.map(index => this._call(index));
+    for (const arg of args) {
+      if (arg instanceof ArrayFunctionObject) {
+        for (const index of arg.indexArray) {
+          concatArray.push(arg._call(index));
+        }
+      } else {
+        concatArray.push(arg);
+      }
+    }
+    return new ArrayFunctionObject(...concatArray);
+  }
+
+  getLength = () => {
+    return this.indexArray.length;
   }
 }
 

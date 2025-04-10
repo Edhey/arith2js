@@ -576,6 +576,71 @@ function buildForStatement(init, test, update, body, startLocation, endLocation)
   );
 }
 
+/**
+ * Builds a labeled statement AST node.
+ * @param {Object} label - The label of the statement.
+ * @param {Object} body - The body of the statement.
+ * @param {Object} startLocation - The start location of the labeled statement.
+ * @param {Object} endLocation - The end location of the labeled statement.
+ * @returns {Object} The AST node representing the labeled statement.
+ */
+function buildLabeledStatement(label, body, startLocation, endLocation) {
+  return {
+    type: 'LabeledStatement',
+    label: label,
+    body: body,
+    loc: {
+      start: startLocation,
+      end: endLocation,
+    },
+  };
+}
+
+/**
+ * Builds a block statement AST node.
+ * @param {Object[]} body - The body of the block statement.
+ * @param {Object} startLocation - The start location of the block statement.
+ * @param {Object} endLocation - The end location of the block statement.
+ * @returns {Object} The AST node representing the block statement.
+ */
+function buildBlockStatement(body, startLocation, endLocation) {
+  return {
+    type: 'BlockStatement',
+    body: body,
+    loc: {
+      start: startLocation,
+      end: endLocation,
+    },
+  };
+}
+
+/**
+ * Build an object expression node of the AST
+ * @param {Array} properties - The properties of the object
+ * @param {Object} startLocation - The start location information
+ * @param {Object} endLocation - The end location information
+ * @returns {Object} - The object expression node
+ */
+function buildObjectExpression(properties, startLocation, endLocation) {
+  return {
+    type: 'ObjectExpression',
+    properties: properties.map(({ key, value }) => ({
+      type: 'Property',
+      key: buildLiteral(key.value, key.loc), // Clave como un literal
+      value: value,
+      kind: 'init', // Tipo de propiedad (init para inicialización)
+      loc: {
+        start: key.loc.start,
+        end: value.loc.end,
+      },
+    })),
+    loc: {
+      start: startLocation,
+      end: endLocation,
+    },
+  };
+}
+
 module.exports = {
   buildRoot,
   buildLiteral,
@@ -594,5 +659,8 @@ module.exports = {
   buildForStatement,
   buildWhileStatement,
   buildDoWhileStatement,
-  buildArrayExpression
+  buildArrayExpression,
+  buildLabeledStatement,
+  buildBlockStatement,
+  buildObjectExpression
 };
