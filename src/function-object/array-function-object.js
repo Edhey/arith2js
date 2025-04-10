@@ -12,7 +12,6 @@
  * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}
  */
 
-const { re } = require("mathjs");
 const { FunctionObject } = require("./function-object");
 const { Complex } = require('complex.js');
 
@@ -28,6 +27,7 @@ class ArrayFunctionObject extends FunctionObject {
     }
     this.wrappedFunction = this._assing(this.wrappedFunction, ['concat'], this.concat, 0);
     this.wrappedFunction = this._assing(this.wrappedFunction, ['length'], this.getLength, 0);
+    this.wrappedFunction = this._assing(this.wrappedFunction, ['push'], this.push, 0);
     this.inmediatFunctions = ['length'];
   }
 
@@ -57,7 +57,11 @@ class ArrayFunctionObject extends FunctionObject {
     if (!cacheArgs.every(arg => arg.re >= 0 && arg.im === 0)) {
       throw new Error("The index of an array must be a positive integer");
     }
-    for (const arg of cacheArgs) this.indexArray.push(arg);
+    for (const arg of cacheArgs) {
+      if (!this.indexArray.some(index => index.equals(arg))) {
+        this.indexArray.push(arg);
+      }
+    }
     let currentFunction = this.wrappedFunction;
     this.wrappedFunction = this._assing(currentFunction, cacheArgs, cacheValue, 0);
     return this; // TODO: Devolver this? wrappedFunction? nada?
@@ -105,6 +109,19 @@ class ArrayFunctionObject extends FunctionObject {
 
   getLength = () => {
     return this.indexArray.length;
+  }
+
+  push = (arg) => {
+    const lastIndex = this.indexArray.length;
+    if (arg instanceof ArrayFunctionObject) {
+      for (const index of arg.indexArray) {
+        this.indexArray.push(arg._call(lastIndex));
+      }
+    } else {
+      this.indexArray.push(new Complex(lastIndex));
+      this.wrappedFunction = this._assing(this.wrappedFunction, [new Complex(lastIndex)], arg, 0);
+    }
+
   }
 }
 
