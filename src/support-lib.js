@@ -19,6 +19,7 @@ require('./mokey-patch/monkey-patch.js');
 const { Complex } = require('./mokey-patch/handlers/complex-monkey-patch.js');
 const { FunctionObject, functionObject } = require('./function-object/function-object.js');
 const { ArrayFunctionObject, arrayObject } = require('./function-object/array-function-object.js');
+const { ObjectFunctionObject, objectFunctionObject } = require('./function-object/object-function-object.js');
 
 const P = [Complex(0.99999999999980993),
 Complex(676.5203681218851), Complex(-1259.1392167224028), Complex(771.32342877765313),
@@ -132,5 +133,7 @@ module.exports = {
   FunctionObject,
   functionObject,
   ArrayFunctionObject,
-  arrayObject
+  arrayObject,
+  ObjectFunctionObject,
+  objectFunctionObject,
 };

@@ -83,8 +83,10 @@ expression:
       | WHILE expression '{'expression'}'                     { $$ = buildWhileStatement($expression1, $expression2, @1, @5);}
       | DO '{' expression '}' WHILE '(' expression ')'        { $$ = buildDoWhileStatement($expression1, $expression2, @1, @3, @7); }
       | '[' argsList ']'                                      { $$ = buildCallExpression(buildIdentifier('arrayObject', @1), $argsList); }
+      | object                                                { $$ = buildCallExpression(buildIdentifier('objectfunctionObject', @1), $object); }
       | FOR '(' expression ';' expression ';' expression ')' '{' expression '}' { $$ = buildForStatement($expression1, $expression2, $expression3, $expression4, @1, @11); }
 ;
+
 
 calls:
       '(' argsList ')' calls { $$ = [ ...$argsList ].concat($calls); }

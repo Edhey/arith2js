@@ -203,16 +203,65 @@ function buildVariableDeclarator(id, init = null) {
  * @returns {Object} - The function expression node
  */
 function buildFunctionExpression(params, expression, startLocation, endLocation) {
+  let wrappedExpression = expression;
+  for (let i = params.length - 1; i > 0; i--) {
+    wrappedExpression = {
+      type: 'CallExpression',
+      callee: {
+        type: 'Identifier',
+        name: 'functionObject',
+      },
+      arguments: [
+        {
+          type: 'FunctionExpression',
+          params: [params[i]],
+          body: {
+            type: 'BlockStatement',
+            body: [
+              {
+                type: 'ReturnStatement',
+                argument: wrappedExpression,
+                loc: {
+                  start: startLocation,
+                  end: endLocation,
+                },
+              },
+            ],
+            loc: {
+              start: startLocation,
+              end: endLocation,
+            },
+          },
+          generator: false,
+          async: false,
+          expression: false,
+          loc: {
+            start: startLocation,
+            end: endLocation,
+          },
+        },
+      ],
+      loc: {
+        start: startLocation,
+        end: endLocation,
+      },
+    };
+  }
+    
+  let param = "";
+  if (params.length > 0) {
+    param = params[0];
+  }
   return {
     type: 'FunctionExpression',
     id: null,
-    params: params,
+    params: [param],
     body: {
       type: 'BlockStatement',
       body: [
         {
           type: 'ReturnStatement',
-          argument: expression,
+          argument: wrappedExpression,
         }
       ]
     },

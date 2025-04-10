@@ -27,6 +27,7 @@ class FunctionObject extends CallableInstance {
     super("_call");
     this.rawFunction = rawFunction;
     this.wrappedFunction = rawFunction;
+    this.cache = new StoreMap();
   }
 
   _call(arg) {
@@ -56,7 +57,7 @@ class FunctionObject extends CallableInstance {
     }
     let currentFunction = this.wrappedFunction;
     this.wrappedFunction = this._assing(currentFunction, cacheArgs, cacheValue, 0);
-    return this.wrappedFunction;
+    return this; // TODO: Devolver this? wrappedFunction? nada?
   }
 
   _assing(currentFunction, cacheArgs, cacheValue, index) {

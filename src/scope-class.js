@@ -149,6 +149,7 @@ class Scope {
   notUsedVariablesAnalysis() {
     let messages = [];
     for (const variable of this.notUsedVariables()) {
+      if (typeof variable === 'undefined') continue;
       const line = this.scope.get(variable).declaration.loc?.first_line ?? this.scope.get(variable).declaration.loc?.start.first_line ?? 'unknow';
       const column = this.scope.get(variable).declaration.loc?.last_column ?? this.scope.get(variable).declaration.loc?.start.last_column ?? 'unknow';
       messages.push(`Variable ${variable} declared but not used at line ${line}, column ${column}`);
