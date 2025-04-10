@@ -16,6 +16,7 @@ const { Complex } = require('./handlers/complex-monkey-patch.js');
 require('./handlers/function-monkey-patch.js');
 require('./handlers/string-monkey-patch.js');
 require('./handlers/function-object-monkey-patch.js');
+require('./handlers/array-function-object-monkey-patch.js');
 
 const { allOperators, implementedTypes, operationHandlers } = require('./monkey-patch-handlers.js');
 

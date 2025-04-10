@@ -13,7 +13,7 @@
  */
 
 const CallableInstance = require('callable-instance');
-const { StoreMap } = require('./store-map.js');
+const { StoreMap } = require('../src/function-object/store-map.js');
 
 /**
  * @class FunctionObject

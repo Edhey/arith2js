@@ -16,12 +16,13 @@ const { Complex } = require('complex.js');
 const { ArrayFunctionObject, arrayObject } = require('../../function-object/array-function-object.js');
 const { operationHandlers, implementedTypes, allOperators } = require('../monkey-patch-handlers.js');
 const lodash = require('lodash');
+const { re } = require('mathjs');
 
 // Initialize the function operators in the operationHandlers
 for(const operator in allOperators) {
   lodash.set(operationHandlers, `arrayfunctionobject.${operator}`, Object.create(Object.prototype));
 }
-implementedTypes.push(FunctionObject);
+implementedTypes.push(ArrayFunctionObject);
 
 /**
  * Represents the operators that can be used in the function
@@ -33,22 +34,21 @@ const Operators = {
 
 for (let operator in Operators) {
   /**
-   * Operates a function with a boolean. Coertion of the boolean to a complex
-   * @param {Boolean} other It is the boolean to operate
-   * @returns Returns a FunctionObject that operates the function with the boolean as a complex
-   */
-  lodash.set(operationHandlers, `arrayfunctionobject.${operator}.boolean`, function (other) {
-    return arrayfunctionObject((...x) => this(...x)[operator](Complex(Number(other))));
-  });
-
-  /**
    * Operates the function with the function result
    * @param {Function} other It is the function to operate
    * @returns Returns a FunctionObject that operates the function with the function result
    */
   lodash.set(operationHandlers, `arrayfunctionobject.${operator}.arrayfunctionobject`, function (other) {
     try {
-      return arrayfunctionObject((...x) => this(...x)[operator](other(...x)));
+      const allIndex = this.indexArray.concat(other.indexArray.filter(item => !this.indexArray.some(existingItem => existingItem.equals(item))));
+      const result = new ArrayFunctionObject();
+      for (const index of allIndex) {
+        const value1 = this._call(index) ?? new Complex(0);
+        const value2 = other._call(index) ?? new Complex(0);
+        const value = value1[operator](value2);
+        result.assign([index], value);
+      }
+      return result;
     } catch (e) {
       throw new Error(`Unsupported ${operator} for function ${other}`);
     }
@@ -62,7 +62,7 @@ for (let operator in Operators) {
    * @throws Error if the object is not a Complex
    */
   lodash.set(operationHandlers, `arrayfunctionobject.${operator}.complex`, function (other) {
-    return arrayfunctionObject((...x) => this(...x)[operator](other));
+    return arrayObject((...x) => this(...x)[operator](other));
   });
 }
 
@@ -72,7 +72,7 @@ for (let operator in Operators) {
  * @returns Returns a FunctionObject representing the concatenation of the function with the string
  */
 lodash.set(operationHandlers, 'arrayfunctionobject.add.string', function (other) {
-  return arrayfunctionObject((...x) => this(...x).add(other));
+  return arrayObject((...x) => this(...x).add(other));
 });
 
 /**
@@ -80,7 +80,7 @@ lodash.set(operationHandlers, 'arrayfunctionobject.add.string', function (other)
  * @returns Returns a FunctionObject representing the not operation for the function
  */
 lodash.set(operationHandlers, 'arrayfunctionobject.not', function () {
-  return arrayfunctionObject((...x) => this(...x).not());
+  return arrayObject((...x) => this(...x).not());
 });
 
 /**
@@ -88,7 +88,7 @@ lodash.set(operationHandlers, 'arrayfunctionobject.not', function () {
  * @returns Returns a FunctionObject representing the negation of the function
  */
 lodash.set(operationHandlers, 'arrayfunctionobject.neg', function() {
-  return arrayfunctionObject((...x) => {
+  return arrayObject((...x) => {
     let r = this(...x);
     return r?.neg() || -r;
   });
