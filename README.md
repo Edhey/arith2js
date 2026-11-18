@@ -1,9 +1,11 @@
 # Scope Intro
 
 ## Autor
+
 Himar Edhey Hernández Alonso - [GitHub](https://github.com/Edhey)
 
 ## Descripción
+
 Este proyecto transpila expresiones aritméticas a programas en JavaScript. Utiliza Jison para el análisis léxico y sintáctico, y genera un AST (Árbol de Sintaxis Abstracta) que luego se convierte en código JavaScript. Es capaz de funcionar tanto con expresiones aritméticas simples como con expresiones aritméticas complejas, con números enteros, decimales, en notación científica y complejos.
 
 A partir de la versión 1.6.0, se ha añadido la capacidad de manejar variables, que se pueden definir y asignar en las expresiones aritméticas.
@@ -13,25 +15,26 @@ A partir de la versión 1.7.0, se ha añadido la capacidad de manejar funciones 
 En la versión 1.8.0, se ha añadido la capacidad de usar bucles for y while que funcionan como expresiones aritméticas. Se usa monkey patching para añadir las diferentes funciones entre tipos y operandos, habiéndose extendido el uso del programa para tipos Complex, Boolean, String y Function.
 
 ## Estructura del Proyecto
+
 El proyecto está estructurado de la siguiente manera:
 
 - `bin/`: Contiene los scripts de ejecución.
-    - `calc2js.mjs`: Script principal.
-    - `test-script/`: Contiene scripts de automatización de tests.
+  - `calc2js.mjs`: Script principal.
+  - `test-script/`: Contiene scripts de automatización de tests.
 - `docs/`: Contiene la documentación.
-- `examples/`: Contiene ejemplos de expresiones aritméticas sencillas. 
+- `examples/`: Contiene ejemplos de expresiones aritméticas sencillas.
 - `src/`: Contiene el código fuente.
-    - `ast-build.js`: Construye el AST.
-    - `calc.js`: Analiza y evalúa las expresiones aritméticas.
-    - `code-generation.js`: Genera código JavaScript usando recast.
-    - `grammar.jison`: Define la gramática.
-    - `lexer.l`: Define las reglas del lexer.
-    - `scope-class.js`: Define la clase Scope.
-    - `scope.js`: Define el ámbito de las variables.
-    - `support-lib.js`: Contiene funciones auxiliares.
-    - `templates/`: Contiene plantillas de código JavaScript.
-    - `transpile.js`: Convierte el AST en código JavaScript.
-    - `write-code.js`: Escribe el código JavaScript en un archivo.
+  - `ast-build.js`: Construye el AST.
+  - `calc.js`: Analiza y evalúa las expresiones aritméticas.
+  - `code-generation.js`: Genera código JavaScript usando recast.
+  - `grammar.jison`: Define la gramática.
+  - `lexer.l`: Define las reglas del lexer.
+  - `scope-class.js`: Define la clase Scope.
+  - `scope.js`: Define el ámbito de las variables.
+  - `support-lib.js`: Contiene funciones auxiliares.
+  - `templates/`: Contiene plantillas de código JavaScript.
+  - `transpile.js`: Convierte el AST en código JavaScript.
+  - `write-code.js`: Escribe el código JavaScript en un archivo.
 - `test/`: Contiene los tests.
   - `data/`: Contiene los datos de los tests simples.
   - `errors/`: Contiene los datos de los tests de errores.
@@ -41,20 +44,26 @@ El proyecto está estructurado de la siguiente manera:
   - `*.js`: Archivos que describen los datos de los tests.
 
 ## Instalación
+
 1. Clona el repositorio:
+
     ```sh
     git clone https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392.git
     cd arith2js-himar_edhey-hernandez-alu0101552392
     ```
+
 2. Instala las dependencias:
+
     ```sh
     npm install
     ```
 
 ## Uso
+
 Este programa permite transpilar expresiones aritméticas a programas en JavaScript y ejecutar expresiones aritméticas directamente.
 
 #### Opciones
+
 Uso: calc2js [opciones] <archivo>
 
 Transpila una expresión aritmética a un programa en JavaScript
@@ -75,47 +84,57 @@ Transpila una expresión aritmética a un programa en JavaScript
   - `-h, --help`               muestra ayuda para el comando
 
 #### Ejemplos
+
 Transpilar una expresión aritmética a un programa en JavaScript:
+
 ```sh
 node bin/calc2js.mjs examples/example1.txt
 ```
 
 Transpilar una expresión aritmética a un programa en JavaScript y ejecutarla:
+
 ```sh
 node bin/calc2js.mjs examples/example1.txt -r
 ```
 
 Transpilar una expresión aritmética a un programa en JavaScript y mostrar el valor de la última sentencia:
+
 ```sh
 node bin/calc2js.mjs examples/example1.txt -re
 ```
 
 Transpilar una expresión aritmética a un programa en JavaScript y mostrar el valor de la última sentencia como una cadena:
+
 ```sh
 node bin/calc2js.mjs examples/example1.txt -S
 ```
 
 Transpilar una expresión aritmética a un programa en JavaScript y mostrar el código generado:
+
 ```sh
 node bin/calc2js.mjs examples/example1.txt -v
 ```
 
 Transpilar una expresión aritmética a un programa en JavaScript y mostrar el AST:
+
 ```sh
 node bin/calc2js.mjs examples/example1.txt -a
 ```
 
 Transpilar una expresión aritmética a un programa en JavaScript y mostrar el ámbito:
+
 ```sh
 node bin/calc2js.mjs examples/example1.txt -s
 ```
 
 Transpilar una expresión aritmética a un programa en JavaScript y mostrar la definición de las variables:
+
 ```sh
 node bin/calc2js.mjs examples/example1.txt -D
 ```
 
 ## Scripts de npm (package.json)
+
 - `npm test`: Ejecuta los tests.
 - `npm run test-example`: Ejecuta los tests de ejemplos.
 - `npm run test-simple`: Ejecuta los tests sencillos.
@@ -155,7 +174,9 @@ node bin/calc2js.mjs examples/example1.txt -D
 ```
 
 ## Tests
+
 Existen test de ejemplos, test sencillos, test difíciles y test de errores.
+
 - Los test de ejemplos son test faciles cuya respuesta es obvia a simple vista.
 - Los test sencillos comprueban que las expresiones aritméticas se evalúan correctamente.
 - Los test difíciles comprueban que las expresiones aritméticas complejas se evalúan correctamente.
@@ -170,25 +191,28 @@ npm run test
 Si quisieras ejecutar alguna de las clases de test en concreto, puedes hacerlo con los comandos listados en la sección Scripts de npm.
 
 ## Test Coverage Report
+
 El reporte de cobertura se genera con el siguiente comando:
 
 ```sh
 npm run coverage
 ```
+
 153 passing (1s)
 
 --------------------|---------|----------|---------|---------|-------------------------------------------------------------------------------------------------------------------------------------------
-File                | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                                                                                                         
+
+File                | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 --------------------|---------|----------|---------|---------|-------------------------------------------------------------------------------------------------------------------------------------------
-All files           |   85.53 |     76.3 |   77.94 |   85.53 |                                                                                                                                           
- ast-build.js       |     100 |      100 |     100 |     100 |                                                                                                                                           
- calc.js            |   72.09 |    66.66 |   51.61 |   72.09 | ...45-469,488-489,496-497,501-506,513-514,534-543,557-565,580,585-590,598-599,604-609,614,619,636-639,641,643,645,647,649,671-676,679-680 
- code-generation.js |     100 |    66.66 |     100 |     100 | 33                                                                                                                                        
- scope-class.js     |     100 |      100 |     100 |     100 |                                                                                                                                           
- scope.js           |     100 |      100 |     100 |     100 |                                                                                                                                           
- support-lib.js     |   96.87 |    82.35 |     100 |   96.87 | 70-71,89                                                                                                                                  
- transpile.js       |   84.14 |    63.63 |     100 |   84.14 | 45-47,65-69,72-76                                                                                                                         
- write-code.js      |     100 |       75 |     100 |     100 | 23                                                                                                                                        
+All files           |   85.53 |     76.3 |   77.94 |   85.53 |
+ ast-build.js       |     100 |      100 |     100 |     100 |
+ calc.js            |   72.09 |    66.66 |   51.61 |   72.09 | ...45-469,488-489,496-497,501-506,513-514,534-543,557-565,580,585-590,598-599,604-609,614,619,636-639,641,643,645,647,649,671-676,679-680
+ code-generation.js |     100 |    66.66 |     100 |     100 | 33
+ scope-class.js     |     100 |      100 |     100 |     100 |
+ scope.js           |     100 |      100 |     100 |     100 |
+ support-lib.js     |   96.87 |    82.35 |     100 |   96.87 | 70-71,89
+ transpile.js       |   84.14 |    63.63 |     100 |   84.14 | 45-47,65-69,72-76
+ write-code.js      |     100 |       75 |     100 |     100 | 23
 --------------------|---------|----------|---------|---------|-------------------------------------------------------------------------------------------------------------------------------------------
 
 Se puede ver el reporte de cobertura en formato HTML con el siguiente comando:
@@ -217,17 +241,23 @@ También puedes abrir el index con alguna extensión como *live-server* para vis
 Esta docuemntación se despliega automáticamente en Github Pages al hacer push. Puedes acceder a él [aquí](https://ull-esit-pl-2425.github.io/arith2js-himar_edhey-hernandez-alu0101552392/).
 
 ## Workflow
+
 ### Coverage
+
 Existe una Github Action que ejecuta los tests y genera un reporte de cobertura. Puedes ver el reporte de cobertura en el directorio `docs/` o en Github Pages.
 
 ### Github Registry
+
 Otra Github Action que publica automáticamente el paquete en el Github Registry al hacer push.
 
 ### Clean Install
+
 Esta Github Action instala las dependencias y ejecuta los tests.
 
 ## Licencia
+
 Este proyecto está licenciado bajo la Licencia ISC.
 
 ## IA
+
 Para realizar este proyecto, se ha utilizado la IA de GitHub mayoritariamente para aumentar la velocidad de desarrollo y la calidad del código. Las sugerencias de código han sido útiles para ello, pero se debe ir con mucho ojo pues no siempre son correctas. Por otra parte, la IA me ha resultado una buena herramienta para poder documentar el código de manera más eficiente. Por último, me he apoyado en ella para entender mejor el por qué de algunos errores y cómo solucionarlos.
