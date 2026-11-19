@@ -1,156 +1,105 @@
-# Scope Intro
+# arith2js
 
-## Autor
+> **Note:** This project is the legacy core calculator transpiler, which later evolved into a fully-fledged Langium-based DSL and VS Code Language Server in [calcjs-langium](https://github.com/Edhey/calcjs-langium).
+
+## Author
 
 Himar Edhey Hernández Alonso - [GitHub](https://github.com/Edhey)
 
-## Descripción
+## Description
 
-Este proyecto transpila expresiones aritméticas a programas en JavaScript. Utiliza Jison para el análisis léxico y sintáctico, y genera un AST (Árbol de Sintaxis Abstracta) que luego se convierte en código JavaScript. Es capaz de funcionar tanto con expresiones aritméticas simples como con expresiones aritméticas complejas, con números enteros, decimales, en notación científica y complejos.
+This project transpiles arithmetic expressions into JavaScript programs. It uses Jison for lexical and syntactic analysis, generating an AST (Abstract Syntax Tree) that is subsequently converted into executable JavaScript code. It supports both simple and complex arithmetic expressions, including integers, decimals, scientific notation, and complex numbers.
 
-A partir de la versión 1.6.0, se ha añadido la capacidad de manejar variables, que se pueden definir y asignar en las expresiones aritméticas.
+- **v1.6.0+:** Added support for variable handling, allowing definitions and assignments within arithmetic expressions.
+- **v1.7.0+:** Added support for single-parameter anonymous functions, logical operators, and comparison operators. *(Note: Factorial operator changed from `!` to `ç`, as `!` is now reserved for logical negation).*
+- **v1.8.0+:** Added `for` and `while` loops functioning as arithmetic expressions. Utilizes monkey-patching to extend operations across `Complex`, `Boolean`, `String`, and `Function` types.
 
-A partir de la versión 1.7.0, se ha añadido la capacidad de manejar funciones anónimas, de un solo parámetro, que se pueden utilizar en las expresiones aritméticas. Además, se han añadido operadores lógicos y de comparación. Cambio en factorial antes ! -> ahora ç, pues ahora ! es el operador de negación.
+## Project Structure
 
-En la versión 1.8.0, se ha añadido la capacidad de usar bucles for y while que funcionan como expresiones aritméticas. Se usa monkey patching para añadir las diferentes funciones entre tipos y operandos, habiéndose extendido el uso del programa para tipos Complex, Boolean, String y Function.
+- `bin/`: Execution scripts.
+  - `calc2js.mjs`: Main CLI script.
+  - `test-script/`: Test automation scripts.
+- `docs/`: Documentation folder.
+- `examples/`: Sample arithmetic expression files.
+- `src/`: Source code.
+  - `ast-build.js`: AST builder.
+  - `calc.js`: Parser and evaluator.
+  - `code-generation.js`: JavaScript code generator using `recast`.
+  - `grammar.jison`: Grammar definition.
+  - `lexer.l`: Lexer rules.
+  - `scope-class.js`: Scope class definition.
+  - `scope.js`: Variable scope handler.
+  - `support-lib.js`: Helper utilities.
+  - `templates/`: JS code templates.
+  - `transpile.js`: AST-to-JS conversion logic.
+  - `write-code.js`: File writer for transpiled output.
+- `test/`: Test suites (`data`, `errors`, `examples-data`, `hard`).
 
-## Estructura del Proyecto
+## Installation
 
-El proyecto está estructurado de la siguiente manera:
-
-- `bin/`: Contiene los scripts de ejecución.
-  - `calc2js.mjs`: Script principal.
-  - `test-script/`: Contiene scripts de automatización de tests.
-- `docs/`: Contiene la documentación.
-- `examples/`: Contiene ejemplos de expresiones aritméticas sencillas.
-- `src/`: Contiene el código fuente.
-  - `ast-build.js`: Construye el AST.
-  - `calc.js`: Analiza y evalúa las expresiones aritméticas.
-  - `code-generation.js`: Genera código JavaScript usando recast.
-  - `grammar.jison`: Define la gramática.
-  - `lexer.l`: Define las reglas del lexer.
-  - `scope-class.js`: Define la clase Scope.
-  - `scope.js`: Define el ámbito de las variables.
-  - `support-lib.js`: Contiene funciones auxiliares.
-  - `templates/`: Contiene plantillas de código JavaScript.
-  - `transpile.js`: Convierte el AST en código JavaScript.
-  - `write-code.js`: Escribe el código JavaScript en un archivo.
-- `test/`: Contiene los tests.
-  - `data/`: Contiene los datos de los tests simples.
-  - `errors/`: Contiene los datos de los tests de errores.
-  - `examples-data/`: Contiene los datos de los tests de ejemplos.
-  - `hard/`: Contiene los datos de los tests difíciles.
-  - `*.test.js`: Archivos que definen los tests.
-  - `*.js`: Archivos que describen los datos de los tests.
-
-## Instalación
-
-1. Clona el repositorio:
+1. Clone the repository:
 
     ```sh
-    git clone https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392.git
-    cd arith2js-himar_edhey-hernandez-alu0101552392
+    git clone [https://github.com/Edhey/arith2js.git](https://github.com/Edhey/arith2js.git)
+    cd arith2js
     ```
 
-2. Instala las dependencias:
+2. Install dependencies:
 
     ```sh
     npm install
     ```
 
-## Uso
+## Usage
 
-Este programa permite transpilar expresiones aritméticas a programas en JavaScript y ejecutar expresiones aritméticas directamente.
+Allows transpiling arithmetic expressions to JavaScript programs or executing them directly.
 
-#### Opciones
+### Options
 
-Uso: calc2js [opciones] <archivo>
+Usage: `calc2js [options] <file>`
 
-Transpila una expresión aritmética a un programa en JavaScript
+- **Arguments:**
+  - `file`: Source code file to transpile.
+- **Options:**
+  - `-V, --version`: Output the version number.
+  - `-o, --output <file>`: Write output to a specific file.
+  - `-v, --verbose`: Display generated code.
+  - `-a, --ast`: Display the AST.
+  - `-s, --scope`: Display variable scopes.
+  - `-D, --definitions`: Display variable definitions.
+  - `-r, --run`: Execute the generated code.
+  - `-re, --return`: Show the value of the last statement.
+  - `-S, --string`: Show the value of the last statement as a string.
+  - `-h, --help`: Display help.
 
-- Argumentos:
-  - `archivo`                  archivo con el código original a transpilar
+#### Examples
 
-- Opciones:
-  - `-V, --version`            muestra el número de versión
-  - `-o, --output` <archivo>   archivo donde escribir el código transpiliado
-  - `-v, --verbose`            muestra el código generado
-  - `-a, --ast`                muestra el AST
-  - `-s, --scope`              muestra el ámbito
-  - `-D, --definitions`        muestra la definición de las variables
-  - `-r, --run`                ejecuta el código generado
-  - `-re, --return`            muestra el valor de la última sentencia
-  - `-S, --string`             muestra el valor de la última sentencia como una cadena
-  - `-h, --help`               muestra ayuda para el comando
-
-#### Ejemplos
-
-Transpilar una expresión aritmética a un programa en JavaScript:
+Transpile an expression to JavaScript:
 
 ```sh
 node bin/calc2js.mjs examples/example1.txt
+
 ```
 
-Transpilar una expresión aritmética a un programa en JavaScript y ejecutarla:
+Transpile and execute:
 
 ```sh
 node bin/calc2js.mjs examples/example1.txt -r
+
 ```
 
-Transpilar una expresión aritmética a un programa en JavaScript y mostrar el valor de la última sentencia:
+## NPM Scripts
 
-```sh
-node bin/calc2js.mjs examples/example1.txt -re
-```
-
-Transpilar una expresión aritmética a un programa en JavaScript y mostrar el valor de la última sentencia como una cadena:
-
-```sh
-node bin/calc2js.mjs examples/example1.txt -S
-```
-
-Transpilar una expresión aritmética a un programa en JavaScript y mostrar el código generado:
-
-```sh
-node bin/calc2js.mjs examples/example1.txt -v
-```
-
-Transpilar una expresión aritmética a un programa en JavaScript y mostrar el AST:
-
-```sh
-node bin/calc2js.mjs examples/example1.txt -a
-```
-
-Transpilar una expresión aritmética a un programa en JavaScript y mostrar el ámbito:
-
-```sh
-node bin/calc2js.mjs examples/example1.txt -s
-```
-
-Transpilar una expresión aritmética a un programa en JavaScript y mostrar la definición de las variables:
-
-```sh
-node bin/calc2js.mjs examples/example1.txt -D
-```
-
-## Scripts de npm (package.json)
-
-- `npm test`: Ejecuta los tests.
-- `npm run test-example`: Ejecuta los tests de ejemplos.
-- `npm run test-simple`: Ejecuta los tests sencillos.
-- `npm run test-hard`: Ejecuta los tests difíciles.
-- `npm run test-error`: Ejecuta los tests de errores.
-- `npm run cov`: Ejecuta los tests y genera un reporte de cobertura.
-- `npm run report`: Genera un reporte de cobertura en formato HTML.
-- `npm run compile`: Compila la gramática y el lexer.
-- `npm run trans`: Transpila una expresión aritmética a un programa en JavaScript.
-- `npm run exec`: Ejecuta el código generado.
-- `npm run coverage`: Genera un reporte de cobertura en formato HTML y texto.
-- `npm run jsdocs`: Genera la documentación del código usando JSDoc.
-- `npm run docs`: Limpia y genera la documentación del código y el reporte de cobertura.
-- `npm run clean`: Limpia los archivos generados.
-- `npm run clean:docs`: Limpia la documentación generada.
-- `npm run dev`: Inicia un servidor de desarrollo para visualizar la documentación.
+- `npm test`: Run tests.
+- `npm run test-example`: Run example tests.
+- `npm run test-simple`: Run simple tests.
+- `npm run test-hard`: Run hard tests.
+- `npm run test-error`: Run error tests.
+- `npm run cov`: Run tests with `nyc` coverage.
+- `npm run coverage`: Generate coverage reports (HTML & text).
+- `npm run compile`: Compile grammar and lexer (`jison`).
+- `npm run docs`: Clean and generate JSDoc and coverage documentation.
+- `npm run dev`: Start a local development server to preview documentation.
 
 ```json
 "scripts": {
@@ -171,93 +120,30 @@ node bin/calc2js.mjs examples/example1.txt -D
   "clean:docs": "rm -fR docs/coverage && rm -fR docs/jsdoc",
   "dev": "http-server -c-1 -o docs"
 }
+
 ```
 
-## Tests
+## Testing & Coverage
 
-Existen test de ejemplos, test sencillos, test difíciles y test de errores.
-
-- Los test de ejemplos son test faciles cuya respuesta es obvia a simple vista.
-- Los test sencillos comprueban que las expresiones aritméticas se evalúan correctamente.
-- Los test difíciles comprueban que las expresiones aritméticas complejas se evalúan correctamente.
-- Los test de errores comprueban que las expresiones aritméticas con errores sintácticos se detectan correctamente.
-
-Para ejecutar los tests, usa el siguiente comando:
+Run the main test suite via:
 
 ```sh
 npm run test
+
 ```
 
-Si quisieras ejecutar alguna de las clases de test en concreto, puedes hacerlo con los comandos listados en la sección Scripts de npm.
-
-## Test Coverage Report
-
-El reporte de cobertura se genera con el siguiente comando:
-
-```sh
-npm run coverage
-```
-
-153 passing (1s)
-
---------------------|---------|----------|---------|---------|-------------------------------------------------------------------------------------------------------------------------------------------
-
-File                | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
---------------------|---------|----------|---------|---------|-------------------------------------------------------------------------------------------------------------------------------------------
-All files           |   85.53 |     76.3 |   77.94 |   85.53 |
- ast-build.js       |     100 |      100 |     100 |     100 |
- calc.js            |   72.09 |    66.66 |   51.61 |   72.09 | ...45-469,488-489,496-497,501-506,513-514,534-543,557-565,580,585-590,598-599,604-609,614,619,636-639,641,643,645,647,649,671-676,679-680
- code-generation.js |     100 |    66.66 |     100 |     100 | 33
- scope-class.js     |     100 |      100 |     100 |     100 |
- scope.js           |     100 |      100 |     100 |     100 |
- support-lib.js     |   96.87 |    82.35 |     100 |   96.87 | 70-71,89
- transpile.js       |   84.14 |    63.63 |     100 |   84.14 | 45-47,65-69,72-76
- write-code.js      |     100 |       75 |     100 |     100 | 23
---------------------|---------|----------|---------|---------|-------------------------------------------------------------------------------------------------------------------------------------------
-
-Se puede ver el reporte de cobertura en formato HTML con el siguiente comando:
-
-```sh
-npm run report
-```
-
-## Documentación
-
-La documentación se genera con JSDoc. Cada clase y función tiene su propio comentario de documentación en dicho formato.
-Para generarla , usa el siguiente comando:
+Documentation and coverage reports can be generated and served locally using:
 
 ```sh
 npm run docs
-```
-
-Finalmente podrás visualizar toda la documentación incluyendo el reporte de cobertura en tu navegador con el siguiente comando:
-
-```sh
 npm run dev
+
 ```
 
-También puedes abrir el index con alguna extensión como *live-server* para visualizarlo en tu navegador.
+## License
 
-Esta docuemntación se despliega automáticamente en Github Pages al hacer push. Puedes acceder a él [aquí](https://ull-esit-pl-2425.github.io/arith2js-himar_edhey-hernandez-alu0101552392/).
+This project is licensed under the **MIT License**.
 
-## Workflow
+## AI Assistance Disclaimer
 
-### Coverage
-
-Existe una Github Action que ejecuta los tests y genera un reporte de cobertura. Puedes ver el reporte de cobertura en el directorio `docs/` o en Github Pages.
-
-### Github Registry
-
-Otra Github Action que publica automáticamente el paquete en el Github Registry al hacer push.
-
-### Clean Install
-
-Esta Github Action instala las dependencias y ejecuta los tests.
-
-## Licencia
-
-Este proyecto está licenciado bajo la Licencia ISC.
-
-## IA
-
-Para realizar este proyecto, se ha utilizado la IA de GitHub mayoritariamente para aumentar la velocidad de desarrollo y la calidad del código. Las sugerencias de código han sido útiles para ello, pero se debe ir con mucho ojo pues no siempre son correctas. Por otra parte, la IA me ha resultado una buena herramienta para poder documentar el código de manera más eficiente. Por último, me he apoyado en ella para entender mejor el por qué de algunos errores y cómo solucionarlos.
+AI tools (such as GitHub Copilot) were utilized during the development of this project to assist with code structuring, efficiency, debugging, and generating JSDoc comments. All suggestions were carefully reviewed and validated.
