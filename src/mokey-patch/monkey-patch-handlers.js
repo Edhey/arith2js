@@ -8,7 +8,7 @@
  * @author Himar Edhey Hernández Alonso
  * @since Wed 19 Mar 2025 
  * @desc Handler for operations
- * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}
+ * @see {@link https://github.com/Edhey/arith2js}
  *
  */
 
@@ -23,7 +23,7 @@ const AritmeticOperators = {
 };
 
 const ComparisonOperators = {
-  equals: '==', notEquals: '!=', lessThan: '<', greaterThan: '>', 
+  equals: '==', notEquals: '!=', lessThan: '<', greaterThan: '>',
   lessEqualThan: '<=', greaterEqualThan: '>=', not: '!'
 };
 

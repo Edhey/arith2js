@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392.git"
+    "url": "git+https://github.com/Edhey/arith2js.git"
   },
   "scripts": {
     "test": "npm run compile; mocha test/",

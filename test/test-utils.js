@@ -8,7 +8,7 @@
  * @autor Himar Edhey Hernández Alonso
  * @since Fri 28 Feb 2025
  * @desc Este archivo contiene los tests de los errores de la práctica
- * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}
+ * @see {@link https://github.com/Edhey/arith2js}
  */
 
 const { transpile } = require("../src/transpile.js");
@@ -61,13 +61,13 @@ async function checkRunConsoleLog(testsFiles, verbose = false) {
     const evaluatedCode = await eval(transpileResult);
     correctOut = await fileStream.readFile(testsFiles.correctOut, 'utf-8');
     // If there is no print in the code, the last sentence is the result
-    if (consoleOutput === "") consoleOutput = evaluatedCode.toString(); 
+    if (consoleOutput === "") consoleOutput = evaluatedCode.toString();
   } catch (error) {
     console.error(error);
   } finally {
     console.log = oldLog; // Restore console.log
   }
-  
+
   expect(removeSpaces(consoleOutput)).to.equal(removeSpaces(correctOut));
 }
 
@@ -89,9 +89,9 @@ async function checkRunConsoleError(testsFiles) {
   }
 }
 
-module.exports = { 
-  removeSpaces, 
-  checkTranspile, 
-  checkRunConsoleLog, 
+module.exports = {
+  removeSpaces,
+  checkTranspile,
+  checkRunConsoleLog,
   checkRunConsoleError
 };

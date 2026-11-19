@@ -8,7 +8,7 @@
  * @author Himar Edhey Hernández Alonso
  * @since Wed 26 Feb 2025
  * @desc Este archivo contiene las funciones que construyen el AST
- * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}
+ * @see {@link https://github.com/Edhey/arith2js}
  */
 
 /** 
@@ -247,7 +247,7 @@ function buildFunctionExpression(params, expression, startLocation, endLocation)
       },
     };
   }
-    
+
   let param = "";
   if (params.length > 0) {
     param = params[0];
@@ -426,8 +426,8 @@ function buildWhileStatement(conditionStatement, bodyStatement, startLocation,
     },
   }
   return buildCallExpression(
-    arrowFunctionExpression, 
-    [], 
+    arrowFunctionExpression,
+    [],
     {
       start: startLocation,
       end: endLocation,
@@ -497,8 +497,8 @@ function buildDoWhileStatement(bodyStatement, conditionStatement, startLocation,
     },
   }
   return buildCallExpression(
-    arrowFunctionExpression, 
-    [], 
+    arrowFunctionExpression,
+    [],
     {
       start: startLocation,
       end: endLocation,
@@ -567,10 +567,10 @@ function buildForStatement(init, test, update, body, startLocation, endLocation)
     },
   };
   return buildCallExpression(
-    arrowFunction, 
+    arrowFunction,
     [],
     {
-      startLocation, 
+      startLocation,
       endLocation
     }
   );

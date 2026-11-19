@@ -10,7 +10,7 @@
  * @desc This file defines the FunctionObject class, which is a subclass of the 
  * CallableInstance class. Now it uses the StoreMap class to cache the results
  * of function calls for specific arguments.
- * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}
+ * @see {@link https://github.com/Edhey/arith2js}
  */
 
 const CallableInstance = require('callable-instance');

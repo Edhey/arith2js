@@ -8,7 +8,7 @@
  * @autor Himar Edhey Hernández Alonso
  * @since Wed 26 Feb 2025
  * @desc Clase Scope que permite
- * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}
+ * @see {@link https://github.com/Edhey/arith2js}
  *
  */
 
@@ -176,7 +176,8 @@ class Scope {
       if (this.isDeclaredInParentScope(variable)) continue;
       const line = this.scope.get(variable).usage[0].loc?.first_line ?? this.scope.get(variable).usage[0].loc?.start.first_line ?? 'unknow'
       const column = this.scope.get(variable).usage[0].loc?.last_column ?? this.scope.get(variable).usage[0].loc?.start.last_column ?? 'unknow'
-      messages.push(`Variable ${variable} not declared at line ${line}, column ${column}`);    }
+      messages.push(`Variable ${variable} not declared at line ${line}, column ${column}`);
+    }
     return this.showVariableErrorMessages(messages);
   }
 
@@ -187,7 +188,7 @@ class Scope {
   usedBeforeDeclarationVariablesAnalysis() {
     let messages = [];
     const usedBeforeDeclaration = this.usedBeforeDeclaration.filter(
-                          node => !this.notDeclaredVariables().has(node.name));
+      node => !this.notDeclaredVariables().has(node.name));
     for (const node of usedBeforeDeclaration) {
       messages.push(`Variable ${node.name} used before declaration at line` +
         ` ${node.loc.first_line}, column ${node.loc.last_column}`);
@@ -224,7 +225,7 @@ class Scope {
     }
     if (message) {
       if (name) {
-        console.error("Errors in " + name  + " scope:");
+        console.error("Errors in " + name + " scope:");
       } else {
         console.error("Errors in scope:");
       }

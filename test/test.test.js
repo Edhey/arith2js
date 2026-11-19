@@ -8,7 +8,7 @@
  * @autor Himar Edhey Hernández Alonso
  * @since Wed 26 Feb 2025
  * @desc Este archivo contiene los tests de la práctica
- * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}
+ * @see {@link https://github.com/Edhey/arith2js}
  */
 
 const TestExample = require('./test-example-description.js');
