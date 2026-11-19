@@ -8,23 +8,25 @@
  * @author Himar Edhey Hernández Alonso
  * @since Sat 29 Feb 2025
  * @desc Write the output code to the output file
- * @see {@link https://github.com/ULL-ESIT-PL-2425/arith2js-himar_edhey-hernandez-alu0101552392}
+ * @see {@link https://github.com/Edhey/arith2js}
  */
 
 const fileStream = require('fs').promises;
+const { dirname } = require('path');
 
 /**
- * Write the output to the output file
- * @param {string} output - The output code
- * @param {Object} options - The options to transpile
- * @returns {string} - The output code
+- Write the output to the output file
+- @param {string} output - The output code
+- @param {Object} options - The options to transpile
+- @returns {string} - The output code
  */
 async function writeCode(output, options) {
   if (options.verbose) console.log(output); // if verbose, print the output
 
-  if (!options.output) 
+  if (!options.output)
     return output; // if there is no output file, return the output
-  
+
+  await fileStream.mkdir(dirname(options.output), { recursive: true });
   await fileStream.writeFile(options.output, output, 'utf-8'); // write the output to the output file
 
   return output;
