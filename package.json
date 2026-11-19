@@ -1,6 +1,6 @@
 {
   "name": "@edhey/arith2js",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "* See section [Análisis Sintáctico Ascendente en JavaScript](http://crguezl.github.io/pl-html/node43.html) * The example working at  [http://crguezl.github.io/jison-minus/](http://crguezl.github.io/jison-minus/)",
   "main": "bin/calc2js.mjs",
   "type": "commonjs",
