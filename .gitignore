@@ -2,3 +2,4 @@ node_modules
 salida.js
 ast.json
 .nyc_output.npmrc
+test/**/output/
