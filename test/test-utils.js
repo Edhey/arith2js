@@ -12,6 +12,7 @@
  */
 
 const { transpile } = require("../src/transpile.js");
+const { dirname } = require('path');
 const fileStream = require("fs/promises");
 const { expect } = require('chai');
 
@@ -82,6 +83,7 @@ async function checkRunConsoleError(testsFiles) {
     const output = await fileStream.readFile(testsFiles.output, 'utf-8');
     expect(removeSpaces(output)).to.equal(removeSpaces(correctErr));
   } catch (error) {
+    await fileStream.mkdir(dirname(testsFiles.output), { recursive: true });
     await fileStream.writeFile(testsFiles.output, error.message);
     expect(removeSpaces(consoleOutput)).to.equal(removeSpaces(correctErr));
   } finally {
